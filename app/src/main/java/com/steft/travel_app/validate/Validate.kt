@@ -6,6 +6,3 @@ import arrow.core.ValidatedNel
 data class ValidationError(val message: String)
 
 typealias ValidatedObject<T> = Validated<ValidationError, T>
-
-object Validate {
-}

@@ -20,8 +20,6 @@ enum class Specialty {
     Manager
 }
 
-
-
 /**
  * Only permits validated instances of Address to exist within the runtime
  */
@@ -38,6 +36,7 @@ class Address private constructor(val addressString: String) {
         }
     }
 }
+
 /**
  * Only permits validated instances of Name to exist within the runtime
  */

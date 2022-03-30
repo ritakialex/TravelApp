@@ -8,16 +8,16 @@ import java.util.*
 
 
 @Dao
-interface TravelAgentDao : ModelDao<TravelAgent> {
-    @Query("SELECT * FROM travel_agency")
-    override fun getAll(): List<TravelAgent>
+interface TravelAgentDao {
+    @Query("SELECT * FROM travel_agent")
+    suspend fun getAll(): List<TravelAgent>
 
-    @Query("SELECT * FROM travel_agency WHERE id = :id")
-    override fun findById(id: UUID): TravelAgent
+    @Query("SELECT * FROM travel_agent WHERE id = :id")
+    suspend fun findById(id: UUID): TravelAgent
 
     @Insert
-    override fun insertAll(vararg agencies: TravelAgent)
+    suspend fun insertAll(vararg agents: TravelAgent)
 
-    @Query("SELECT * FROM travel_agency WHERE id = :id")
-    override fun delete(id: UUID)
+    @Query("SELECT * FROM travel_agent WHERE id = :id")
+    suspend fun delete(id: UUID)
 }

@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 import java.util.UUID
 
 @Entity(tableName = "travel_agency")
-data class TravelAgency(@PrimaryKey override val id: UUID,
-                        @ColumnInfo val name: Name,
-                        @ColumnInfo val address: Address) : Model
+data class TravelAgency(@PrimaryKey val id: UUID,
+                        val name: Name,
+                        val address: Address)

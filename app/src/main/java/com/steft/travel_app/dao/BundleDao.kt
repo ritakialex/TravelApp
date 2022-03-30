@@ -7,16 +7,16 @@ import com.steft.travel_app.model.Bundle
 import java.util.*
 
 @Dao
-interface BundleDao : ModelDao<Bundle> {
-    @Query("SELECT * FROM travel_agency")
-    override fun getAll(): List<Bundle>
+interface BundleDao {
+    @Query("SELECT * FROM bundle")
+    suspend fun getAll(): List<Bundle>
 
-    @Query("SELECT * FROM travel_agency WHERE id = :id")
-    override fun findById(id: UUID): Bundle
+    @Query("SELECT * FROM bundle WHERE id = :id")
+    suspend fun findById(id: UUID): Bundle
 
     @Insert
-    override fun insertAll(vararg agencies: Bundle)
+    suspend fun insertAll(vararg bundles: Bundle)
 
-    @Query("SELECT * FROM travel_agency WHERE id = :id")
-    override fun delete(id: UUID)
+    @Query("SELECT * FROM bundle WHERE id = :id")
+    suspend fun delete(id: UUID)
 }

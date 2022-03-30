@@ -8,16 +8,16 @@ import com.steft.travel_app.model.TravelAgency
 import java.util.UUID
 
 @Dao
-interface TravelAgencyDao : ModelDao<TravelAgency> {
+interface TravelAgencyDao {
     @Query("SELECT * FROM travel_agency")
-    override fun getAll(): List<TravelAgency>
+    suspend fun getAll(): List<TravelAgency>
 
     @Query("SELECT * FROM travel_agency WHERE id = :id")
-    override fun findById(id: UUID): TravelAgency
+    suspend fun findById(id: UUID): TravelAgency
 
     @Insert
-    override fun insertAll(vararg agencies: TravelAgency)
+    suspend fun insertAll(vararg agencies: TravelAgency)
 
     @Query("SELECT * FROM travel_agency WHERE id = :id")
-    override fun delete(id: UUID)
+    suspend fun delete(id: UUID)
 }
