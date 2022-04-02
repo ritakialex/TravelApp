@@ -17,6 +17,6 @@ interface BundleDao {
     @Insert
     suspend fun insertAll(vararg bundles: Bundle)
 
-    @Query("SELECT * FROM bundle WHERE id = :id")
+    @Query("DELETE FROM bundle WHERE id = :id")
     suspend fun delete(id: UUID)
 }

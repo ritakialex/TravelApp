@@ -18,6 +18,6 @@ interface TravelAgencyDao {
     @Insert
     suspend fun insertAll(vararg agencies: TravelAgency)
 
-    @Query("SELECT * FROM travel_agency WHERE id = :id")
+    @Query("DELETE FROM travel_agency WHERE id = :id")
     suspend fun delete(id: UUID)
 }
