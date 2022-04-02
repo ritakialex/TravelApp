@@ -56,17 +56,19 @@ object DocumentRegistrationUtils {
                     { name, surname, phone, email ->
                         CustomerDetails(name, surname, phone, email, map[hotel] as String)
                     }
-            }.traverseEither { validated ->
-                validated.toEither()
-            }
+            }.traverseValidated {
+                it
+            }.zip(Semigroup.nonEmptyList(),
+                  Validated.catch { UUID.fromString(id as String)!! }
+                      .mapLeft { ValidationError(it.toString()).nel() }) { details, id ->
+                Registration(id, details)
+            }.toEither()
         }.mapLeft {
-            ValidationError(it.toString()).nel()
+            CorruptDatabaseObjectException(it.toString())
         }.flatMap {
-            it.map { details ->
-                Registration(UUID.fromString(id as String)!!, details)
+            it.mapLeft { errs ->
+                CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(errs))
             }
-        }.mapLeft { errs ->
-            CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(errs))
         }
 }
 
@@ -109,3 +111,4 @@ class RegistrationDaoImpl {
 
         }.filterNotNull()
 }
+
