@@ -65,6 +65,8 @@ object DocumentRegistrationUtils {
             it.map { details ->
                 Registration(UUID.fromString(id as String)!!, details)
             }
+        }.mapLeft { errs ->
+            CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(errs))
         }
 }
 
@@ -86,25 +88,24 @@ class RegistrationDaoImpl {
         it.await(); Unit
     }
 
-    suspend fun getAll() =
-        collection.get()
-            .await()
-            .pMap { document ->
-                val bundleId = document.get("bundleId")
+    suspend fun getAll() = collection.get()
+        .await()
+        .pMap { document ->
+            val bundleId = document.get("bundleId")
 
-                val customerDetails = document.reference
-                    .collection("customers")
-                    .get()
-                    .await()
-                    .map { document ->
-                        document.data
-                    }
+            val customerDetails = document.reference
+                .collection("customers")
+                .get()
+                .await()
+                .map { document ->
+                    document.data
+                }
 
-                toRegistration(bundleId, customerDetails)
-                    .mapLeft {
-                        Log.e("Firebase",
-                              "Couldn't retrieve object with id $bundleId because of $it")
-                    }.orNull()
+            toRegistration(bundleId, customerDetails)
+                .mapLeft {
+                    Log.e("Firebase",
+                          "Couldn't retrieve object with id $bundleId because of $it")
+                }.orNull()
 
-            }.filterNotNull()
+        }.filterNotNull()
 }
