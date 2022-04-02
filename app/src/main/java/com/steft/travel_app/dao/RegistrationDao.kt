@@ -34,11 +34,11 @@ interface RegistrationDao {
 }
 
 object DocumentRegistrationUtils {
-    val name = CustomerDetails::name.name
-    val surname = CustomerDetails::surname.name
-    val phone = CustomerDetails::phone.name
-    val email = CustomerDetails::email.name
-    val hotel = CustomerDetails::hotel.name
+    private val name = CustomerDetails::name.name
+    private val surname = CustomerDetails::surname.name
+    private val phone = CustomerDetails::phone.name
+    private val email = CustomerDetails::email.name
+    private val hotel = CustomerDetails::hotel.name
 
     fun toMap(customerDetails: CustomerDetails) =
         mapOf(name to customerDetails.name.toString(),
