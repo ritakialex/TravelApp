@@ -3,19 +3,17 @@
 package com.steft.travel_app.dao
 
 import android.util.Log
-import arrow.core.Either
+import arrow.core.*
 import arrow.core.computations.ResultEffect.bind
-import arrow.core.flatMap
-import arrow.core.orNull
-import arrow.core.zip
 import arrow.typeclasses.Semigroup
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
 import com.steft.travel_app.common.Utils.pMap
 import com.steft.travel_app.common.ValidateUtils
-import com.steft.travel_app.dao.DocumentRegistrationUtils.toCustomerDetails
+import com.steft.travel_app.common.ValidationError
 import com.steft.travel_app.dao.DocumentRegistrationUtils.toMap
+import com.steft.travel_app.dao.DocumentRegistrationUtils.toRegistration
 import com.steft.travel_app.model.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -47,21 +45,26 @@ object DocumentRegistrationUtils {
               email to customerDetails.email.toString(),
               hotel to customerDetails.hotel)
 
-    fun toCustomerDetails(map: Map<String, Any>) =
+    fun toRegistration(id: Any?, detailsList: List<Map<String, Any>>) =
         Either.catch {
-            Name.makeValidated(map[name].toString())
-                .zip(Semigroup.nonEmptyList(),
-                     Name.makeValidated(map[surname] as String),
-                     Phone.makeValidated(map[phone] as String),
-                     Email.makeValidated(map[email] as String))
-                { name, surname, phone, email ->
-                    CustomerDetails(name, surname, phone, email, map[hotel] as String)
-                }
+            detailsList.map { map ->
+                Name.makeValidated(map[name].toString())
+                    .zip(Semigroup.nonEmptyList(),
+                         Name.makeValidated(map[surname] as String),
+                         Phone.makeValidated(map[phone] as String),
+                         Email.makeValidated(map[email] as String))
+                    { name, surname, phone, email ->
+                        CustomerDetails(name, surname, phone, email, map[hotel] as String)
+                    }
+            }.traverseEither { validated ->
+                validated.toEither()
+            }
+        }.mapLeft {
+            ValidationError(it.toString()).nel()
         }.flatMap {
-            it.toEither()
-                .mapLeft { errors ->
-                    CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(errors))
-                }
+            it.map { details ->
+                Registration(UUID.fromString(id as String)!!, details)
+            }
         }
 }
 
@@ -88,28 +91,20 @@ class RegistrationDaoImpl {
             .await()
             .pMap { document ->
                 val bundleId = document.get("bundleId")
-                Either.catch {
-                    UUID.fromString(bundleId.toString())
-                }.mapLeft {
-                    CorruptDatabaseObjectException("'$bundleId' is not a valid UUID")
-                }.tapLeft {
-                    Log.e("Firebase",
-                          "Couldn't get registration from database because of: $it")
-                }.map { id ->
-                    val customerDetails = document.reference
-                        .collection("customers")
-                        .get()
-                        .await()
-                        .pMap { document ->
-                            document.data
-                                .let(::toCustomerDetails)
-                                .tapLeft { err ->
-                                    Log.e("Firebase",
-                                          "Document ${document.data} couldn't be coerced to CustomerDetails because of $err")
-                                }.orNull()
-                        }.filterNotNull()
 
-                    Registration(id, customerDetails)
-                }.orNull()
+                val customerDetails = document.reference
+                    .collection("customers")
+                    .get()
+                    .await()
+                    .map { document ->
+                        document.data
+                    }
+
+                toRegistration(bundleId, customerDetails)
+                    .mapLeft {
+                        Log.e("Firebase",
+                              "Couldn't retrieve object with id $bundleId because of $it")
+                    }.orNull()
+
             }.filterNotNull()
 }
