@@ -9,6 +9,7 @@ import arrow.typeclasses.Semigroup
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
+import com.steft.travel_app.common.InvalidObjectException
 import com.steft.travel_app.common.Utils.pMap
 import com.steft.travel_app.common.ValidateUtils
 import com.steft.travel_app.common.ValidationError
@@ -58,16 +59,17 @@ object DocumentRegistrationUtils {
                     }
             }.traverseValidated {
                 it
-            }.zip(Semigroup.nonEmptyList(),
-                  Validated.catch { UUID.fromString(id as String)!! }
-                      .mapLeft { ValidationError(it.toString()).nel() }) { details, id ->
-                Registration(id, details)
-            }.toEither()
-        }.mapLeft {
-            CorruptDatabaseObjectException(it.toString())
+            }.let { validatedCustomerDetails ->
+                val validatedId = Validated.catch { UUID.fromString(id as String)!! }
+                    .mapLeft { ValidationError(it.toString()).nel() }
+
+                validatedCustomerDetails.zip(Semigroup.nonEmptyList(), validatedId) { details, id ->
+                    Registration(id, details)
+                }.toEither()
+            }
         }.flatMap {
             it.mapLeft { errs ->
-                CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(errs))
+                InvalidObjectException(ValidateUtils.foldValidationErrors(errs))
             }
         }
 }
@@ -105,6 +107,8 @@ class RegistrationDaoImpl {
 
             toRegistration(bundleId, customerDetails)
                 .mapLeft {
+                    CorruptDatabaseObjectException(it.toString())
+                }.tapLeft {
                     Log.e("Firebase",
                           "Couldn't retrieve object with id $bundleId because of $it")
                 }.orNull()
