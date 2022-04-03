@@ -8,7 +8,6 @@ import androidx.room.TypeConverters
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.steft.travel_app.model.Bundle
-import com.steft.travel_app.model.Converters
 import com.steft.travel_app.model.Excursion
 import com.steft.travel_app.model.TravelAgency
 

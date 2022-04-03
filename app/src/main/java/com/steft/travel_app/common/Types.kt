@@ -1,4 +1,4 @@
-package com.steft.travel_app.model
+package com.steft.travel_app.common
 
 import androidx.room.TypeConverter
 import arrow.core.Validated
@@ -9,8 +9,6 @@ import com.steft.travel_app.common.ValidationError
 import java.util.*
 import java.util.regex.Pattern
 
-class CorruptDatabaseObjectException(override val message: String) : Exception()
-
 enum class Gender {
     Male,
     Female
@@ -20,6 +18,11 @@ enum class ExcursionType {
     Cruise,
     Roadtrip,
     Independent
+}
+
+enum class LogTag(val tag: String) {
+    Firebase("Firebase"),
+    Validation("Validation")
 }
 
 /**
@@ -104,69 +107,4 @@ class Phone private constructor(private val phoneString: String) {
                 ValidationError("'$phoneString' is not a valid phone.").invalidNel()
         }
     }
-}
-
-object Converters {
-    private const val male = "male"
-    private const val female = "female"
-    private const val roadtrip = "roadtrip"
-    private const val cruise = "cruise"
-    private const val independent = "independent"
-
-    @TypeConverter
-    fun longToDate(value: Long): Date = Date(value)
-
-    @TypeConverter
-    fun dateToLong(value: Date): Long = value.time
-
-    @TypeConverter
-    fun uuidToString(value: UUID): String = value.toString()
-
-    @TypeConverter
-    fun dateToLong(value: String): UUID = UUID.fromString(value)
-
-
-    @TypeConverter
-    fun stringToGender(value: String): Gender = when (value) {
-        male -> Gender.Male
-        female -> Gender.Female
-        else -> throw CorruptDatabaseObjectException("Gender was $value")
-    }
-
-    @TypeConverter
-    fun genderToString(value: Gender): String = when (value) {
-        Gender.Male -> male
-        Gender.Female -> female
-    }
-
-    @TypeConverter
-    fun stringToSpecialty(value: String): ExcursionType = when (value) {
-        roadtrip -> ExcursionType.Roadtrip
-        independent -> ExcursionType.Independent
-        cruise -> ExcursionType.Cruise
-        else -> throw CorruptDatabaseObjectException("ExcursionType was $value")
-    }
-
-    @TypeConverter
-    fun specialtyToString(value: ExcursionType): String = when (value) {
-        ExcursionType.Roadtrip -> roadtrip
-        ExcursionType.Cruise -> cruise
-        ExcursionType.Independent -> independent
-    }
-
-    @TypeConverter
-    fun addressToString(value: Address): String = value.toString()
-
-    @TypeConverter
-    fun stringToAddress(value: String): Address = Address.makeValidated(value)
-        .fold({ throw CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(it)) },
-              { it })
-
-    @TypeConverter
-    fun nameToString(value: Name): String = value.toString()
-
-    @TypeConverter
-    fun stringToHumanName(value: String): Name = Name.makeValidated(value)
-        .fold({ throw CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(it)) },
-              { it })
 }

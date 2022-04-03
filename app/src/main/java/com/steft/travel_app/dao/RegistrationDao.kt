@@ -3,22 +3,11 @@
 package com.steft.travel_app.dao
 
 import android.util.Log
-import arrow.core.*
-import arrow.core.computations.ResultEffect.bind
-import arrow.typeclasses.Semigroup
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.ktx.toObject
-import com.steft.travel_app.common.InvalidObjectException
+import com.steft.travel_app.common.CorruptDatabaseObjectException
+import com.steft.travel_app.common.LogTag
+import com.steft.travel_app.common.Utils.filterRight
 import com.steft.travel_app.common.Utils.pMap
-import com.steft.travel_app.common.ValidateUtils
-import com.steft.travel_app.common.ValidationError
-import com.steft.travel_app.dao.DocumentRegistrationUtils.toMap
-import com.steft.travel_app.dao.DocumentRegistrationUtils.toRegistration
 import com.steft.travel_app.model.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
 import java.util.*
 
@@ -27,70 +16,29 @@ interface RegistrationDao {
 
     suspend fun findById(id: UUID): Registration
 
-    suspend fun insert(registration: Registration)
+    suspend fun insertAll(vararg registration: Registration)
 
     suspend fun delete(id: UUID)
-}
-
-object DocumentRegistrationUtils {
-    private val name = CustomerDetails::name.name
-    private val surname = CustomerDetails::surname.name
-    private val phone = CustomerDetails::phone.name
-    private val email = CustomerDetails::email.name
-    private val hotel = CustomerDetails::hotel.name
-
-    fun toMap(customerDetails: CustomerDetails) =
-        mapOf(name to customerDetails.name.toString(),
-              surname to customerDetails.surname.toString(),
-              phone to customerDetails.phone.toString(),
-              email to customerDetails.email.toString(),
-              hotel to customerDetails.hotel)
-
-    fun toRegistration(id: Any?, detailsList: List<Map<String, Any>>) =
-        Either.catch {
-            detailsList.map { map ->
-                Name.makeValidated(map[name].toString())
-                    .zip(Semigroup.nonEmptyList(),
-                         Name.makeValidated(map[surname] as String),
-                         Phone.makeValidated(map[phone] as String),
-                         Email.makeValidated(map[email] as String))
-                    { name, surname, phone, email ->
-                        CustomerDetails(name, surname, phone, email, map[hotel] as String)
-                    }
-            }.traverseValidated {
-                it
-            }.let { validatedCustomerDetails ->
-                val validatedId = Validated.catch { UUID.fromString(id as String)!! }
-                    .mapLeft { ValidationError(it.toString()).nel() }
-
-                validatedCustomerDetails.zip(Semigroup.nonEmptyList(), validatedId) { details, id ->
-                    Registration(id, details)
-                }.toEither()
-            }
-        }.flatMap {
-            it.mapLeft { errs ->
-                InvalidObjectException(ValidateUtils.foldValidationErrors(errs))
-            }
-        }
 }
 
 class RegistrationDaoImpl {
     private val db = firebaseDb()
     private val collection = db.collection("registration")
 
-    suspend fun insert(registration: Registration) = registration.let { (bundle, customers) ->
-        db.runBatch { batch ->
-            val newRef = collection.document()
-            customers.forEach {
-                batch.set(newRef, mapOf("bundleId" to bundle.toString()))
-                batch.set(newRef
-                              .collection("customers")
-                              .document(), toMap(it))
-            }
+    suspend fun insert(vararg registration: Registration) =
+        registration.pMap { (bundle, customers) ->
+            db.runBatch { batch ->
+                val newRef = collection.document()
+                val b = batch.set(newRef, mapOf("bundleId" to bundle.toString()))
+
+                customers.forEach {
+                    b.set(newRef.collection("customers").document(),
+                          RegistrationUtils.registrationToMap(it))
+                }
+            }.await()
+
+            Unit //Would return Void!
         }
-    }.let {
-        it.await(); Unit
-    }
 
     suspend fun getAll() = collection.get()
         .await()
@@ -101,18 +49,16 @@ class RegistrationDaoImpl {
                 .collection("customers")
                 .get()
                 .await()
-                .map { document ->
-                    document.data
+                .map { it.data }
+
+            RegistrationUtils
+                .mapToRegistration(bundleId, customerDetails)
+                .mapLeft(CorruptDatabaseObjectException::fromOtherException)
+                .tapLeft { err ->
+                    Log.e(LogTag.Firebase.tag,
+                          "Couldn't retrieve object with id $bundleId because of $err")
                 }
 
-            toRegistration(bundleId, customerDetails)
-                .mapLeft {
-                    CorruptDatabaseObjectException(it.toString())
-                }.tapLeft {
-                    Log.e("Firebase",
-                          "Couldn't retrieve object with id $bundleId because of $it")
-                }.orNull()
-
-        }.filterNotNull()
+        }.filterRight()
 }
 
