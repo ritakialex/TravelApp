@@ -1,4 +1,4 @@
-package com.steft.travel_app.dao
+package com.steft.travel_app.view_model.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

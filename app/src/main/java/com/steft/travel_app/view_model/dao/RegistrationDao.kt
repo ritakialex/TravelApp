@@ -1,6 +1,6 @@
 @file:Suppress("NAME_SHADOWING")
 
-package com.steft.travel_app.dao
+package com.steft.travel_app.view_model.dao
 
 import android.util.Log
 import com.steft.travel_app.common.CorruptDatabaseObjectException
