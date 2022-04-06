@@ -7,7 +7,6 @@ import androidx.room.Query
 import com.steft.travel_app.model.Excursion
 import java.util.*
 
-
 @Dao
 interface ExcursionDao {
     @Query("SELECT * FROM excursion")
