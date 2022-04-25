@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.steft.travel_app.R
 import com.steft.travel_app.dto.AppDatabase
 import com.steft.travel_app.placeholder.PlaceholderContent
+import com.steft.travel_app.placeholder.PlaceholderContent.PlaceholderItem
 import kotlinx.coroutines.launch
 
 /**
@@ -20,7 +21,12 @@ import kotlinx.coroutines.launch
  */
 class Locations : Fragment() {
 
-    private var columnCount = 15
+
+    private val items = arrayListOf(
+        PlaceholderItem("asd", "aasdassd", "details"),
+        PlaceholderItem("asd", "aasdassd", "details"),
+        PlaceholderItem("asd", "aasdassd", "details")
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,12 +36,10 @@ class Locations : Fragment() {
 
         if (view is RecyclerView) {
             with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
+                layoutManager = LinearLayoutManager(context)
+
                 viewLifecycleOwner.lifecycleScope.launch {
-                    adapter = MyItemRecyclerViewAdapter(ArrayList(PlaceholderContent.ITEMS))
+                    adapter = MyItemRecyclerViewAdapter(items)
                 }
             }
         }
