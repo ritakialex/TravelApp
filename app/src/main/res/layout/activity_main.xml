@@ -7,6 +7,17 @@
     tools:context=".view.MainActivity">
 
     <Button
+        android:id="@+id/travelerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/traveller"
+        app:layout_constraintBottom_toTopOf="@+id/agencyButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/agencyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,14 +28,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/travelerButton" />
 
-    <Button
-        android:id="@+id/travelerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/traveller"
-        app:layout_constraintBottom_toTopOf="@+id/agencyButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

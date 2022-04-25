@@ -15,7 +15,7 @@ import com.steft.travel_app.placeholder.PlaceholderContent
  */
 class Locations : Fragment() {
 
-    private var columnCount = 1
+    private var columnCount = 15
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

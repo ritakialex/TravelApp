@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/User Rita folders sync/Documents/GitHub/travel_app/app/src/main/res/layout/activity_main.xml" value="0.15925925925925927" />
-        <entry key="..\:/UserRita/Documents/GitHub/travel_app/app/src/main/res/layout/activity_login_agent.xml" value="0.36666666666666664" />
+        <entry key="..\:/UserRita/Documents/GitHub/travel_app/app/src/main/res/layout-w1240dp/activity_login_agent.xml" value="0.297265625" />
+        <entry key="..\:/UserRita/Documents/GitHub/travel_app/app/src/main/res/layout-w936dp/activity_login_agent.xml" value="0.23359375" />
+        <entry key="..\:/UserRita/Documents/GitHub/travel_app/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/UserRita/Documents/GitHub/travel_app/app/src/main/res/layout/activity_login_agent.xml" value="0.25" />
         <entry key="..\:/UserRita/Documents/GitHub/travel_app/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/UserRita/Documents/GitHub/travel_app/app/src/main/res/layout/fragment_locations.xml" value="0.36666666666666664" />
         <entry key="..\:/UserRita/Documents/GitHub/travel_app/app/src/main/res/layout/fragment_locations_list.xml" value="0.36666666666666664" />
