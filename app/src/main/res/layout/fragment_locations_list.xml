@@ -17,6 +17,6 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".view.Locations"
-        tools:listitem="@layout/fragment_locations" />
+        tools:listitem="@layout/recycler_view_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
