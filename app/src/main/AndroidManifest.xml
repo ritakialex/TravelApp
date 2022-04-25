@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Travel_app">
         <activity
-            android:name=".LoginActivity"
+            android:name=".view.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginAgent"

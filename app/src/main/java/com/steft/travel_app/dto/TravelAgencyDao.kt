@@ -1,4 +1,4 @@
-package com.steft.travel_app.view_model.dao
+package com.steft.travel_app.dto
 
 import androidx.room.Dao
 import androidx.room.Delete
