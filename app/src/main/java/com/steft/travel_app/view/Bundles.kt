@@ -20,7 +20,8 @@ class Bundles : Fragment() {
     )
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_bundles, container, false)
@@ -28,10 +29,7 @@ class Bundles : Fragment() {
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = LinearLayoutManager(context)
-
-                viewLifecycleOwner.lifecycleScope.launch {
-                    adapter = MyItemRecyclerViewAdapter(items)
-                }
+                adapter = MyItemRecyclerViewAdapter(items)
             }
         }
         return view

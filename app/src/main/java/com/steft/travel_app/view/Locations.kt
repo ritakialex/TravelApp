@@ -37,10 +37,7 @@ class Locations : Fragment() {
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = LinearLayoutManager(context)
-
-                viewLifecycleOwner.lifecycleScope.launch {
-                    adapter = MyItemRecyclerViewAdapter(items)
-                }
+                adapter = MyItemRecyclerViewAdapter(items)
             }
         }
         return view
