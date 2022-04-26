@@ -13,10 +13,6 @@
             android:name=".view.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.LoginAgent"
-            android:exported="false"
-            android:label="@string/title_activity_login_agent" />
-        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
