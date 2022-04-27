@@ -1,4 +1,4 @@
-package com.steft.travel_app.dto
+package com.steft.travel_app.dao
 
 import android.content.Context
 import androidx.room.Database
@@ -7,6 +7,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.steft.travel_app.dto.BundleDao
+import com.steft.travel_app.dto.Converters
+import com.steft.travel_app.dto.TravelAgencyDao
 import com.steft.travel_app.model.Bundle
 import com.steft.travel_app.model.Location
 import com.steft.travel_app.model.TravelAgency

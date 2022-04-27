@@ -7,6 +7,7 @@ import com.steft.travel_app.common.CorruptDatabaseObjectException
 import com.steft.travel_app.common.LogTag
 import com.steft.travel_app.common.Utils.filterRight
 import com.steft.travel_app.common.Utils.pMap
+import com.steft.travel_app.dao.firebaseDb
 import com.steft.travel_app.model.*
 import kotlinx.coroutines.tasks.await
 import java.util.*
