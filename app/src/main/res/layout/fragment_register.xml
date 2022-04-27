@@ -6,37 +6,74 @@
     android:layout_height="match_parent"
     tools:context=".view.RegisterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <EditText
-            android:id="@+id/usernameText"
+            android:id="@+id/agencyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:hint="Agency name - username"
+            android:hint="Agency name"
             android:inputType="textPersonName"
+            android:textAlignment="center"
+            style="@style/NameStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/passwordText"
+                android:id="@+id/agencyAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                style="@style/NameStyle"
+                android:hint="Address"
+                android:textAlignment="center"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/agencyName" />
+
+        <EditText
+                android:id="@+id/agencyUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                style="@style/NameStyle"
+                android:textAlignment="center"
+                android:hint="Username"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/agencyAddress" />
+
+        <EditText
+            android:id="@+id/agencyPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
+            style="@style/NameStyle"
+            android:textAlignment="center"
             android:hint="Password"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/usernameText" />
+            app:layout_constraintTop_toBottomOf="@+id/agencyUsername" />
 
 
 
@@ -50,7 +87,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordText" />
+            app:layout_constraintTop_toBottomOf="@+id/agencyPassword" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
