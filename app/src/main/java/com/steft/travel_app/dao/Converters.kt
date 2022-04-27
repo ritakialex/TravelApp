@@ -4,12 +4,12 @@ import androidx.room.TypeConverter
 import com.steft.travel_app.common.*
 import java.util.*
 
-class Converters {
-    private val male = "male"
-    private val female = "female"
-    private val roadtrip = "roadtrip"
-    private val cruise = "cruise"
-    private val independent = "independent"
+object Converters {
+    private const val male = "male"
+    private const val female = "female"
+    private const val roadtrip = "roadtrip"
+    private const val cruise = "cruise"
+    private const val independent = "independent"
 
     @TypeConverter
     fun longToDate(value: Long): Date = Date(value)
@@ -21,8 +21,19 @@ class Converters {
     fun uuidToString(value: UUID): String = value.toString()
 
     @TypeConverter
-    fun dateToLong(value: String): UUID = UUID.fromString(value)
+    fun stringToUuid(value: String): UUID = UUID.fromString(value)
 
+    @TypeConverter
+    fun usernameToString(value: Username): String = value.string
+
+    @TypeConverter
+    fun stringToUsername(value: String): Username = Username(value)
+
+    @TypeConverter
+    fun shaToString(value: Sha256): String = value.string
+
+    @TypeConverter
+    fun stringToSha(value: String): Sha256 = Sha256(value)
 
     @TypeConverter
     fun stringToGender(value: String): Gender = when (value) {
@@ -38,18 +49,18 @@ class Converters {
     }
 
     @TypeConverter
-    fun stringToSpecialty(value: String): ExcursionType = when (value) {
-        roadtrip -> ExcursionType.Roadtrip
-        independent -> ExcursionType.Independent
-        cruise -> ExcursionType.Cruise
-        else -> throw CorruptDatabaseObjectException("ExcursionType was $value")
+    fun stringToSpecialty(value: String): LocationType = when (value) {
+        roadtrip -> LocationType.Roadtrip
+        independent -> LocationType.Independent
+        cruise -> LocationType.Cruise
+        else -> throw CorruptDatabaseObjectException("LocationType was $value")
     }
 
     @TypeConverter
-    fun specialtyToString(value: ExcursionType): String = when (value) {
-        ExcursionType.Roadtrip -> roadtrip
-        ExcursionType.Cruise -> cruise
-        ExcursionType.Independent -> independent
+    fun specialtyToString(value: LocationType): String = when (value) {
+        LocationType.Roadtrip -> roadtrip
+        LocationType.Cruise -> cruise
+        LocationType.Independent -> independent
     }
 
     @TypeConverter

@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
 }
+apply plugin: 'kotlin-android'
 
 android {
     compileSdk 32
@@ -48,7 +49,7 @@ dependencies {
 
     def roomVersion = "2.4.2"
     implementation "androidx.room:room-runtime:$roomVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
 
     def arrowVersion = "1.0.1"
@@ -64,6 +65,8 @@ dependencies {
     implementation("androidx.activity:activity-ktx:$activity_version")
 
     implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 //repositories {
