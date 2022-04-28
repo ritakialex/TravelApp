@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.steft.travel_app.R
-import com.steft.travel_app.dto.AppDatabase
 import com.steft.travel_app.placeholder.PlaceholderContent
 import com.steft.travel_app.placeholder.PlaceholderContent.PlaceholderItem
 import kotlinx.coroutines.launch

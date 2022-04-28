@@ -5,12 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.steft.travel_app.R
 import com.steft.travel_app.placeholder.PlaceholderContent
-import kotlinx.coroutines.launch
 
 class Bundles : Fragment() {
     private val items = arrayListOf(
@@ -24,7 +22,7 @@ class Bundles : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_bundles, container, false)
+        val view = inflater.inflate(R.layout.fragment_bundles_list, container, false)
 
         if (view is RecyclerView) {
             with(view) {
