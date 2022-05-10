@@ -15,6 +15,10 @@ import com.steft.travel_app.placeholder.PlaceholderContent.PlaceholderItem
 class MyItemRecyclerViewAdapter(private val values: ArrayList<PlaceholderItem>) :
     RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
+
+
+
+    //-------
 /*    inner class ViewHolder(binding: FragmentLocationsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -30,7 +34,7 @@ class MyItemRecyclerViewAdapter(private val values: ArrayList<PlaceholderItem>) 
         val itemDesc : TextView = itemView.findViewById(R.id.item_description)
 
     }
-
+//---------
     /*override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             FragmentLocationsBinding.inflate(
@@ -46,7 +50,7 @@ class MyItemRecyclerViewAdapter(private val values: ArrayList<PlaceholderItem>) 
 
         return ViewHolder(itemView)
     }
-
+//------------
     /*override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.idView.text = item.id
