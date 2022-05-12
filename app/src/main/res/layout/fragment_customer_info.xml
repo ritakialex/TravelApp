@@ -6,19 +6,19 @@
         android:layout_height="match_parent"
         tools:context="view.CustomerInfo">
 
-
-    <EditText
+    <TextView
+            android:text="Bundle id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:hint="Your mobile number"
+            android:id="@+id/bundleIdToBook"
             style="@style/NameStyle"
-            android:id="@+id/custMobile2"
-            app:layout_constraintTop_toBottomOf="@+id/custEmail"
-            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_marginTop="16dp"  />
+
+
 
     <EditText
             android:layout_width="wrap_content"
@@ -27,10 +27,10 @@
             android:hint="Your Name"
             style="@style/NameStyle"
             android:id="@+id/custName"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/bundleIdToBook"
             android:layout_marginTop="16dp" />
 
 
@@ -60,7 +60,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent" />
-
 
     <EditText
             android:layout_width="wrap_content"
@@ -97,6 +96,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
