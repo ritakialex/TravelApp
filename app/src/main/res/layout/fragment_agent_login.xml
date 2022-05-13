@@ -4,8 +4,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="view.AgentLogin">
-
+        tools:context="view.AgentLogin"
+        android:id="@+id/agentLoginLayout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

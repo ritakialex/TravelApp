@@ -14,14 +14,14 @@ import com.steft.travel_app.R
 class LoginActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
-     lateinit var drawerLayout: DrawerLayout
+    lateinit var drawerLayout: DrawerLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
+        drawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
