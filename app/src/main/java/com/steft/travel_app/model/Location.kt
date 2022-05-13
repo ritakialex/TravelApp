@@ -11,5 +11,4 @@ import java.util.*
 @Entity(tableName = "location", indices = [Index(value = ["city", "country"])])
 data class Location(@PrimaryKey val id: UUID,
                      val city: Name,
-                     val country: Name,
-                     val type: LocationType)
+                     val country: Name)
