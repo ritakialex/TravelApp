@@ -23,6 +23,9 @@
         <action
                 android:id="@+id/action_locations_to_bundles"
                 app:destination="@id/bundles" />
+        <action
+                android:id="@+id/action_locations_to_addLocation"
+                app:destination="@id/addLocation" />
     </fragment>
     <fragment
             android:id="@+id/bundles"
@@ -74,4 +77,13 @@
             android:name="com.steft.travel_app.view.LoginActivity"
             android:label="Home"
             tools:layout="@layout/activity_login" />
+    <fragment
+            android:id="@+id/addLocation"
+            android:name="com.steft.travel_app.view.AddLocation"
+            android:label="fragment_add_location"
+            tools:layout="@layout/fragment_add_location" >
+        <action
+                android:id="@+id/action_addLocation_to_locations"
+                app:destination="@id/locations" />
+    </fragment>
 </navigation>

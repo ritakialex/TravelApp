@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.constraintlayout.widget.Placeholder
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +41,16 @@ class Locations : Fragment() {
                 adapter = MyItemRecyclerViewAdapter(items)
             }
         }
+
+
+        //floating button
+        val addLocation = view.findViewById<Button>(R.id.floatingAddLocationButton)
+        addLocation.setOnClickListener{
+            findNavController().navigate(R.id.action_locations_to_addLocation)
+
+        }
+
+
         return view
     }
 
