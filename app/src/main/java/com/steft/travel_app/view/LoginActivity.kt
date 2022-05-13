@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
+import com.steft.travel_app.Bookings
 import com.steft.travel_app.R
 
 class LoginActivity : AppCompatActivity() {
@@ -37,12 +38,14 @@ class LoginActivity : AppCompatActivity() {
             it.isChecked = true
 
             when(it.itemId){
-                R.id.nav_home -> Toast.makeText(applicationContext, "lala", Toast.LENGTH_SHORT).show()
-                R.id.nav_login -> Toast.makeText(applicationContext, "lala", Toast.LENGTH_SHORT).show()
+                R.id.nav_home -> replaceFragment(Bookings(),it.title.toString())
+                R.id.nav_bookings -> replaceFragment(Bookings(),it.title.toString())
+                R.id.nav_locations -> replaceFragment(Locations(),it.title.toString())
                 //the name of the .kt of the fragment
                 R.id.nav_bundles -> replaceFragment(Bundles(),it.title.toString())
-                R.id.nav_profile -> Toast.makeText(applicationContext, "lala", Toast.LENGTH_SHORT).show()
-                R.id.nav_purchase -> Toast.makeText(applicationContext, "lala", Toast.LENGTH_SHORT).show()
+                R.id.nav_profile -> replaceFragment(AgentProfile(),it.title.toString())
+                R.id.nav_logout -> replaceFragment(AgentLogin(),it.title.toString())
+                //R.id.nav_purchase -> Toast.makeText(applicationContext, "lala", Toast.LENGTH_SHORT).show()
             }
 
             true
