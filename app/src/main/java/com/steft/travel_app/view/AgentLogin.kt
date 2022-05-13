@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.findNavController
 import arrow.fx.coroutines.fixedRate
 import com.steft.travel_app.R
 import com.steft.travel_app.databinding.ActivityLoginBinding.inflate
@@ -34,10 +35,11 @@ class AgentLogin : Fragment() {
 
         //αν πατήσει register σε νέο fragment
         bind.gotoRegisterButton.setOnClickListener {
-            val register = RegisterFragment()
+            findNavController().navigate(R.id.action_agentLogin_to_registerFragment)
+            /*val register = RegisterFragment()
             val transaction : FragmentTransaction = requireFragmentManager().beginTransaction()
             transaction.replace(R.id.agentLoginLayout, register)
-            transaction.commit()
+            transaction.commit()*/
         }
 
 

@@ -23,10 +23,20 @@ class MainFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_main, container, false)
 
+        //Traveller
         val travelBtn = view.findViewById<Button>(R.id.travelerButton)
         travelBtn.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_locations)
         }
+
+
+        //Agent
+        val agentBtn = view.findViewById<Button>(R.id.agencyButton)
+        agentBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_agentLogin)
+        }
+
+
 
         return view
 
