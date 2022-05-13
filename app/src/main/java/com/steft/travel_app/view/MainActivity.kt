@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.steft.travel_app.R
 
 
@@ -23,13 +24,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.myNavHostFragment)
-            as NavHostFragment
+                as NavHostFragment
 
         navController = navHostFragment.navController
 
+        //back arrow for navigation
+        setupActionBarWithNavController(navController)
 
 
+    }
 
+        override fun onSupportNavigateUp(): Boolean {
+            return navController.navigateUp() || super.onSupportNavigateUp()
+        }
 
         //pops msg: skipped no adapter attached
 
@@ -78,6 +85,6 @@ class MainActivity : AppCompatActivity() {
         //supportFragmentManager.beginTransaction().replace(R.id.nav_container, FirstFragment()).commit()
 
 
-    }
+
 
 }

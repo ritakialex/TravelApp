@@ -7,7 +7,7 @@
     <fragment
             android:id="@+id/mainFragment"
             android:name="com.steft.travel_app.view.MainFragment"
-            android:label="fragment_main"
+            android:label="Welcome"
             tools:layout="@layout/fragment_main" >
         <action
                 android:id="@+id/action_mainFragment_to_locations"
@@ -35,7 +35,7 @@
     <fragment
             android:id="@+id/bundle"
             android:name="com.steft.travel_app.view.Bundle"
-            android:label="fragment_bundle"
+            android:label="Bundle"
             tools:layout="@layout/fragment_bundle" >
         <action
                 android:id="@+id/action_bundle_to_customerInfo"
@@ -44,7 +44,7 @@
     <fragment
             android:id="@+id/customerInfo"
             android:name="com.steft.travel_app.view.CustomerInfo"
-            android:label="CustomerInfo" >
+            android:label="Book Bundle" >
         <action
                 android:id="@+id/action_customerInfo_to_locations"
                 app:destination="@id/locations" />
@@ -52,7 +52,7 @@
     <fragment
             android:id="@+id/agentLogin"
             android:name="com.steft.travel_app.view.AgentLogin"
-            android:label="AgentLogin" >
+            android:label="Login" >
         <action
                 android:id="@+id/action_agentLogin_to_registerFragment"
                 app:destination="@id/registerFragment" />
@@ -63,7 +63,7 @@
     <fragment
             android:id="@+id/registerFragment"
             android:name="com.steft.travel_app.view.RegisterFragment"
-            android:label="fragment_register"
+            android:label="Register"
             tools:layout="@layout/fragment_register" >
         <action
                 android:id="@+id/action_registerFragment_to_loginActivity"
@@ -72,6 +72,6 @@
     <activity
             android:id="@+id/loginActivity"
             android:name="com.steft.travel_app.view.LoginActivity"
-            android:label="activity_login"
+            android:label="Home"
             tools:layout="@layout/activity_login" />
 </navigation>
