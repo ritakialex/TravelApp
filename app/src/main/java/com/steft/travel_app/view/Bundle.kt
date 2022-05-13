@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
 
 
@@ -24,13 +25,19 @@ class Bundle : Fragment() {
         //return inflater.inflate(R.layout.fragment_bundle, container, false)
 
         val view = inflater.inflate(R.layout.fragment_bundle, container, false)
+
+        //Book Button Traveler
         val bookButton : Button = view.findViewById(R.id.bookBundleButton)
         bookButton.setOnClickListener{
-            val fragment = CustomerInfo()
-            val transaction = fragmentManager?.beginTransaction()
-            //οπου nav_container για αυτον ειναι ενα FrameLayout στο mainActivity που είναι blank
-            //transaction?.replace(R.id.nav_container,fragment)?.commit()
+            findNavController().navigate(R.id.action_bundle_to_customerInfo)
         }
+
+        //Edit Button Agent
+        val editButton : Button = view.findViewById(R.id.editBundleButton)
+        bookButton.setOnClickListener{
+            //findNavController().navigate(R.id.action_bundle_to_edit----)
+        }
+
         return view
     }
 
