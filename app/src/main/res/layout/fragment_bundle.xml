@@ -6,7 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.Bundle"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/teal_100">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -189,6 +190,8 @@
                 android:layout_height="wrap_content"
                 android:text="Book"
                 android:id="@+id/bookBundleButton"
+                app:backgroundTint="@color/teal_700"
+                android:textColor="@color/white"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -201,6 +204,8 @@
                 android:text="Edit"
                 android:id="@+id/editBundleButton"
                 android:visibility="gone"
+                app:backgroundTint="@color/teal_700"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/priceText" />

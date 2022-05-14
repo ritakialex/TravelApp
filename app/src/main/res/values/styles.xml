@@ -8,4 +8,9 @@
         <item name="android:textSize">@dimen/text_size</item>
     </style>
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:itemBackground">@color/teal_100</item>
+        <item name="android:textColor">@color/teal_700</item>
+    </style>
+
 </resources>

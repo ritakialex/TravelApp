@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.steft.travel_app.R
 import com.steft.travel_app.placeholder.PlaceholderContent
 import com.steft.travel_app.placeholder.PlaceholderContent.PlaceholderItem
@@ -44,7 +45,8 @@ class Locations : Fragment() {
 
 
         //floating button
-        val addLocation = view.findViewById<Button>(R.id.floatingAddLocationButton)
+        val addLocation : FloatingActionButton
+        addLocation = view.findViewById(R.id.floatingAddLocationButton)
         addLocation.setOnClickListener{
             findNavController().navigate(R.id.action_locations_to_addLocation)
 

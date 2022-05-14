@@ -4,7 +4,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".view.AddLocation">
+        tools:context=".view.AddLocation"
+        android:background="@color/teal_100">
 
     <EditText
         android:layout_width="wrap_content"
@@ -50,6 +51,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/saveLocationButton"
+            app:backgroundTint="@color/teal_700"
+            android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editAge"
