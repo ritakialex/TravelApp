@@ -11,6 +11,9 @@ import com.steft.travel_app.model.Bundle
 import com.steft.travel_app.model.Location
 import com.steft.travel_app.model.TravelAgency
 
+/**
+ * Singleton pattern implemented for room database object
+ */
 @Database(entities = [TravelAgency::class, Location::class, Bundle::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

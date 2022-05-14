@@ -67,15 +67,17 @@ object Converters {
     fun addressToString(value: Address): String = value.toString()
 
     @TypeConverter
-    fun stringToAddress(value: String): Address = Address.makeValidated(value)
-        .fold({ throw CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(it)) },
-              { it })
+    fun stringToAddress(value: String): Address =
+        Address.makeValidated(value)
+            .fold({ throw CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(it)) },
+                { it })
 
     @TypeConverter
     fun nameToString(value: Name): String = value.toString()
 
     @TypeConverter
-    fun stringToHumanName(value: String): Name = Name.makeValidated(value)
-        .fold({ throw CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(it)) },
-              { it })
+    fun stringToName(value: String): Name =
+        Name.makeValidated(value)
+            .fold({ throw CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(it)) },
+                { it })
 }
