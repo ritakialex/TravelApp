@@ -126,13 +126,12 @@ value class Phone private constructor(private val phoneString: String) {
 value class Username(val string: String)
 
 @JvmInline
-value class Sha256 (val string: String) {
+value class Sha256(val string: String) {
     companion object {
         fun makeSalted(string: String): Sha256 = with(MessageDigest.getInstance("SHA-256")) {
-
-
             val salt =
-                Random(Random.nextInt(1, 1000)).nextBytes(Random.nextInt(1, 20))
+                Random(Random.nextInt(1, 1000))
+                    .nextBytes(Random.nextInt(1, 20))
                     .let { String(it, Charset.forName("UTF-8")) }
 
             digest((string + salt).toByteArray())
@@ -141,12 +140,18 @@ value class Sha256 (val string: String) {
                 .let { Sha256(it) }
         }
 
-        fun makeSalted(string: String, salt: String) = with(MessageDigest.getInstance("SHA-256")) {
-            digest((string + salt).toByteArray())
-                .fold("") { acc, it -> acc + "%02x".format(it) }
-                .let { it + salt }
-                .let { Sha256(it) }
-        }
+        fun makeSalted(string: String, salt: String) =
+            with(MessageDigest.getInstance("SHA-256")) {
+                digest((string + salt).toByteArray())
+                    .fold("") { acc, it -> acc + "%02x".format(it) }
+                    .let { it + salt }
+                    .let { Sha256(it) }
+            }
+
+        fun split(sha: Sha256): Pair<String, String> =
+            sha.string.let {
+                Pair(it.substring(0, 64), it.substring(64))
+            }
     }
 }
 
@@ -154,10 +159,11 @@ value class Sha256 (val string: String) {
 //fun main() {
 //    val s = Sha256.makeSalted("asdasd12123").string
 //
-//    val pass = "asdasd12123"
+//    val pass = s.substring(0, 64)
 //    val salt = s.substring(64)
-//    println(s)
-//    println(Sha256.makeSalted(pass, salt).string)
 //
+//    println(s)
+//    println(pass)
+//    println(salt)
 //
 //}
