@@ -75,12 +75,12 @@
     <activity
             android:id="@+id/loginActivity"
             android:name="com.steft.travel_app.view.LoginActivity"
-            android:label="Home"
+            android:label="Agent Home"
             tools:layout="@layout/activity_login" />
     <fragment
             android:id="@+id/addLocation"
             android:name="com.steft.travel_app.view.AddLocation"
-            android:label="fragment_add_location"
+            android:label="New Location"
             tools:layout="@layout/fragment_add_location" >
         <action
                 android:id="@+id/action_addLocation_to_locations"

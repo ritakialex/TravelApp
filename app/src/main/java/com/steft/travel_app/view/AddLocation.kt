@@ -6,14 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
+import com.steft.travel_app.dataTestRita.User
+import com.steft.travel_app.dataTestRita.UserViewModel
+import kotlinx.coroutines.launch
 
 
 class AddLocation : Fragment() {
 
 
-    
+    //try
+    private lateinit var mUserViewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,22 +30,36 @@ class AddLocation : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_location, container, false)
 
-        //Add Location - Save
-        val saveLocation = view.findViewById<Button>(R.id.saveLocationButton)
-        saveLocation.setOnClickListener{
+        //try
+        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
+
+        //Add Location - Save
+        val saveLocationBtn = view.findViewById<Button>(R.id.saveLocationButton)
+
+        saveLocationBtn.setOnClickListener{
+
+            //try
             //εισαγωγή στη βάση
-            insertDataToDatabase()
+            val cityLoc = view.findViewById<EditText>(R.id.editLocationCity)?.text?.toString() ?: ""
+            val countryLoc = view.findViewById<EditText>(R.id.editLocationCountry)?.text?.toString() ?: ""
+            val typeLoc = view.findViewById<EditText>(R.id.editLocationType)?.text?.toString() ?: ""
+
+            val location = User(0, cityLoc, countryLoc, Integer.parseInt(typeLoc.toString()))
+            mUserViewModel.addUser(location)
+
+            //stef
+            /*viewLifecycleOwner.lifecycleScope.launch {
+                service.insert(cityLoc, countryLoc, typeLoc)
+                parentFragmentManager.popBackStack()
+            }*/
+            Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_LONG)
+
             findNavController().navigate(R.id.action_addLocation_to_locations)
 
         }
 
         return view
     }
-
-    private fun insertDataToDatabase() {
-        TODO("Not yet implemented")
-    }
-
 
 }

@@ -21,13 +21,13 @@
         tools:context=".view.Locations"
         tools:listitem="@layout/recycler_view_item" />
 
+    <!--when user loged out - button should be visibility="gone"-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
             android:visibility="visible"
-            android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_add_24"
             android:id="@+id/floatingAddLocationButton"
             app:layout_constraintEnd_toEndOf="parent"

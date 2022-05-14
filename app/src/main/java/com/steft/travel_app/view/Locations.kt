@@ -18,9 +18,7 @@ import com.steft.travel_app.placeholder.PlaceholderContent
 import com.steft.travel_app.placeholder.PlaceholderContent.PlaceholderItem
 import kotlinx.coroutines.launch
 
-/**
- * A fragment representing a list of Items.
- */
+
 class Locations : Fragment() {
 
 
@@ -45,9 +43,10 @@ class Locations : Fragment() {
 
 
         //floating button
-        val addLocation : FloatingActionButton
-        addLocation = view.findViewById(R.id.floatingAddLocationButton)
-        addLocation.setOnClickListener{
+        val addLocationBtn : FloatingActionButton
+        addLocationBtn = view.findViewById(R.id.floatingAddLocationButton)
+
+        addLocationBtn.setOnClickListener{
             findNavController().navigate(R.id.action_locations_to_addLocation)
 
         }

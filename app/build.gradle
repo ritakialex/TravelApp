@@ -69,6 +69,8 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
 
+
+
     def arrowVersion = "1.0.1"
     implementation "io.arrow-kt:arrow-core:$arrowVersion"
     implementation "io.arrow-kt:arrow-fx-coroutines:$arrowVersion"

@@ -10,11 +10,11 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editLocationName"
+        android:id="@+id/editLocationCity"
         android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="text"
-        android:hint="Location Name"
+        android:hint="Location City"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,28 +23,28 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editLocationLName"
+        android:id="@+id/editLocationCountry"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="text"
-        android:hint=""
+        android:hint="Location Country"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editLocationName" />
+        app:layout_constraintTop_toBottomOf="@+id/editLocationCity" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editAge"
+        android:id="@+id/editLocationType"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="text"
-        android:hint="Age"
+        android:inputType="number"
+        android:hint="Type - number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editLocationLName"/>
+        app:layout_constraintTop_toBottomOf="@+id/editLocationCountry"/>
 
     <Button
         android:text="Save"
@@ -55,7 +55,7 @@
             android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editAge"
+        app:layout_constraintTop_toBottomOf="@+id/editLocationType"
         android:layout_marginTop="32dp" />
 
 
