@@ -1,4 +1,67 @@
+@file:Suppress("SimpleRedundantLet")
+
 package com.steft.travel_app.viewmodel
 
-class LoginRegisterViewModel {
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import arrow.core.Invalid
+import arrow.core.Valid
+import arrow.core.Validated
+import arrow.core.zip
+import arrow.typeclasses.Semigroup
+import com.steft.travel_app.common.*
+import com.steft.travel_app.dao.AppDatabase
+import com.steft.travel_app.model.TravelAgency
+import kotlinx.coroutines.launch
+import java.util.*
+
+class LoginRegisterViewModel(application: Application) : AndroidViewModel(application) {
+    private val agencyDao = AppDatabase
+        .getDatabase(application)
+        .travelAgencyDao()
+
+    fun login(username: String, password: String): LiveData<Boolean> {
+        val result = MutableLiveData<Boolean>()
+
+        viewModelScope.launch {
+            agencyDao
+                .getPassword(Username(username))
+                .let { Sha256.split(it) }
+                .let { (storedPass, storedSalt) ->
+                    val passToValidate = Sha256
+                        .makeSalted(password, storedSalt)
+                        .string
+
+                    result.value = passToValidate == storedPass
+                }
+        }
+        return result
+    }
+
+    fun register(name: String, address: String, username: String, password: String): Unit =
+        Name.makeValidated(name)
+            .zip(
+                Semigroup.nonEmptyList(),
+                Address.makeValidated(address))
+            .map { (name, address) ->
+                TravelAgency(
+                    UUID.randomUUID(),
+                    name,
+                    address,
+                    Username(username),
+                    Sha256.makeSalted(password))
+            }
+            .let {
+                when (it) {
+                    is Invalid ->
+                        throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
+                    is Valid ->
+                        viewModelScope.launch {
+                            agencyDao.insertAll(it.value)
+                        }
+                }
+            }
 }
