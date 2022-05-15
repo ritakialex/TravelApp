@@ -8,13 +8,14 @@ import androidx.room.TypeConverters
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.steft.travel_app.model.Bundle
+import com.steft.travel_app.model.CustomLocation
 import com.steft.travel_app.model.Location
 import com.steft.travel_app.model.TravelAgency
 
 /**
  * Singleton pattern implemented for room database object
  */
-@Database(entities = [TravelAgency::class, Location::class, Bundle::class], version = 1)
+@Database(entities = [TravelAgency::class, Location::class, Bundle::class, CustomLocation::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun travelAgencyDao(): TravelAgencyDao
@@ -28,6 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
                 synchronized(this) {
                     instance =
                         Room.databaseBuilder(context, AppDatabase::class.java, "travel_app")
+                            .createFromAsset("database/travel_app")
                             .build()
                 }
             }
