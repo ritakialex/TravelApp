@@ -2,12 +2,12 @@
 
 package com.steft.travel_app.common
 
-import androidx.room.TypeConverter
-import arrow.core.Validated
-import arrow.core.invalidNel
-import com.steft.travel_app.common.ValidateUtils
-import com.steft.travel_app.common.ValidatedObject
-import com.steft.travel_app.common.ValidationError
+import androidx.lifecycle.viewModelScope
+import arrow.core.*
+import arrow.typeclasses.Semigroup
+import com.steft.travel_app.dao.Converters
+import com.steft.travel_app.model.TravelAgency
+import kotlinx.coroutines.launch
 import java.nio.charset.Charset
 import java.security.MessageDigest
 import java.util.*
@@ -33,8 +33,7 @@ enum class LogTag(val tag: String) {
 /**
  * Only permits validated instances of Address to exist within the runtime
  */
-@JvmInline
-value class Address private constructor(private val addressString: String) {
+class Address private constructor(private val addressString: String) {
     override fun toString() = addressString
 
     companion object {
@@ -53,8 +52,7 @@ value class Address private constructor(private val addressString: String) {
 /**
  * Only permits validated instances of Name to exist within the runtime
  */
-@JvmInline
-value class Name private constructor(private val nameString: String) {
+class Name private constructor(private val nameString: String) {
     override fun toString() = nameString
 
     companion object {
@@ -76,8 +74,7 @@ value class Name private constructor(private val nameString: String) {
 /**
  * Only permits validated instances of Email to exist within the runtime
  */
-@JvmInline
-value class Email private constructor(private val emailString: String) {
+class Email private constructor(private val emailString: String) {
     override fun toString() = emailString
 
     companion object {
@@ -105,8 +102,7 @@ value class Email private constructor(private val emailString: String) {
 /**
  * Only permits validated instances of Phone to exist within the runtime
  */
-@JvmInline
-value class Phone private constructor(private val phoneString: String) {
+class Phone private constructor(private val phoneString: String) {
     override fun toString() = phoneString
 
     companion object {
@@ -122,11 +118,9 @@ value class Phone private constructor(private val phoneString: String) {
     }
 }
 
-@JvmInline
-value class Username(val string: String)
+class Username(val string: String)
 
-@JvmInline
-value class Sha256(val string: String) {
+class Sha256(val string: String) {
     companion object {
         fun makeSalted(string: String): Sha256 = with(MessageDigest.getInstance("SHA-256")) {
             val salt =
@@ -156,14 +150,36 @@ value class Sha256(val string: String) {
 }
 
 
-//fun main() {
-//    val s = Sha256.makeSalted("asdasd12123").string
+fun main() {
+    Name.makeValidated("Stef")
+        .zip(
+            Semigroup.nonEmptyList(),
+            Address.makeValidated("Thoukididou 38, Sykies, Thessaloniki"))
+        .map { (name, address) ->
+            TravelAgency(
+                UUID.randomUUID(),
+                name,
+                address,
+                Username("asdasd"),
+                Sha256.makeSalted("asdasd"))
+        }
+        .let {
+            when (it) {
+                is Invalid ->
+                    throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
+                is Valid -> println(Converters.shaToString(it.value.password))
+            }
+        }
+
+//    val s = Sha256.makeSalted("asdasd").string
+//    val s2 = Sha256.makeSalted("asdasd").string
 //
 //    val pass = s.substring(0, 64)
 //    val salt = s.substring(64)
-//
+
 //    println(s)
+//    println(s2)
 //    println(pass)
 //    println(salt)
-//
-//}
+
+}

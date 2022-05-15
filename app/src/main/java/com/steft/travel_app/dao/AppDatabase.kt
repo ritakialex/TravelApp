@@ -36,6 +36,7 @@ abstract class AppDatabase : RoomDatabase() {
     }
 }
 
+
 /**
  * Firebase uses singleton pattern internally
  */

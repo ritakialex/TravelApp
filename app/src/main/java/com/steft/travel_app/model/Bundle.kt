@@ -21,7 +21,7 @@ import java.util.UUID
         ForeignKey(
             entity = Location::class,
             parentColumns = ["id"],
-            childColumns = ["excursion"],
+            childColumns = ["location"],
             onDelete = ForeignKey.RESTRICT
         )]
 )
