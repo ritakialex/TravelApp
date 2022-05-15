@@ -8,24 +8,44 @@ import java.util.*
 
 @Dao
 interface LocationDao {
-    @Query("SELECT * FROM location")
+    @Query("SELECT * FROM location WHERE travel_agency IS NULL")
     suspend fun getAll(): List<Location>
 
-    @Query("SELECT * FROM location WHERE id = :id")
+    @Query("SELECT * FROM location WHERE travel_agency = :travelAgencyId")
+    suspend fun getAllCustom(travelAgencyId: UUID): List<Location>
+
+    @Query("SELECT * FROM location WHERE id = :id AND travel_agency IS NULL")
     suspend fun findById(id: UUID): Location
+
+    @Query("SELECT * FROM location WHERE id = :id AND travel_agency = :travelAgencyId")
+    suspend fun findByIdCustom(id: UUID, travelAgencyId: UUID): Location
 
     @Query(
         """
         SELECT * FROM location 
         WHERE city LIKE '%' || :query || '%' 
         OR country LIKE '%' || :query || '%'
+        AND travel_agency IS NULL
         """
     )
     suspend fun search(query: String): List<Location>
 
+    @Query(
+        """
+        SELECT * FROM location 
+        WHERE city LIKE '%' || :query || '%' 
+        OR country LIKE '%' || :query || '%'
+        AND travel_agency = :travelAgencyId
+        """
+    )
+    suspend fun searchCustom(query: String, travelAgencyId: UUID): List<Location>
+
     @Insert
     suspend fun insertAll(vararg location: Location)
 
-    @Query("DELETE FROM location WHERE id = :id")
+    @Query("DELETE FROM location WHERE id = :id AND travel_agency IS NULL")
     suspend fun delete(id: UUID)
+
+    @Query("DELETE FROM location WHERE id = :id AND travel_agency = :travelAgencyId")
+    suspend fun deleteCustom(id: UUID, travelAgencyId: UUID)
 }

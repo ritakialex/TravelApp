@@ -12,7 +12,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.activity.viewModels
 import com.steft.travel_app.R
+import com.steft.travel_app.viewmodel.LoginRegisterViewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +33,9 @@ class MainActivity : AppCompatActivity() {
         //back arrow for navigation
         setupActionBarWithNavController(navController)
 
+
+
+        val viewModel by viewModels<LoginRegisterViewModel>()
 
     }
 

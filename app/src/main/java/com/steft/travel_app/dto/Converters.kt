@@ -1,7 +1,10 @@
 package com.steft.travel_app.dto
 
+import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
+import com.google.gson.Gson
 import com.steft.travel_app.common.*
+import org.json.JSONObject
 import java.util.*
 
 object Converters {
@@ -11,6 +14,13 @@ object Converters {
     private const val cruise = "cruise"
     private const val independent = "independent"
 
+
+    @TypeConverter
+    fun namesToJson(value: List<Name>) = Gson().toJson(value)
+
+    @TypeConverter
+    fun jsonToNames(value: String) = Gson().fromJson(value, Array<Name>::class.java).toList()
+
     @TypeConverter
     fun longToDate(value: Long): Date = Date(value)
 
@@ -18,10 +28,10 @@ object Converters {
     fun dateToLong(value: Date): Long = value.time
 
     @TypeConverter
-    fun uuidToString(value: UUID): String = value.toString()
+    fun uuidToStringNullable(value: UUID?): String? = value.toString()
 
     @TypeConverter
-    fun stringToUuid(value: String): UUID = UUID.fromString(value)
+    fun stringToUuidNullable(value: String?): UUID? = UUID.fromString(value)
 
     @TypeConverter
     fun usernameToString(value: Username): String = value.string
@@ -49,7 +59,7 @@ object Converters {
     }
 
     @TypeConverter
-    fun stringToSpecialty(value: String): LocationType = when (value) {
+    fun stringToLocationType(value: String): LocationType = when (value) {
         roadtrip -> LocationType.Roadtrip
         independent -> LocationType.Independent
         cruise -> LocationType.Cruise
@@ -57,7 +67,7 @@ object Converters {
     }
 
     @TypeConverter
-    fun specialtyToString(value: LocationType): String = when (value) {
+    fun locationTypeToString(value: LocationType): String = when (value) {
         LocationType.Roadtrip -> roadtrip
         LocationType.Cruise -> cruise
         LocationType.Independent -> independent
@@ -67,15 +77,17 @@ object Converters {
     fun addressToString(value: Address): String = value.toString()
 
     @TypeConverter
-    fun stringToAddress(value: String): Address = Address.makeValidated(value)
-        .fold({ throw CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(it)) },
-              { it })
+    fun stringToAddress(value: String): Address =
+        Address.makeValidated(value)
+            .fold({ throw CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(it)) },
+                { it })
 
     @TypeConverter
     fun nameToString(value: Name): String = value.toString()
 
     @TypeConverter
-    fun stringToHumanName(value: String): Name = Name.makeValidated(value)
-        .fold({ throw CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(it)) },
-              { it })
+    fun stringToName(value: String): Name =
+        Name.makeValidated(value)
+            .fold({ throw CorruptDatabaseObjectException(ValidateUtils.foldValidationErrors(it)) },
+                { it })
 }
