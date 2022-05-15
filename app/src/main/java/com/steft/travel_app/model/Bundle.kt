@@ -19,7 +19,7 @@ import java.util.UUID
             onDelete = ForeignKey.RESTRICT
         ),
         ForeignKey(
-            entity = Location::class,
+            entity = CustomLocation::class,
             parentColumns = ["id"],
             childColumns = ["location"],
             onDelete = ForeignKey.RESTRICT
