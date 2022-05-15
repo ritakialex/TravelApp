@@ -47,10 +47,10 @@
         app:layout_constraintTop_toBottomOf="@+id/editLocationCountry"/>-->
 
     <Button
-        android:text="Save"
+        android:text="Create Location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/saveNewLocationButton"
+        android:id="@+id/createNewLocationButton"
         app:backgroundTint="@color/teal_700"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

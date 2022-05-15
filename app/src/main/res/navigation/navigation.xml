@@ -34,6 +34,9 @@
         <action
                 android:id="@+id/action_bundles_to_bundle"
                 app:destination="@id/bundle" />
+        <action
+                android:id="@+id/action_bundles_to_addBundle"
+                app:destination="@id/addBundle" />
     </fragment>
     <fragment
             android:id="@+id/bundle"
@@ -98,6 +101,14 @@
                 app:destination="@id/bundle" />
         <action
                 android:id="@+id/action_editBundle_to_bundles"
+                app:destination="@id/bundles" />
+    </fragment>
+    <fragment
+            android:id="@+id/addBundle"
+            android:name="com.steft.travel_app.view.AddBundle"
+            android:label="AddBundle" >
+        <action
+                android:id="@+id/action_addBundle_to_bundles"
                 app:destination="@id/bundles" />
     </fragment>
 </navigation>

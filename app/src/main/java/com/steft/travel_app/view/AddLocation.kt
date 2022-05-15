@@ -35,9 +35,9 @@ class AddLocation : Fragment() {
 
 
         //Add Location - Save
-        val saveLocationBtn = view.findViewById<Button>(R.id.saveNewLocationButton)
+        val createLocationBtn = view.findViewById<Button>(R.id.createNewLocationButton)
 
-        saveLocationBtn.setOnClickListener{
+        createLocationBtn.setOnClickListener{
 
             //try
             //εισαγωγή στη βάση
@@ -53,7 +53,7 @@ class AddLocation : Fragment() {
                 service.insert(cityLoc, countryLoc, typeLoc)
                 parentFragmentManager.popBackStack()
             }*/
-            Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_LONG)
+            Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG)
 
             findNavController().navigate(R.id.action_addLocation_to_locations)
 

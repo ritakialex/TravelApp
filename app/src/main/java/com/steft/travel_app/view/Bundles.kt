@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.steft.travel_app.R
 import com.steft.travel_app.placeholder.PlaceholderContent
 
@@ -30,6 +32,17 @@ class Bundles : Fragment() {
                 adapter = MyItemRecyclerViewAdapter(items)
             }
         }
+
+        //floating button
+        val addBundleBtn : FloatingActionButton
+        addBundleBtn = view.findViewById(R.id.floatingAddBundleButton)
+
+        addBundleBtn.setOnClickListener{
+            findNavController().navigate(R.id.action_bundles_to_addBundle)
+
+        }
+
+
         return view
     }
 }
