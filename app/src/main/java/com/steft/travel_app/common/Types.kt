@@ -4,13 +4,8 @@ package com.steft.travel_app.common
 
 import androidx.lifecycle.viewModelScope
 import arrow.core.*
-import arrow.typeclasses.Semigroup
-import com.steft.travel_app.dto.Converters
-import com.steft.travel_app.model.TravelAgency
-import kotlinx.coroutines.launch
 import java.nio.charset.Charset
 import java.security.MessageDigest
-import java.util.*
 import java.util.regex.Pattern
 import kotlin.random.Random
 
@@ -37,14 +32,18 @@ class Address private constructor(private val addressString: String) {
     override fun toString() = addressString
 
     companion object {
+        //"Road 123, City, Country"
         private val validAddressPattern =
             Pattern.compile("^[A-Z][a-z]+ [0-9]+, [A-Z][a-z]+, [A-Z][a-z]+\$")
+
+        fun content(address: Address) = address.addressString
 
         fun makeValidated(addressString: String): ValidatedObject<Address> = when {
             validAddressPattern.matcher(addressString).matches() ->
                 Validated.Valid(Address(addressString))
             else ->
                 ValidationError("'$addressString' is not a valid address.").invalidNel()
+
         }
     }
 }

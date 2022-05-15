@@ -32,13 +32,13 @@ class LoginRegisterViewModel(application: Application) : AndroidViewModel(applic
                         .makeSalted(password, storedSalt)
                         .let { it.string == storedEntirePass }
                 }
-                .let { it.getOrElse { false } }
+                .getOrElse { false }
                 .let { result.value = it }
         }
         return result
     }
 
-    fun register(name: String, address: String, username: String, password: String): Unit =
+    fun register(name: String, address: String, username: String, password: String) =
         Name.makeValidated(name)
             .zip(
                 Semigroup.nonEmptyList(),
