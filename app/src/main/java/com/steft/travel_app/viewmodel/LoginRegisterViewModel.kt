@@ -7,16 +7,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import arrow.core.Invalid
-import arrow.core.Valid
-import arrow.core.Validated
-import arrow.core.zip
+import arrow.core.*
 import arrow.typeclasses.Semigroup
 import com.steft.travel_app.common.*
 import com.steft.travel_app.dao.AppDatabase
 import com.steft.travel_app.model.TravelAgency
 import kotlinx.coroutines.launch
 import java.util.*
+
 
 class LoginRegisterViewModel(application: Application) : AndroidViewModel(application) {
     private val agencyDao = AppDatabase
@@ -29,14 +27,14 @@ class LoginRegisterViewModel(application: Application) : AndroidViewModel(applic
         viewModelScope.launch {
             agencyDao
                 .getPassword(Username(username))
-                .let { Sha256.split(it) }
-                .let { (storedPass, storedSalt) ->
-                    val passToValidate = Sha256
+                .let { Either.catch { it.string to Sha256.split(it).second } }
+                .map { (storedEntirePass, storedSalt) ->
+                    Sha256
                         .makeSalted(password, storedSalt)
-                        .string
-
-                    result.value = passToValidate == storedPass
+                        .let { it.string == storedEntirePass }
                 }
+                .let { it.getOrElse { false } }
+                .let { result.value = it }
         }
         return result
     }
@@ -58,10 +56,11 @@ class LoginRegisterViewModel(application: Application) : AndroidViewModel(applic
                 when (it) {
                     is Invalid ->
                         throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
-                    is Valid ->
+                    is Valid -> {
                         viewModelScope.launch {
                             agencyDao.insertAll(it.value)
                         }
+                    }
                 }
             }
 }
