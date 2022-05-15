@@ -134,7 +134,7 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dateFromEditText"
+                android:id="@+id/dateFromBundleEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
                 app:layout_constraintTop_toBottomOf="@+id/countryEditText"
@@ -145,10 +145,10 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/durationEditText"
+                android:id="@+id/durationBundleEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/dateFromEditText"
+                app:layout_constraintTop_toBottomOf="@+id/dateFromBundleEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -156,20 +156,20 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/typeEditText"
+                android:id="@+id/typeBundleEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/durationEditText"
+                app:layout_constraintTop_toBottomOf="@+id/durationBundleEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
         <EditText
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/priceEditText"
+                android:id="@+id/priceBundleEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/typeEditText"
+                app:layout_constraintTop_toBottomOf="@+id/typeBundleEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -177,10 +177,10 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/agencyEditText"
+                android:id="@+id/agencyBundleEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/priceEditText"
+                app:layout_constraintTop_toBottomOf="@+id/priceBundleEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -197,7 +197,7 @@
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/agencyEditText" />
+                app:layout_constraintTop_toBottomOf="@+id/agencyBundleEditText" />
 
 
         <Button
@@ -210,7 +210,7 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/agencyEditText"
+                app:layout_constraintTop_toBottomOf="@+id/agencyBundleEditText"
                  />
 
 

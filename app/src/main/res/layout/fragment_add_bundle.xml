@@ -10,11 +10,11 @@
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editLocationCity"
+            android:id="@+id/addBundleDateET"
             android:layout_marginTop="32dp"
             android:ems="10"
-            android:inputType="text"
-            android:hint="Location City"
+            android:inputType="date"
+            android:hint="Bundle Date From"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,39 +23,51 @@
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editLocationCountry"
+            android:id="@+id/addBundleDurationET"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:inputType="text"
-            android:hint="Location Country"
+            android:inputType="number"
+            android:hint="Bundle Duration"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editLocationCity" />
+            app:layout_constraintTop_toBottomOf="@+id/addBundleDateET" />
 
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editLocationType"
+            android:id="@+id/addBundleTypeET"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:inputType="number"
-            android:hint="Type - number"
+            android:inputType="text"
+            android:hint="Bundle Type"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editLocationCountry"/>
+            app:layout_constraintTop_toBottomOf="@+id/addBundleDurationET"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addBundlePriceET"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="Bundle Price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addBundleTypeET"/>
 
     <Button
             android:text="Save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/saveLocationButton"
+            android:id="@+id/saveNewBundleButton"
             app:backgroundTint="@color/teal_700"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editLocationType"
+            app:layout_constraintTop_toBottomOf="@+id/addBundlePriceET"
             android:layout_marginTop="32dp" />
 
 

@@ -23,7 +23,7 @@ class CustomerInfo : Fragment() {
         val view = inflater.inflate(R.layout.fragment_customer_info, container, false)
 
         //Traveller
-        val saveBtn = view.findViewById<Button>(R.id.saveButton)
+        val saveBtn = view.findViewById<Button>(R.id.saveCustInfoButton)
         saveBtn.setOnClickListener {
             findNavController().navigate(R.id.action_customerInfo_to_locations)
         }

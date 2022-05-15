@@ -112,7 +112,7 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/cityText"
+                android:id="@+id/cityBundleTextView"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
                 app:layout_constraintTop_toTopOf="parent"
@@ -123,10 +123,10 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/countryText"
+                android:id="@+id/countryBundleTextView"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/cityText"
+                app:layout_constraintTop_toBottomOf="@+id/cityBundleTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -134,10 +134,10 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dateFromText"
+                android:id="@+id/dateFromBundleTextView"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/countryText"
+                app:layout_constraintTop_toBottomOf="@+id/countryBundleTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -145,10 +145,10 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/durationText"
+                android:id="@+id/durationBundleTextView"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/dateFromText"
+                app:layout_constraintTop_toBottomOf="@+id/dateFromBundleTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -156,10 +156,10 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/typeText"
+                android:id="@+id/typeBundleTextView"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/durationText"
+                app:layout_constraintTop_toBottomOf="@+id/durationBundleTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -167,10 +167,10 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/priceText"
+                android:id="@+id/priceBundleTextView"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/typeText"
+                app:layout_constraintTop_toBottomOf="@+id/typeBundleTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -178,10 +178,10 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/agencyText"
+                android:id="@+id/agencyBundleTextView"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/priceText"
+                app:layout_constraintTop_toBottomOf="@+id/priceBundleTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -198,7 +198,7 @@
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/agencyText" />
+                app:layout_constraintTop_toBottomOf="@+id/agencyBundleTextView" />
 
 <!-- if agent is logged in, they should see the Edit Button instead of Buy        -->
         <Button
@@ -211,7 +211,7 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/agencyText" />
+                app:layout_constraintTop_toBottomOf="@+id/agencyBundleTextView" />
 
 
 

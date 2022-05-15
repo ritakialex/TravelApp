@@ -35,18 +35,18 @@ class AddLocation : Fragment() {
 
 
         //Add Location - Save
-        val saveLocationBtn = view.findViewById<Button>(R.id.saveLocationButton)
+        val saveLocationBtn = view.findViewById<Button>(R.id.saveNewLocationButton)
 
         saveLocationBtn.setOnClickListener{
 
             //try
             //εισαγωγή στη βάση
-            val cityLoc = view.findViewById<EditText>(R.id.editLocationCity)?.text?.toString() ?: ""
-            val countryLoc = view.findViewById<EditText>(R.id.editLocationCountry)?.text?.toString() ?: ""
-            val typeLoc = view.findViewById<EditText>(R.id.editLocationType)?.text?.toString() ?: ""
+            val cityLoc = view.findViewById<EditText>(R.id.addLocationCityET)?.text?.toString() ?: ""
+            val countryLoc = view.findViewById<EditText>(R.id.addLocationCountryET)?.text?.toString() ?: ""
+            //val typeLoc = view.findViewById<EditText>(R.id.editLocationType)?.text?.toString() ?: ""
 
-            val location = User(0, cityLoc, countryLoc, Integer.parseInt(typeLoc.toString()))
-            mUserViewModel.addUser(location)
+            //val location = User(0, cityLoc, countryLoc, Integer.parseInt(typeLoc.toString()))
+            //mUserViewModel.addUser(location)
 
             //stef
             /*viewLifecycleOwner.lifecycleScope.launch {
