@@ -68,6 +68,8 @@ class Name private constructor(private val nameString: String) {
                             "Only letters and spaces are allowed."
                 ).invalidNel()
         }
+
+        fun content(name: Name): String = name.nameString
     }
 }
 
@@ -147,39 +149,4 @@ class Sha256(val string: String) {
                 Pair(it.substring(0, 64), it.substring(64))
             }
     }
-}
-
-
-fun main() {
-    Name.makeValidated("Stef")
-        .zip(
-            Semigroup.nonEmptyList(),
-            Address.makeValidated("Thoukididou 38, Sykies, Thessaloniki"))
-        .map { (name, address) ->
-            TravelAgency(
-                UUID.randomUUID(),
-                name,
-                address,
-                Username("asdasd"),
-                Sha256.makeSalted("asdasd"))
-        }
-        .let {
-            when (it) {
-                is Invalid ->
-                    throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
-                is Valid -> println(Converters.shaToString(it.value.password))
-            }
-        }
-
-//    val s = Sha256.makeSalted("asdasd").string
-//    val s2 = Sha256.makeSalted("asdasd").string
-//
-//    val pass = s.substring(0, 64)
-//    val salt = s.substring(64)
-
-//    println(s)
-//    println(s2)
-//    println(pass)
-//    println(salt)
-
 }

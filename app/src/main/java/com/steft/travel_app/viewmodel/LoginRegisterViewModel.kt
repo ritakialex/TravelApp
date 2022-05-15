@@ -17,9 +17,8 @@ import java.util.*
 
 
 class LoginRegisterViewModel(application: Application) : AndroidViewModel(application) {
-    private val agencyDao = AppDatabase
-        .getDatabase(application)
-        .travelAgencyDao()
+    private val database = AppDatabase.getDatabase(application)
+    private val agencyDao = database.travelAgencyDao()
 
     fun login(username: String, password: String): LiveData<Boolean> {
         val result = MutableLiveData<Boolean>()

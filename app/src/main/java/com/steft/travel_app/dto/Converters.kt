@@ -2,10 +2,14 @@ package com.steft.travel_app.dto
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
+import arrow.core.Invalid
+import arrow.core.Valid
+import arrow.core.getOrElse
 import com.google.gson.Gson
 import com.steft.travel_app.common.*
 import org.json.JSONObject
 import java.util.*
+import kotlin.math.E
 
 object Converters {
     private const val male = "male"
@@ -16,10 +20,21 @@ object Converters {
 
 
     @TypeConverter
-    fun namesToJson(value: List<Name>) = Gson().toJson(value)
+    fun namesToJson(value: List<Name>): String =
+        Gson().toJson(value.map { Name.content(it) })
 
     @TypeConverter
-    fun jsonToNames(value: String) = Gson().fromJson(value, Array<Name>::class.java).toList()
+    fun jsonToNames(value: String): List<Name> =
+        Gson()
+            .fromJson(value, Array<String>::class.java)
+            .toList()
+            .map { Name.makeValidated(it) }
+            .map {
+                when (it) {
+                    is Valid -> it.value
+                    is Invalid -> throw CorruptDatabaseObjectException("Name was $value")
+                }
+            }
 
     @TypeConverter
     fun longToDate(value: Long): Date = Date(value)
@@ -28,7 +43,7 @@ object Converters {
     fun dateToLong(value: Date): Long = value.time
 
     @TypeConverter
-    fun uuidToStringNullable(value: UUID?): String? = value.toString()
+    fun uuidToStringNullable(value: UUID?): String = value.toString()
 
     @TypeConverter
     fun stringToUuidNullable(value: String?): UUID? = UUID.fromString(value)
