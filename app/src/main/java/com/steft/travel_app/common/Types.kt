@@ -68,6 +68,8 @@ class Name private constructor(private val nameString: String) {
                             "Only letters and spaces are allowed."
                 ).invalidNel()
         }
+
+        fun content(name: Name): String = name.nameString
     }
 }
 
