@@ -40,11 +40,14 @@ class Address private constructor(private val addressString: String) {
         private val validAddressPattern =
             Pattern.compile("^[A-Z][a-z]+ [0-9]+, [A-Z][a-z]+, [A-Z][a-z]+\$")
 
+        fun content(address: Address) = address.addressString
+
         fun makeValidated(addressString: String): ValidatedObject<Address> = when {
             validAddressPattern.matcher(addressString).matches() ->
                 Validated.Valid(Address(addressString))
             else ->
                 ValidationError("'$addressString' is not a valid address.").invalidNel()
+
         }
     }
 }

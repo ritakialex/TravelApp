@@ -32,7 +32,7 @@ class LoginRegisterViewModel(application: Application) : AndroidViewModel(applic
                         .makeSalted(password, storedSalt)
                         .let { it.string == storedEntirePass }
                 }
-                .let { it.getOrElse { false } }
+                .getOrElse { false }
                 .let { result.value = it }
         }
         return result
