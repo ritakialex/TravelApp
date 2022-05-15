@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/frameLayoutBundles"
         android:background="@color/teal_700">
 
 
@@ -20,5 +21,19 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/recycler_view_item"/>
 
+    <!--when user logged out - button should be visibility="gone"-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_add_24"
+            android:id="@+id/floatingAddBundleButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp" />
+
 <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
