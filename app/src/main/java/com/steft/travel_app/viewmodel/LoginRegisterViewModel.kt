@@ -38,7 +38,7 @@ class LoginRegisterViewModel(application: Application) : AndroidViewModel(applic
         return result
     }
 
-    fun register(name: String, address: String, username: String, password: String): Unit =
+    fun register(name: String, address: String, username: String, password: String) =
         Name.makeValidated(name)
             .zip(
                 Semigroup.nonEmptyList(),
