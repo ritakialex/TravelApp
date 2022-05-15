@@ -43,6 +43,9 @@
         <action
                 android:id="@+id/action_bundle_to_customerInfo"
                 app:destination="@id/customerInfo" />
+        <action
+                android:id="@+id/action_bundle_to_editBundle"
+                app:destination="@id/editBundle" />
     </fragment>
     <fragment
             android:id="@+id/customerInfo"
@@ -85,5 +88,16 @@
         <action
                 android:id="@+id/action_addLocation_to_locations"
                 app:destination="@id/locations" />
+    </fragment>
+    <fragment
+            android:id="@+id/editBundle"
+            android:name="com.steft.travel_app.view.EditBundle"
+            android:label="EditBundle" >
+        <action
+                android:id="@+id/action_editBundle_to_bundle"
+                app:destination="@id/bundle" />
+        <action
+                android:id="@+id/action_editBundle_to_bundles"
+                app:destination="@id/bundles" />
     </fragment>
 </navigation>

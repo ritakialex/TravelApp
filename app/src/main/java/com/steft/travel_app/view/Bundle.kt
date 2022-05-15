@@ -9,12 +9,7 @@ import android.widget.Button
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
 
-
-
-
 class Bundle : Fragment() {
-
-
 
 
     override fun onCreateView(
@@ -35,8 +30,10 @@ class Bundle : Fragment() {
         //Edit Button Agent
         val editButton : Button = view.findViewById(R.id.editBundleButton)
         bookButton.setOnClickListener{
-            //findNavController().navigate(R.id.action_bundle_to_edit----)
+            findNavController().navigate(R.id.action_bundle_to_editBundle)
         }
+
+
 
         return view
     }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -103,84 +104,84 @@
             android:layout_weight="3"
             android:padding="8dp"
             android:background="@color/teal_200">
-            <!--      remove line above after      -->
+        <!--      remove line above after      -->
 
 
 
-        <TextView
+        <EditText
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/cityText"
+                android:id="@+id/cityEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
+        <EditText
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/countryText"
+                android:id="@+id/countryEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/cityText"
+                app:layout_constraintTop_toBottomOf="@+id/cityEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
+        <EditText
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dateFromText"
+                android:id="@+id/dateFromEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/countryText"
+                app:layout_constraintTop_toBottomOf="@+id/countryEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
+        <EditText
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/durationText"
+                android:id="@+id/durationEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/dateFromText"
+                app:layout_constraintTop_toBottomOf="@+id/dateFromEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
+        <EditText
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/typeText"
+                android:id="@+id/typeEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/durationText"
+                app:layout_constraintTop_toBottomOf="@+id/durationEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
+        <EditText
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/agencyText"
+                android:id="@+id/agencyEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/typeText"
+                app:layout_constraintTop_toBottomOf="@+id/typeEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
+        <EditText
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/priceText"
+                android:id="@+id/priceEditText"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/agencyText"
+                app:layout_constraintTop_toBottomOf="@+id/agencyEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -188,27 +189,28 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Book"
-                android:id="@+id/bookBundleButton"
+                android:text="Save"
+                android:id="@+id/saveBundleButton"
                 app:backgroundTint="@color/teal_700"
                 android:textColor="@color/white"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/priceText" />
+                app:layout_constraintTop_toBottomOf="@+id/priceEditText" />
 
-<!-- if agent is logged in, they should see the Edit Button instead of Buy        -->
+
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit"
-                android:id="@+id/editBundleButton"
-                android:visibility="gone"
+                android:text="Delete"
+                android:id="@+id/deleteBundleButton"
+                android:visibility="visible"
                 app:backgroundTint="@color/teal_700"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/priceText" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/priceEditText"
+                 />
 
 
 
