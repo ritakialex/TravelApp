@@ -87,9 +87,14 @@ private class AgentMainViewModel(application: Application, val loggedIn: Boolean
                     ?: throw CorruptDatabaseObjectException("Location with id $locationId doesnt exist")
             }
 
-    private fun <T> init(f: suspend (MutableLiveData<T>) -> Unit): LiveData<T> =
+    private inline fun <T> intoLiveData(crossinline f: suspend () -> T): LiveData<T> =
         MutableLiveData<T>()
-            .also { viewModelScope.launch { f(it) } }
+            .also { viewModelScope.launch { it.value = f() } }
+
+    private inline fun <T> ifAuthorized(crossinline f: (travelAgency: UUID) -> T): T =
+        travelAgency
+            ?.let { f(it) }
+            ?: throw AnauthorizedException("You aren't logged in as a travel agent")
 
     private suspend fun getLocationSuspend(locationId: UUID): Either<Location, CustomLocation>? =
         Utils.concurrently(
@@ -103,98 +108,86 @@ private class AgentMainViewModel(application: Application, val loggedIn: Boolean
         }
 
     fun getLocation(locationId: UUID): LiveData<LocationDto?> =
-        init { result ->
+        intoLiveData {
             getLocationSuspend(locationId)
                 ?.let {
                     when (it) {
                         is Either.Left ->
-                            it.value
-                                .let { (id, city, country) ->
-                                    LocationDto(
-                                        id = id,
-                                        travelAgency = null,
-                                        city = Name.content(city),
-                                        country = Name.content(country))
-                                }
+                            it.value.let { (id, city, country) ->
+                                LocationDto(
+                                    id = id,
+                                    travelAgency = null,
+                                    city = Name.content(city),
+                                    country = Name.content(country))
+                            }
                         is Either.Right ->
-                            it.value
-                                .let { (id, travelAgency, city, country) ->
-                                    LocationDto(
-                                        id = id,
-                                        travelAgency = travelAgency,
-                                        city = Name.content(city),
-                                        country = Name.content(country))
-                                }
+                            it.value.let { (id, travelAgency, city, country) ->
+                                LocationDto(
+                                    id = id,
+                                    travelAgency = travelAgency,
+                                    city = Name.content(city),
+                                    country = Name.content(country))
+                            }
                     }
-                }.let { result.value = it }
+                }
         }
 
     fun getLocations(): LiveData<List<LocationPreviewDto>> =
-        init { result ->
-            listOf(
-                getAllLocations(),
-                getAllCustomLocations())
+        intoLiveData {
+            listOf(getAllLocations(), getAllCustomLocations())
                 .flatten()
-                .let { result.value = it }
         }
 
 
     fun getAgencyLocations(): LiveData<List<LocationPreviewDto>> =
-        travelAgency
-            ?.let { travelAgency ->
-                init { result ->
-                    listOf(
-                        getAllLocations(),
-                        getCustomLocationsOfAgency(travelAgency))
-                        .flatten()
-                        .let { result.value = it }
-                }
-            } ?: throw AnauthorizedException("You aren't logged in as a travel agent")
+        ifAuthorized { travelAgency ->
+            intoLiveData {
+                listOf(getAllLocations(), getCustomLocationsOfAgency(travelAgency))
+                    .flatten()
+            }
+        }
 
-    fun getTravelAgency(): LiveData<TravelAgencyDto> =
-        travelAgency
-            ?.let { travelAgency ->
-                init { result ->
-                    agencyDao
-                        .findById(travelAgency)
-                        ?.let { (id, name, address, username, _) ->
-                            TravelAgencyDto(
-                                id = id,
-                                name = Name.content(name),
-                                address = Address.content(address),
-                                username = username.string)
-                        }
-                        .let { result.value = it }
-                }
-            } ?: throw AnauthorizedException("You aren't logged in as a travel agent")
+    fun getTravelAgency(): LiveData<TravelAgencyDto?> =
+        ifAuthorized { travelAgency ->
+            intoLiveData {
+                agencyDao
+                    .findById(travelAgency)
+                    ?.let { (id, name, address, username, _) ->
+                        TravelAgencyDto(
+                            id = id,
+                            name = Name.content(name),
+                            address = Address.content(address),
+                            username = username.string)
+                    }
+            }
+        }
 
 
     fun addCustomLocation(city: String, country: String) {
-        travelAgency
-            ?.let { travelAgency ->
-                Name.makeValidated(city)
-                    .zip(Semigroup.nonEmptyList(), Name.makeValidated(country))
-                    .map { (city, country) ->
-                        CustomLocation(
-                            travelAgency = travelAgency,
-                            city = city,
-                            country = country)
-                    }.let {
-                        when (it) {
-                            is Invalid ->
-                                throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
-                            is Valid ->
-                                viewModelScope.launch {
-                                    locationDao.insertAllCustom(it.value)
-                                }
-                        }
+        ifAuthorized { travelAgency ->
+            Name.makeValidated(city)
+                .zip(Semigroup.nonEmptyList(), Name.makeValidated(country))
+                .map { (city, country) ->
+                    CustomLocation(
+                        travelAgency = travelAgency,
+                        city = city,
+                        country = country)
+                }.let {
+                    when (it) {
+                        is Invalid ->
+                            throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
+                        is Valid ->
+                            viewModelScope.launch {
+                                locationDao.insertAllCustom(it.value)
+                            }
                     }
-            } ?: throw AnauthorizedException("You aren't logged in as a travel agent")
+                }
+        }
     }
 
 
     fun getBundle(bundleId: UUID): LiveData<BundleDto?> =
-        init { result ->
+        intoLiveData {
             bundleDao
                 .findById(bundleId)
                 ?.let { (id, agencyId, locationId, date, price, duration, hotels, type) ->
@@ -208,26 +201,22 @@ private class AgentMainViewModel(application: Application, val loggedIn: Boolean
                         hotels = hotels.map { Name.content(it) },
                         type = type.name)
                 }
-                .let { result.value = it }
         }
 
 
     fun getBundles(): LiveData<List<BundlePreviewDto>> =
-        init { result ->
+        intoLiveData {
             bundleDao
                 .getAll()
                 .map { bundleToBundlePreviewDto(it) }
-                .let { result.value = it }
         }
 
     fun getAgencyBundles(): LiveData<List<BundlePreviewDto>> =
-        travelAgency
-            ?.let { travelAgency ->
-                init { result ->
-                    bundleDao
-                        .getAll(travelAgency)
-                        .map { bundleToBundlePreviewDto(it) }
-                        .let { result.value = it }
-                }
-            } ?: throw AnauthorizedException("You aren't logged in as a travel agent")
+        ifAuthorized { travelAgency ->
+            intoLiveData {
+                bundleDao
+                    .getAll(travelAgency)
+                    .map { bundleToBundlePreviewDto(it) }
+            }
+        }
 }
