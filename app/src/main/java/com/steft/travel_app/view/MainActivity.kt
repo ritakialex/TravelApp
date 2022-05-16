@@ -9,13 +9,19 @@ import com.steft.travel_app.R
 import com.steft.travel_app.common.InvalidObjectException
 import com.steft.travel_app.viewmodel.LoginRegisterViewModel
 import com.steft.travel_app.viewmodel.MainViewModel
+import com.steft.travel_app.viewmodel.MainViewModelFactory
 import java.util.*
+
+val travelAgencyId: UUID = TODO()
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val viewModel2 by viewModels<MainViewModel> { MainViewModel.Factory(application, true) }
+        val viewModel2 by viewModels<MainViewModel> {
+            MainViewModelFactory(application, true, travelAgencyId)
+        }
+
         val viewModel by viewModels<LoginRegisterViewModel>()
 
         try {
@@ -34,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             // for fragments
             // val viewModel by activityViewModels<MainViewModel>()
             viewModel2
-                .getLocations(UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
+                .getLocations()
                 .observe(this) { locations -> locations.forEach(::println) }
         } catch (ex: Exception) {
             println(ex.message)
