@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-<
+
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.myNavHostFragment)
                 as NavHostFragment
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel by viewModels<LoginRegisterViewModel>()
 
-        try {
+        /*try {
             viewModel
                 .register(
                     "Validname",
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 .observe(this) { locations -> locations.forEach(::println) }
         } catch (ex: Exception) {
             println(ex.message)
-        }
+        }*/
 
 
     }
