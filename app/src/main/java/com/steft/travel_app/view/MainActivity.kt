@@ -3,6 +3,8 @@ package com.steft.travel_app.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider.Factory
 import com.steft.travel_app.R
 import com.steft.travel_app.common.InvalidObjectException
 import com.steft.travel_app.viewmodel.LoginRegisterViewModel
@@ -13,8 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val viewModel2 by viewModels<MainViewModel>()
+        val viewModel2 by viewModels<MainViewModel> { MainViewModel.Factory(application, true) }
         val viewModel by viewModels<LoginRegisterViewModel>()
 
         try {
@@ -38,6 +39,5 @@ class MainActivity : AppCompatActivity() {
         } catch (ex: Exception) {
             println(ex.message)
         }
-
     }
 }

@@ -13,16 +13,14 @@ data class InvalidObjectException(override val message: String) : Exception(mess
 data class CorruptDatabaseObjectException(override val message: String) : Exception(message) {
     companion object {
         fun fromOtherException(exception: Throwable) =
-            InvalidObjectException(derivedExceptionMessage(exception))
+            CorruptDatabaseObjectException(derivedExceptionMessage(exception))
     }
 }
 
-sealed interface LoginException
-
-data class UnknownUserException(override val message: String) : Exception(message), LoginException {
+data class AnauthorizedException(override val message: String) : Exception(message) {
     companion object {
         fun fromOtherException(exception: Throwable) =
-            InvalidObjectException(derivedExceptionMessage(exception))
+            AnauthorizedException(derivedExceptionMessage(exception))
     }
 }
 

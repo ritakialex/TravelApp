@@ -8,6 +8,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlinx.coroutines.async
 
 object Utils {
     suspend fun <A, B> Iterable<A>.pMap(f: suspend (A) -> B): List<B> = coroutineScope {
@@ -21,12 +22,22 @@ object Utils {
     fun String.toUUID(): UUID =
         UUID.fromString(this)
 
-    fun <Y : Any, Z: Any, T : Either<Y, Z>> Iterable<T>.filterRight(): List<Z> =
+    fun <Y : Any, Z : Any, T : Either<Y, Z>> Iterable<T>.filterRight(): List<Z> =
         filterRightTo<Y, Z, T>(arrayListOf())
 
 
-    private fun <Y : Any, Z: Any, T : Either<Y, Z>> Iterable<T>.filterRightTo(destination: ArrayList<Z>): List<Z> {
+    private fun <Y : Any, Z : Any, T : Either<Y, Z>> Iterable<T>.filterRightTo(destination: ArrayList<Z>): List<Z> {
         forEach { it.map { destination.add(it) } }
         return destination
     }
+
+    suspend fun <A, B, C> concurrently(a: suspend () -> A, b: suspend () -> B, f: (A, B) -> C): C =
+        coroutineScope {
+            val resultA = async { a() }
+            val resultB = async { b() }
+
+            f(resultA.await(), resultB.await())
+        }
+
+
 }
