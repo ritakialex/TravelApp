@@ -15,6 +15,7 @@ import com.steft.travel_app.model.Location
 import com.steft.travel_app.model.TravelAgency
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.contracts.Effect
 
 private typealias PreviewTriple = Triple<UUID, String, String>
 
@@ -25,10 +26,10 @@ class MainViewModelFactory(
     private val travelAgency: UUID? = null) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        AgentMainViewModel(application, loggedIn, travelAgency) as T
+        MainViewModel(application, loggedIn, travelAgency) as T
 }
 
-private class AgentMainViewModel(application: Application, val loggedIn: Boolean, val travelAgency: UUID?) :
+class MainViewModel(application: Application, val loggedIn: Boolean, val travelAgency: UUID?) :
     AndroidViewModel(application) {
     private val database = AppDatabase.getDatabase(application)
     private val locationDao = database.locationDao()
@@ -184,7 +185,6 @@ private class AgentMainViewModel(application: Application, val loggedIn: Boolean
                 }
         }
     }
-
 
     fun getBundle(bundleId: UUID): LiveData<BundleDto?> =
         intoLiveData {
