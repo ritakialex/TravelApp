@@ -12,7 +12,7 @@ data class CustomerDetails(val name: Name,
                            val email: Email,
                            val hotel: String)
 
-data class Registration(val bundle: UUID,
+data class Registration(val bundle: UUID = UUID.randomUUID(),
                         val customers: List<CustomerDetails>)
 
 object RegistrationUtils {

@@ -13,6 +13,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.activity.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider.Factory
 import com.steft.travel_app.R
 import com.steft.travel_app.common.InvalidObjectException
 import com.steft.travel_app.viewmodel.LoginRegisterViewModel

@@ -13,7 +13,6 @@ import com.steft.travel_app.common.*
 import com.steft.travel_app.dao.AppDatabase
 import com.steft.travel_app.model.TravelAgency
 import kotlinx.coroutines.launch
-import java.util.*
 
 
 class LoginRegisterViewModel(application: Application) : AndroidViewModel(application) {
@@ -45,21 +44,19 @@ class LoginRegisterViewModel(application: Application) : AndroidViewModel(applic
                 Address.makeValidated(address))
             .map { (name, address) ->
                 TravelAgency(
-                    UUID.randomUUID(),
-                    name,
-                    address,
-                    Username(username),
-                    Sha256.makeSalted(password))
+                    name = name,
+                    address = address,
+                    username = Username(username),
+                    password = Sha256.makeSalted(password))
             }
             .let {
                 when (it) {
                     is Invalid ->
                         throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
-                    is Valid -> {
+                    is Valid ->
                         viewModelScope.launch {
                             agencyDao.insertAll(it.value)
                         }
-                    }
                 }
             }
 }

@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity(tableName = "location", indices = [Index(value = ["city", "country"])])
 data class Location(
-    @PrimaryKey val id: UUID,
+    @PrimaryKey val id: UUID = UUID.randomUUID(),
     val city: Name,
     val country: Name
 )

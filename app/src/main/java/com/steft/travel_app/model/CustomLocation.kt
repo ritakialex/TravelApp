@@ -16,7 +16,7 @@ import java.util.*
         )]
 )
 data class CustomLocation(
-    @PrimaryKey val id: UUID,
+    @PrimaryKey val id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "travel_agency") val travelAgency: UUID,
     val city: Name,
     val country: Name

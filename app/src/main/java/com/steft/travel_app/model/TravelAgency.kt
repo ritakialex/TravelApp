@@ -11,7 +11,7 @@ import java.util.UUID
 
 @Entity(tableName = "travel_agency", indices = [Index(value = ["username"], unique = true)])
 data class TravelAgency(
-    @PrimaryKey val id: UUID,
+    @PrimaryKey val id: UUID = UUID.randomUUID(),
     val name: Name,
     val address: Address,
     val username: Username,

@@ -19,10 +19,10 @@ interface LocationDao {
     suspend fun getAllCustom(travelAgencyId: UUID): List<CustomLocation>
 
     @Query("SELECT * FROM location WHERE id = :id")
-    suspend fun findById(id: UUID): Location
+    suspend fun findById(id: UUID): Location?
 
-    @Query("SELECT * FROM custom_location WHERE id = :id AND travel_agency = :travelAgencyId")
-    suspend fun findByIdCustom(id: UUID, travelAgencyId: UUID): CustomLocation
+    @Query("SELECT * FROM custom_location WHERE id = :id")
+    suspend fun findByIdCustom(id: UUID): CustomLocation?
 
     @Query(
         """
@@ -45,6 +45,9 @@ interface LocationDao {
 
     @Insert
     suspend fun insertAll(vararg location: Location)
+
+    @Insert
+    suspend fun insertAllCustom(vararg location: CustomLocation)
 
     @Query("DELETE FROM location WHERE id = :id")
     suspend fun delete(id: UUID)
