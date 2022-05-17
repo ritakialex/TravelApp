@@ -6,16 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.shape.Shapeable
 import com.steft.travel_app.R
-//import com.steft.travel_app.databinding.FragmentLocationsBinding
-import com.steft.travel_app.placeholder.PlaceholderContent.PlaceholderItem
+import com.steft.travel_app.dto.Preview
+import java.util.UUID
 
 
-class MyItemRecyclerViewAdapter(private val values: ArrayList<PlaceholderItem>) :
+class MyItemRecyclerViewAdapter<T : Preview>(private val values: ArrayList<T>) :
     RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
-
-
 
 
     //-------
@@ -26,12 +23,12 @@ class MyItemRecyclerViewAdapter(private val values: ArrayList<PlaceholderItem>) 
         val contentView: TextView = binding.content
     }*/
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         //titleImage
-        val itemImage : ShapeableImageView = itemView.findViewById(R.id.item_image)
-        val itemTitle : TextView = itemView.findViewById(R.id.item_title)
-        val itemDesc : TextView = itemView.findViewById(R.id.item_description)
+        val itemImage: ShapeableImageView = itemView.findViewById(R.id.item_image)
+        val itemTitle: TextView = itemView.findViewById(R.id.item_title)
+        val itemDesc: TextView = itemView.findViewById(R.id.item_description)
 
     }
 //---------
@@ -50,7 +47,8 @@ class MyItemRecyclerViewAdapter(private val values: ArrayList<PlaceholderItem>) 
 
         return ViewHolder(itemView)
     }
-//------------
+
+    //------------
     /*override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.idView.text = item.id
@@ -58,11 +56,11 @@ class MyItemRecyclerViewAdapter(private val values: ArrayList<PlaceholderItem>) 
     }*/
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = values[position]
-
-        /*
-        holder.itemImage.setImageResource(currentItem.itemImage)
-        holder.itemTitle.text = currentItem.header
-        */
+        with(holder) {
+            itemTitle.text = currentItem.title
+            itemDesc.text = currentItem.title
+        }
+//        holder.itemImage.setImageResource(currentItem.itemImage)
     }
 
 
