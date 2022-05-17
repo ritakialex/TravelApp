@@ -13,11 +13,11 @@ import com.steft.travel_app.R
 import com.steft.travel_app.placeholder.PlaceholderContent
 
 class Bundles : Fragment() {
-    private val items = arrayListOf(
-        PlaceholderContent.PlaceholderItem("asd", "dasdawdwa", "details"),
-        PlaceholderContent.PlaceholderItem("asd", "12323asdsad", "details"),
-        PlaceholderContent.PlaceholderItem("asd", "aasdassd", "details")
-    )
+//    private val items = arrayListOf(
+//        PlaceholderContent.PlaceholderItem("asd", "dasdawdwa", "details"),
+//        PlaceholderContent.PlaceholderItem("asd", "12323asdsad", "details"),
+//        PlaceholderContent.PlaceholderItem("asd", "aasdassd", "details")
+//    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +29,7 @@ class Bundles : Fragment() {
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = LinearLayoutManager(context)
-                adapter = MyItemRecyclerViewAdapter(items)
+//                adapter = MyItemRecyclerViewAdapter(items)
             }
         }
 

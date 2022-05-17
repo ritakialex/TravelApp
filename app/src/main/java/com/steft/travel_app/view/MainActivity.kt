@@ -23,16 +23,13 @@ import com.steft.travel_app.viewmodel.MainViewModelFactory
 import java.util.*
 
 
-val travelAgencyId: UUID = TODO()
-
 class MainActivity : AppCompatActivity() {
 
-    lateinit var navController : NavController
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-<
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.myNavHostFragment)
                 as NavHostFragment
@@ -44,94 +41,84 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        //val viewModel by viewModels<LoginRegisterViewModel>()
 
-
-        //val viewModel2 by viewModels<MainViewModel>()
-
-        val viewModel2 by viewModels<MainViewModel> {
-            MainViewModelFactory(application, true, travelAgencyId)
-        }
-
-
-        val viewModel by viewModels<LoginRegisterViewModel>()
-
-        try {
-            viewModel
-                .register(
-                    "Validname",
-                    "2",
-                    "user",
-                    "123123123")
-
-        } catch (ex: Exception) {
-            println(ex.message)
-        }
-
-        try {
-            // for fragments
-            // val viewModel by activityViewModels<MainViewModel>()
-            viewModel2
-                .getLocations()
-                .observe(this) { locations -> locations.forEach(::println) }
-        } catch (ex: Exception) {
-            println(ex.message)
-        }
+//
+//        val viewModel by viewModels<LoginRegisterViewModel>()
+//
+//        try {
+//            viewModel
+//                .register(
+//                    "Validname",
+//                    "2",
+//                    "user",
+//                    "123123123")
+//
+//        } catch (ex: Exception) {
+//            println(ex.message)
+//        }
+//
+//        try {
+//            // for fragments
+//            // val viewModel by activityViewModels<MainViewModel>()
+//            viewModel2
+//                .getLocations()
+//                .observe(this) { locations -> locations.forEach(::println) }
+//        } catch (ex: Exception) {
+//            println(ex.message)
+//        }
 
 
     }
 
-        override fun onSupportNavigateUp(): Boolean {
-            return navController.navigateUp() || super.onSupportNavigateUp()
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    //pops msg: skipped no adapter attached
+
+    /*val travelerBtn : Button = findViewById(R.id.travelerButton)
+    travelerBtn.setOnClickListener {
+        val locations = Locations()
+        val locationsFr : Fragment? =
+            supportFragmentManager.findFragmentByTag(Locations::class.java.simpleName)
+
+        if (locationsFr !is Locations){
+            supportFragmentManager.beginTransaction()
+                .add(R.id.layoutMain, locations, Locations::class.java.simpleName)
+                .commit()
         }
-
-        //pops msg: skipped no adapter attached
-
-        /*val travelerBtn : Button = findViewById(R.id.travelerButton)
-        travelerBtn.setOnClickListener {
-            val locations = Locations()
-            val locationsFr : Fragment? =
-                supportFragmentManager.findFragmentByTag(Locations::class.java.simpleName)
-
-            if (locationsFr !is Locations){
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.layoutMain, locations, Locations::class.java.simpleName)
-                    .commit()
-            }
-        }*/
+    }*/
 
 
-        //Agent button- starts new activity to log in
-        /*val agentBtn = findViewById<Button>(R.id.agencyButton)
-        agentBtn.setOnClickListener {
-            val Intent = Intent(this,LoginActivity::class.java)
-            startActivity(Intent)
-        }*/
+    //Agent button- starts new activity to log in
+    /*val agentBtn = findViewById<Button>(R.id.agencyButton)
+    agentBtn.setOnClickListener {
+        val Intent = Intent(this,LoginActivity::class.java)
+        startActivity(Intent)
+    }*/
 
-        //τελικά θα πηγαίνω σε νέο fragment, όχι νέο activity
-
-
-        /*val agentBtn = findViewById<Button>(R.id.agencyButton)
-        agentBtn.setOnClickListener {
-            val agentLogin = AgentLogin()
-            val agentLoginFr : Fragment? =
-            supportFragmentManager.findFragmentByTag(AgentLogin::class.java.simpleName)
-
-            if (agentLoginFr !is AgentLogin){
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.layoutMain, agentLogin, AgentLogin::class.java.simpleName)
-                    .commit()
-            }
-            agentBtn.visibility = View.GONE
-            travelerBtn.visibility = View.GONE
-        }*/
+    //τελικά θα πηγαίνω σε νέο fragment, όχι νέο activity
 
 
-        //αν στο mainActivity θελω να κάνω import fragment θα έχω ένα άδεια FrameLayout
-        //κατω απο το setContentView
-        //supportFragmentManager.beginTransaction().replace(R.id.nav_container, FirstFragment()).commit()
+    /*val agentBtn = findViewById<Button>(R.id.agencyButton)
+    agentBtn.setOnClickListener {
+        val agentLogin = AgentLogin()
+        val agentLoginFr : Fragment? =
+        supportFragmentManager.findFragmentByTag(AgentLogin::class.java.simpleName)
+
+        if (agentLoginFr !is AgentLogin){
+            supportFragmentManager.beginTransaction()
+                .add(R.id.layoutMain, agentLogin, AgentLogin::class.java.simpleName)
+                .commit()
+        }
+        agentBtn.visibility = View.GONE
+        travelerBtn.visibility = View.GONE
+    }*/
 
 
+    //αν στο mainActivity θελω να κάνω import fragment θα έχω ένα άδεια FrameLayout
+    //κατω απο το setContentView
+    //supportFragmentManager.beginTransaction().replace(R.id.nav_container, FirstFragment()).commit()
 
 
 }
