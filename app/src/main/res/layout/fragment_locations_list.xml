@@ -33,7 +33,7 @@
             android:id="@+id/floatingAddLocationButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="57dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
