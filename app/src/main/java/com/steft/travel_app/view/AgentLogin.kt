@@ -58,9 +58,7 @@ class AgentLogin : Fragment() {
                 println(ex.message)
             }
 
-            //μετά τις δοκιμές να ξαναμπεί ο κώδικας
-            /*val intent = Intent(this@AgentLogin.requireContext(),LoginActivity::class.java)
-            startActivity(intent)*/
+
         }
 
         //αν πατήσει register σε νέο fragment
