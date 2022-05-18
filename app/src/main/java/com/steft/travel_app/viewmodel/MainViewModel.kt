@@ -10,7 +10,6 @@ import arrow.typeclasses.Semigroup
 import com.steft.travel_app.common.*
 import com.steft.travel_app.dao.AppDatabase
 import com.steft.travel_app.dao.firebaseDb
-import com.steft.travel_app.dao.registrationDao
 import com.steft.travel_app.dto.*
 import com.steft.travel_app.model.*
 import kotlinx.coroutines.launch

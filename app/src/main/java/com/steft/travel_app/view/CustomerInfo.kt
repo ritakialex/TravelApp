@@ -9,8 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
-
-
+import com.steft.travel_app.databinding.FragmentCustomerInfoBinding
 
 
 class CustomerInfo : Fragment() {
@@ -21,16 +20,15 @@ class CustomerInfo : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_customer_info, container, false)
+        val bind = FragmentCustomerInfoBinding.inflate(layoutInflater)
 
         //Traveller Book bundle
-        val bookBundleBtn = view.findViewById<Button>(R.id.bookBundleCustInfoButton)
-        bookBundleBtn.setOnClickListener {
+        bind.bookBundleCustInfoButton.setOnClickListener {
             Toast.makeText(requireContext(), "Bundle Booked!", Toast.LENGTH_LONG)
             findNavController().navigate(R.id.action_customerInfo_to_locations)
         }
 
-        return view
+        return bind.root
     }
 
 

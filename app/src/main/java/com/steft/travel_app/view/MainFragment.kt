@@ -21,24 +21,22 @@ class MainFragment : Fragment() {
                 savedInstanceState: Bundle?
                 ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
+        val bind = FragmentMainBinding.inflate(layoutInflater)
 
         //Traveller
-        val travelBtn = view.findViewById<Button>(R.id.travelerButton)
-        travelBtn.setOnClickListener {
+        bind.travelerButton.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_locations)
         }
 
 
         //Agent
-        val agentBtn = view.findViewById<Button>(R.id.agencyButton)
-        agentBtn.setOnClickListener {
+        bind.agencyButton.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_agentLogin)
         }
 
 
 
-        return view
+        return bind.root
 
 
         //---------- Inflate the layout for this fragment

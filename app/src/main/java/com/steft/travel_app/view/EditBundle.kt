@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
+import com.steft.travel_app.databinding.FragmentEditBundleBinding
 
 
 class EditBundle : Fragment() {
@@ -18,24 +19,22 @@ class EditBundle : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_edit_bundle, container, false)
+        val bind = FragmentEditBundleBinding.inflate(layoutInflater)
 
         //Save changes Button Agent
-        val saveBundleButton : Button = view.findViewById(R.id.saveBundleButton)
-        saveBundleButton.setOnClickListener{
+        bind.saveBundleButton.setOnClickListener{
             Toast.makeText(requireContext(), "Changes saved!", Toast.LENGTH_LONG)
-            findNavController().navigate(R.id.action_editBundle_to_bundle)
+            findNavController().navigate(R.id.action_editBundle_to_bundles)
         }
 
         //Delete Button Agent
-        val deleteBundleButton : Button = view.findViewById(R.id.deleteBundleButton)
-        deleteBundleButton.setOnClickListener{
+        bind.deleteBundleButton.setOnClickListener{
             Toast.makeText(requireContext(), "Bundle Deleted!!", Toast.LENGTH_LONG)
             findNavController().navigate(R.id.action_editBundle_to_bundles)
         }
 
 
-        return view
+        return bind.root
     }
 
 }

@@ -37,6 +37,7 @@ class Bundles : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val bind = FragmentBundlesListBinding.inflate(layoutInflater)
         val recyclerView = bind.recyclerBundlesList
 
@@ -57,6 +58,7 @@ class Bundles : Fragment() {
 
         //floating button
         bind.floatingAddBundleButton.setOnClickListener{
+            println("------------------add bundle CLICK----------")
             findNavController().navigate(R.id.action_bundles_to_addBundle)
 
         }

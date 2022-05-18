@@ -7,7 +7,8 @@
     <fragment
             android:id="@+id/bundles"
             android:name="com.steft.travel_app.view.Bundles"
-            android:label="Bundles" >
+            android:label="Bundles"
+            tools:layout="@layout/fragment_bundles_list">
         <action
                 android:id="@+id/action_bundles_to_addBundle"
                 app:destination="@id/addBundle" />
@@ -18,7 +19,8 @@
     <fragment
             android:id="@+id/agentProfile"
             android:name="com.steft.travel_app.view.AgentProfile"
-            android:label="AgentProfile" >
+            android:label="AgentProfile"
+            tools:layout="@layout/fragment_agent_profile">
         <action
                 android:id="@+id/action_agentProfile_to_mainActivity"
                 app:destination="@id/mainActivity" />
@@ -31,7 +33,8 @@
     <fragment
             android:id="@+id/addBundle"
             android:name="com.steft.travel_app.view.AddBundle"
-            android:label="AddBundle" >
+            android:label="AddBundle"
+            tools:layout="@layout/fragment_add_bundle">
         <action
                 android:id="@+id/action_addBundle_to_bundles"
                 app:destination="@id/bundles" />
@@ -39,7 +42,8 @@
     <fragment
             android:id="@+id/locations"
             android:name="com.steft.travel_app.view.Locations"
-            android:label="Locations" >
+            android:label="Locations"
+            tools:layout="@layout/fragment_locations_list">
         <action
                 android:id="@+id/action_locations_to_addLocation"
                 app:destination="@id/addLocation" />
@@ -56,7 +60,8 @@
     <fragment
             android:id="@+id/editBundle"
             android:name="com.steft.travel_app.view.EditBundle"
-            android:label="EditBundle" >
+            android:label="EditBundle"
+            tools:layout="@layout/fragment_edit_bundle">
         <action
                 android:id="@+id/action_editBundle_to_bundles"
                 app:destination="@id/bundles" />

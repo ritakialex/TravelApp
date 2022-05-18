@@ -32,6 +32,7 @@ class AddBundle : Fragment() {
 
         val bind = FragmentAddBundleBinding.inflate(layoutInflater)
 
+        println("------------------went to ADD Bundle----------")
         //Add Bundle - Create
         bind.createNewBundleButton.setOnClickListener{
 
@@ -58,7 +59,7 @@ class AddBundle : Fragment() {
         }
 
 
-        return view
+        return bind.root
     }
 
 

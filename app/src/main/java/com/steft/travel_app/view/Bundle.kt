@@ -29,6 +29,7 @@ class Bundle : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        println("------------------went to one Bundle----------")
         val bind = FragmentBundleBinding.inflate(layoutInflater)
 
         //Book Button Traveler
@@ -37,9 +38,9 @@ class Bundle : Fragment() {
         }
 
         //Edit Button Agent
-        bind.editBundleButton.setOnClickListener{
+        /*bind.editBundleButton.setOnClickListener{
             findNavController().navigate(R.id.action_bundle_to_editBundle)
-        }
+        }*/
 
 
 
