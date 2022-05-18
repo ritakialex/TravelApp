@@ -18,18 +18,15 @@ import java.util.*
 import kotlin.contracts.Effect
 
 private typealias PreviewTriple = Triple<UUID, String, String>
-
-
 class MainViewModelFactory(
     private val application: Application,
-    private val loggedIn: Boolean,
     private val travelAgency: UUID? = null) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        MainViewModel(application, loggedIn, travelAgency) as T
+        MainViewModel(application, travelAgency) as T
 }
 
-class MainViewModel(application: Application, val loggedIn: Boolean, val travelAgency: UUID?) :
+class MainViewModel(application: Application, private val travelAgency: UUID?) :
     AndroidViewModel(application) {
     private val database = AppDatabase.getDatabase(application)
     private val locationDao = database.locationDao()
@@ -113,6 +110,10 @@ class MainViewModel(application: Application, val loggedIn: Boolean, val travelA
     fun init() {
         Log.i("MainViewModel", "Initialized main view model")
     }
+
+    fun isLoggedIn() = travelAgency != null
+
+    fun getUserId() = travelAgency
 
     fun getLocation(locationId: UUID): LiveData<LocationDto?> =
         intoLiveData {
@@ -278,10 +279,4 @@ class MainViewModel(application: Application, val loggedIn: Boolean, val travelA
                 }
             }
 
-    fun test(): Unit =
-        ifAuthorized { travelAgency ->
-            viewModelScope.launch {
-                registrationDao.insert(Registration(UUID.randomUUID(), travelAgency, emptyList()))
-            }.let { }
-        }
 }
