@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/agent_nav"
+        app:startDestination="@id/locations">
+    <fragment
+            android:id="@+id/bundles"
+            android:name="com.steft.travel_app.view.Bundles"
+            android:label="Bundles" >
+        <action
+                android:id="@+id/action_bundles_to_addBundle"
+                app:destination="@id/addBundle" />
+        <action
+                android:id="@+id/action_bundles_to_editBundle"
+                app:destination="@id/editBundle" />
+    </fragment>
+    <fragment
+            android:id="@+id/agentProfile"
+            android:name="com.steft.travel_app.view.AgentProfile"
+            android:label="AgentProfile" />
+    <fragment
+            android:id="@+id/bookings"
+            android:name="com.steft.travel_app.view.Bookings"
+            android:label="fragment_bookings"
+            tools:layout="@layout/fragment_bookings" />
+    <fragment
+            android:id="@+id/addBundle"
+            android:name="com.steft.travel_app.view.AddBundle"
+            android:label="AddBundle" >
+        <action
+                android:id="@+id/action_addBundle_to_bundles"
+                app:destination="@id/bundles" />
+    </fragment>
+    <fragment
+            android:id="@+id/locations"
+            android:name="com.steft.travel_app.view.Locations"
+            android:label="Locations" >
+        <action
+                android:id="@+id/action_locations_to_addLocation"
+                app:destination="@id/addLocation" />
+    </fragment>
+    <fragment
+            android:id="@+id/addLocation"
+            android:name="com.steft.travel_app.view.AddLocation"
+            android:label="fragment_add_location"
+            tools:layout="@layout/fragment_add_location" >
+        <action
+                android:id="@+id/action_addLocation_to_locations"
+                app:destination="@id/locations" />
+    </fragment>
+    <fragment
+            android:id="@+id/editBundle"
+            android:name="com.steft.travel_app.view.EditBundle"
+            android:label="EditBundle" >
+        <action
+                android:id="@+id/action_editBundle_to_bundles"
+                app:destination="@id/bundles" />
+    </fragment>
+</navigation>

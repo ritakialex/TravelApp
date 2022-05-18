@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Locations"
+            android:id="@+id/locations"
+            android:icon="@drawable/ic_baseline_location_24"/>
+
+    <item android:title="Bundles"
+            android:id="@+id/bundles"
+            android:icon="@drawable/ic_baseline_bundles_24"/>
+
+    <item android:title="Bookings"
+            android:icon="@drawable/ic_baseline_purchase_24"
+            android:id="@+id/bookings"/>
+
+    <item android:title="Profile"
+            android:id="@+id/agentProfile"
+            android:icon="@drawable/ic_baseline_profile_24"/>
+
+
+</menu>
