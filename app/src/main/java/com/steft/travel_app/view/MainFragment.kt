@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -12,10 +13,12 @@ import androidx.navigation.ui.NavigationUI
 import com.steft.travel_app.R
 import com.steft.travel_app.databinding.ActivityLoginBinding.inflate
 import com.steft.travel_app.databinding.FragmentMainBinding
+import com.steft.travel_app.viewmodel.MainViewModel
 
 
 class MainFragment : Fragment() {
 
+    private val viewModel by activityViewModels<MainViewModel>()
     override fun onCreateView(
                 inflater: LayoutInflater, container: ViewGroup?,
                 savedInstanceState: Bundle?

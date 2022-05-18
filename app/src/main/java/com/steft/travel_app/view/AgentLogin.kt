@@ -2,24 +2,16 @@ package com.steft.travel_app.view
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import arrow.fx.coroutines.fixedRate
 import com.steft.travel_app.R
-import com.steft.travel_app.databinding.ActivityLoginBinding.inflate
 import com.steft.travel_app.databinding.FragmentAgentLoginBinding
 import com.steft.travel_app.viewmodel.LoginRegisterViewModel
-import com.steft.travel_app.viewmodel.MainViewModel
-import com.steft.travel_app.viewmodel.MainViewModelFactory
 import java.util.*
 
 
@@ -45,10 +37,15 @@ class AgentLogin : Fragment() {
                 viewModel
                     .login(username,password)
                     .observe(viewLifecycleOwner) {
-                            if(it){
+                            if(it){//(it!==null)
                                 println("-------TEST---------True")
                                 val intent = Intent(this@AgentLogin.requireContext(),LoginActivity::class.java)
                                 startActivity(intent)
+//                                val intent = Intent(this@FirstActivity, SecondActivity::class.java)
+//                                val b = Bundle()
+//                                b.putString("id", UUID.fromString(it)) //Your id
+//                                intent.putExtras(b) //Put your id to your next Intent
+//                                startActivity(intent)
                             }else{
                                 Toast.makeText(context, "Wrong credentials", Toast.LENGTH_LONG).show()
                             }

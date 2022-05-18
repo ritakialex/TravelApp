@@ -20,7 +20,9 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> {
         MainViewModelFactory(
             application,
-            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
+            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d")
+            /*intent.extras!!.getString("id").let{ UUID.fromString(it) }*/
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

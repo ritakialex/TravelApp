@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
 import com.steft.travel_app.databinding.FragmentEditBundleBinding
+import com.steft.travel_app.viewmodel.MainViewModel
 
 
 class EditBundle : Fragment() {
 
+    private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

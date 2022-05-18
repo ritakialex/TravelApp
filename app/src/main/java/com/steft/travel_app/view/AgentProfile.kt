@@ -8,15 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
 import com.steft.travel_app.databinding.FragmentAgentLoginBinding
 import com.steft.travel_app.databinding.FragmentAgentProfileBinding
+import com.steft.travel_app.viewmodel.MainViewModel
 
 
 class AgentProfile : Fragment() {
 
-
+    private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +28,26 @@ class AgentProfile : Fragment() {
 
         //αν πατήσει login σε νέο activity
         val bind = FragmentAgentProfileBinding.inflate(layoutInflater)
+
+        try {
+            viewModel
+                .getTravelAgency()
+                .observe(viewLifecycleOwner) {
+                    if(it != null){
+                        val (id, name, address, username) = it
+                        bind.profileName.text = name
+                    }else{
+                        throw Exception()
+                    }
+
+                }
+        } catch (ex: Exception) {
+            //Do something
+            Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+            println(ex.message)
+        }
+
+
 
         bind.profileLogoutButton.setOnClickListener {
             val intent = Intent(this@AgentProfile.requireContext(),MainActivity::class.java)

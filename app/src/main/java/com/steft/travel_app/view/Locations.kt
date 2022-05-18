@@ -32,21 +32,7 @@ import kotlin.collections.ArrayList
 
 class Locations : Fragment() {
 
-    //    Testing data
-//    private val items = liveData {
-//        arrayListOf(
-//            LocationPreviewDto(UUID.randomUUID(), "Thessaloniki", "Thessaloniki, Greece"),
-//            LocationPreviewDto(UUID.randomUUID(), "Thessaloniki", "Thessaloniki, Greece"),
-//            LocationPreviewDto(UUID.randomUUID(), "Thessaloniki", "Thessaloniki, Greece"),
-//            LocationPreviewDto(UUID.randomUUID(), "Thessaloniki", "Thessaloniki, Greece"),
-//            LocationPreviewDto(UUID.randomUUID(), "Thessaloniki", "Thessaloniki, Greece"),
-//            LocationPreviewDto(UUID.randomUUID(), "Thessaloniki", "Thessaloniki, Greece"),
-//            LocationPreviewDto(UUID.randomUUID(), "Thessaloniki", "Thessaloniki, Greece"),
-//            LocationPreviewDto(UUID.randomUUID(), "Thessaloniki", "Thessaloniki, Greece"),
-//            LocationPreviewDto(UUID.randomUUID(), "Thessaloniki", "Thessaloniki, Greece"),
-//            LocationPreviewDto(UUID.randomUUID(), "Thessaloniki", "Thessaloniki, Greece")
-//        ).let { emit(it) }
-//    }
+
     private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(

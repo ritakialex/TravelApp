@@ -19,12 +19,7 @@ import java.util.*
 
 class CustomerInfo : Fragment() {
 
-    private val viewModel by activityViewModels<MainViewModel> {
-        MainViewModelFactory(
-            requireActivity().application,
-            true,
-            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
-    }
+    private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

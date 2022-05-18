@@ -2,6 +2,7 @@ package com.steft.travel_app.view
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -12,6 +13,9 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.steft.travel_app.R
+import com.steft.travel_app.viewmodel.MainViewModel
+import com.steft.travel_app.viewmodel.MainViewModelFactory
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -19,11 +23,16 @@ class LoginActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout*/
     private lateinit var navController: NavController
 
+    private val viewModel by viewModels<MainViewModel> {
+        MainViewModelFactory(
+            application,
+            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        viewModel.init()
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
