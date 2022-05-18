@@ -17,7 +17,10 @@
             android:id="@+id/fragment"
             app:layout_constraintEnd_toStartOf="@+id/bottomNavigationView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBaseline_toTopOf="@id/bottomNavigationView"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="50dp"/>
 
             <!--app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
             app:layout_constraintEnd_toStartOf="@id/bottomNavigationView"
@@ -28,7 +31,7 @@
             android:id="@+id/bottomNavigationView"
             android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:background="@color/teal_800"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

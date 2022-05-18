@@ -10,7 +10,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addLocationCityET"
+        android:id="@+id/addLocationCity"
         android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="text"
@@ -23,7 +23,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addLocationCountryET"
+        android:id="@+id/addLocationCountry"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="text"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addLocationCityET" />
+        app:layout_constraintTop_toBottomOf="@+id/addLocationCity" />
 
     <!--<EditText
         android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addLocationCountryET"
+        app:layout_constraintTop_toBottomOf="@+id/addLocationCountry"
         android:layout_marginTop="32dp" />
 
 

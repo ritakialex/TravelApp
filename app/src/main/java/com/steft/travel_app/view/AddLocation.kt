@@ -1,5 +1,6 @@
 package com.steft.travel_app.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,58 +9,60 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
 import com.steft.travel_app.dataTestRita.User
 import com.steft.travel_app.dataTestRita.UserViewModel
+import com.steft.travel_app.databinding.FragmentAddLocationBinding
+import com.steft.travel_app.databinding.FragmentRegisterBinding
+import com.steft.travel_app.viewmodel.MainViewModel
+import com.steft.travel_app.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class AddLocation : Fragment() {
 
+    private val viewModel by activityViewModels<MainViewModel> {
+        MainViewModelFactory(
+            requireActivity().application,
+            true,
+            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
+    }
 
-    //try
-    private lateinit var mUserViewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_add_location, container, false)
+        //val view = inflater.inflate(R.layout.fragment_add_location, container, false)
 
-        //try
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        val bind = FragmentAddLocationBinding.inflate(layoutInflater)
 
+        //Add Location Button
+        bind.createNewLocationButton.setOnClickListener {
+            val city = bind.addLocationCity.text.toString()
+            val country = bind.addLocationCountry.text.toString()
 
-        //Add Location - Save
-        val createLocationBtn = view.findViewById<Button>(R.id.createNewLocationButton)
+            try {
+                viewModel
+                    .addCustomLocation(city,country)
+                Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
 
-        createLocationBtn.setOnClickListener{
-
-            //try
-            //εισαγωγή στη βάση
-            val cityLoc = view.findViewById<EditText>(R.id.addLocationCityET)?.text?.toString() ?: ""
-            val countryLoc = view.findViewById<EditText>(R.id.addLocationCountryET)?.text?.toString() ?: ""
-            //val typeLoc = view.findViewById<EditText>(R.id.editLocationType)?.text?.toString() ?: ""
-
-            //val location = User(0, cityLoc, countryLoc, Integer.parseInt(typeLoc.toString()))
-            //mUserViewModel.addUser(location)
-
-            //stef
-            /*viewLifecycleOwner.lifecycleScope.launch {
-                service.insert(cityLoc, countryLoc, typeLoc)
-                parentFragmentManager.popBackStack()
-            }*/
-            Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG)
-
-            findNavController().navigate(R.id.action_addLocation_to_locations)
+                findNavController().navigate(R.id.action_addLocation_to_locations)
+            } catch (ex: Exception) {
+                //Do something
+                Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+                println(ex.message)
+            }
 
         }
 
-        return view
+        return bind.root//return view
     }
 
 }
