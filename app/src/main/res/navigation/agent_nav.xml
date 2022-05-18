@@ -18,7 +18,11 @@
     <fragment
             android:id="@+id/agentProfile"
             android:name="com.steft.travel_app.view.AgentProfile"
-            android:label="AgentProfile" />
+            android:label="AgentProfile" >
+        <action
+                android:id="@+id/action_agentProfile_to_mainActivity"
+                app:destination="@id/mainActivity" />
+    </fragment>
     <fragment
             android:id="@+id/bookings"
             android:name="com.steft.travel_app.view.Bookings"
@@ -57,4 +61,9 @@
                 android:id="@+id/action_editBundle_to_bundles"
                 app:destination="@id/bundles" />
     </fragment>
+    <activity
+            android:id="@+id/mainActivity"
+            android:name="com.steft.travel_app.view.MainActivity"
+            android:label="activity_main"
+            tools:layout="@layout/activity_main" />
 </navigation>
