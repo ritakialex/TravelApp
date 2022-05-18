@@ -1,6 +1,6 @@
 @file:Suppress("NAME_SHADOWING")
 
-package com.steft.travel_app.dto
+package com.steft.travel_app.dao
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore

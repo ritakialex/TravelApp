@@ -1,23 +1,13 @@
 package com.steft.travel_app.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider.Factory
+import androidx.fragment.app.activityViewModels
 import com.steft.travel_app.R
-import com.steft.travel_app.common.InvalidObjectException
-import com.steft.travel_app.viewmodel.LoginRegisterViewModel
 import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
 import java.util.*
@@ -27,11 +17,17 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var navController: NavController
 
+    private val viewModel by viewModels<MainViewModel> {
+        MainViewModelFactory(
+            application,
+            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        viewModel.init()
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.myNavHostFragment)
                 as NavHostFragment
@@ -40,10 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         //back arrow for navigation
         setupActionBarWithNavController(navController)
-
-
-
-
 
 
         //val viewModel2 by viewModels<MainViewModel>()
@@ -71,12 +63,6 @@ class MainActivity : AppCompatActivity() {
             println(ex.message)
         }*/
 
-
-
-
-        val viewModel by viewModels<MainViewModel> {
-            MainViewModelFactory(application, true, UUID.randomUUID())
-        }
 
         viewModel
             .registerCustomer(
