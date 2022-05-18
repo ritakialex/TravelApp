@@ -5,12 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.steft.travel_app.R
 import com.steft.travel_app.placeholder.PlaceholderContent
+import com.steft.travel_app.viewmodel.MainViewModel
+import com.steft.travel_app.viewmodel.MainViewModelFactory
+import java.util.*
 
 class Bundles : Fragment() {
 //    private val items = arrayListOf(
@@ -19,18 +23,34 @@ class Bundles : Fragment() {
 //        PlaceholderContent.PlaceholderItem("asd", "aasdassd", "details")
 //    )
 
+    private val viewModel by activityViewModels<MainViewModel> {
+        MainViewModelFactory(
+            activity!!.application,
+            true,
+            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_bundles_list, container, false)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_bundles_list)!!
 
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = LinearLayoutManager(context)
-//                adapter = MyItemRecyclerViewAdapter(items)
-            }
+
+        try {
+            viewModel
+                .getBundles()
+                .observe(this) { bundles ->
+                    with(recyclerView) {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = MyItemRecyclerViewAdapter(ArrayList(bundles))
+                    }
+                }
+        } catch (ex: Exception) {
+            //Do something
+            println(ex.message)
         }
 
         //floating button

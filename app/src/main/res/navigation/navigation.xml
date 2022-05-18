@@ -66,8 +66,8 @@
                 android:id="@+id/action_agentLogin_to_registerFragment"
                 app:destination="@id/registerFragment" />
         <action
-                android:id="@+id/action_agentLogin_to_loginActivity"
-                app:destination="@id/loginActivity" />
+                android:id="@+id/action_agentLogin_to_loginActivity2"
+                app:destination="@id/loginActivity2" />
     </fragment>
     <fragment
             android:id="@+id/registerFragment"
@@ -75,14 +75,9 @@
             android:label="Register"
             tools:layout="@layout/fragment_register" >
         <action
-                android:id="@+id/action_registerFragment_to_loginActivity"
-                app:destination="@id/loginActivity" />
+                android:id="@+id/action_registerFragment_to_loginActivity2"
+                app:destination="@id/loginActivity2" />
     </fragment>
-    <activity
-            android:id="@+id/loginActivity"
-            android:name="com.steft.travel_app.view.LoginActivity"
-            android:label="Agent Home"
-            tools:layout="@layout/activity_login" />
     <fragment
             android:id="@+id/addLocation"
             android:name="com.steft.travel_app.view.AddLocation"
@@ -111,4 +106,9 @@
                 android:id="@+id/action_addBundle_to_bundles"
                 app:destination="@id/bundles" />
     </fragment>
+    <activity
+            android:id="@+id/loginActivity2"
+            android:name="com.steft.travel_app.view.LoginActivity"
+            android:label="activity_login"
+            tools:layout="@layout/activity_login" />
 </navigation>

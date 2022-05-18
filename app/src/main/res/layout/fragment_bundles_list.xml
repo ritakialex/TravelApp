@@ -15,11 +15,16 @@
         android:layout_height="match_parent" >-->
 
     <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_bundles_list"
+            android:name="com.steft.travel_app.Bundles"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".view.Bundles"
+            tools:listitem="@layout/recycler_view_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/recycler_view_item"/>
+            />
 
     <!--when user logged out - button should be visibility="gone"-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
