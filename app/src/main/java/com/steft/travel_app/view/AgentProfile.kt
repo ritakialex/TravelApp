@@ -32,6 +32,10 @@ class AgentProfile : Fragment() {
             startActivity(intent)
         }
 
+        bind.profileDeleteButton.setOnClickListener {
+            TODO()
+        }
+
         // Inflate the layout for this fragment
         return bind.root //return inflater.inflate(R.layout.fragment_agent_profile, container, false)
     }
