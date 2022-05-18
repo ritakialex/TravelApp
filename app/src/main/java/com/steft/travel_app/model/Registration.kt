@@ -6,14 +6,17 @@ import com.steft.travel_app.common.*
 import java.util.UUID
 
 
-data class CustomerDetails(val name: Name,
-                           val surname: Name,
-                           val phone: Phone,
-                           val email: Email,
-                           val hotel: String)
+data class CustomerDetails(
+    val name: Name,
+    val surname: Name,
+    val phone: Phone,
+    val email: Email,
+    val hotel: String)
 
-data class Registration(val bundle: UUID = UUID.randomUUID(),
-                        val customers: List<CustomerDetails>)
+data class Registration(
+    val bundle: UUID,
+    val travelAgency: UUID,
+    val customers: List<CustomerDetails>)
 
 object RegistrationUtils {
     private val name = CustomerDetails::name.name
@@ -22,23 +25,27 @@ object RegistrationUtils {
     private val email = CustomerDetails::email.name
     private val hotel = CustomerDetails::hotel.name
 
-    fun registrationToMap(customerDetails: CustomerDetails) =
-        mapOf(name to customerDetails.name.toString(),
-              surname to customerDetails.surname.toString(),
-              phone to customerDetails.phone.toString(),
-              email to customerDetails.email.toString(),
-              hotel to customerDetails.hotel)
+    fun customerDetailsToMap(customerDetails: CustomerDetails) =
+        mapOf(
+            name to customerDetails.name.toString(),
+            surname to customerDetails.surname.toString(),
+            phone to customerDetails.phone.toString(),
+            email to customerDetails.email.toString(),
+            hotel to customerDetails.hotel)
 
 
-    fun mapToRegistration(regId: Any?,
-                          detailsList: List<Map<String, Any>>): Either<Throwable, Registration> {
+    fun mapToRegistration(
+        regId: Any?,
+        travelAgency: Any?,
+        detailsList: List<Map<String, Any>>): Either<Throwable, Registration> {
 
         val mapToDetails: (Map<String, Any>) -> ValidatedObject<CustomerDetails> = { map ->
             Name.makeValidated(map[name].toString())
-                .zip(Semigroup.nonEmptyList(),
-                     Name.makeValidated(map[surname] as String),
-                     Phone.makeValidated(map[phone] as String),
-                     Email.makeValidated(map[email] as String))
+                .zip(
+                    Semigroup.nonEmptyList(),
+                    Name.makeValidated(map[surname] as String),
+                    Phone.makeValidated(map[phone] as String),
+                    Email.makeValidated(map[email] as String))
                 { name, surname, phone, email ->
                     CustomerDetails(name, surname, phone, email, map[hotel] as String)
                 }
@@ -46,13 +53,17 @@ object RegistrationUtils {
 
         val makeRegistration: (ValidatedObject<List<CustomerDetails>>) -> ValidatedObject<Registration> =
             { validatedCustomerDetails ->
-                val validatedId =
+                val validatedRegId =
                     Validated.catch { UUID.fromString(regId as String)!! }
                         .mapLeft { ValidationError(it.toString()).nel() }
 
+                val validatedAgencyId =
+                    Validated.catch { UUID.fromString(travelAgency as String)!! }
+                        .mapLeft { ValidationError(it.toString()).nel() }
+
                 validatedCustomerDetails
-                    .zip(Semigroup.nonEmptyList(), validatedId) { details, id ->
-                        Registration(id, details)
+                    .zip(Semigroup.nonEmptyList(), validatedAgencyId, validatedRegId) { details, bundleId, agencyId ->
+                        Registration(bundleId, agencyId, details)
                     }
             }
 

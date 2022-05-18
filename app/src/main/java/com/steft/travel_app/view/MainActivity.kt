@@ -12,38 +12,47 @@ import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
 import java.util.*
 
-val travelAgencyId: UUID = TODO()
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val viewModel2 by viewModels<MainViewModel> {
-            MainViewModelFactory(application, true, travelAgencyId)
+
+        val viewModel by viewModels<MainViewModel> {
+            MainViewModelFactory(application, true, UUID.randomUUID())
         }
 
-        val viewModel by viewModels<LoginRegisterViewModel>()
-
-        try {
-            viewModel
-                .register(
-                    "Validname",
-                    "2",
-                    "user",
-                    "123123123")
-
-        } catch (ex: Exception) {
-            println(ex.message)
-        }
-
-        try {
-            // for fragments
-            // val viewModel by activityViewModels<MainViewModel>()
-            viewModel2
-                .getLocations()
-                .observe(this) { locations -> locations.forEach(::println) }
-        } catch (ex: Exception) {
-            println(ex.message)
-        }
+        viewModel
+            .registerCustomer(
+                UUID.fromString("b6c8a409-1355-4948-b026-40fb86f788f4"),
+                "Stef",
+                "Touf",
+                "+12124567890",
+                "stefetoufe@gmail.com",
+                "Hotel Grande")
+//
+//        val viewModel by viewModels<Ma>()
+//
+//        try {
+//            viewModel
+//                .register(
+//                    "Validname",
+//                    "2",
+//                    "user",
+//                    "123123123")
+//
+//        } catch (ex: Exception) {
+//            println(ex.message)
+//        }
+//
+//        try {
+//            // for fragments
+//            // val viewModel by activityViewModels<MainViewModel>()
+//            viewModel2
+//                .getLocations()
+//                .observe(this) { locations -> locations.forEach(::println) }
+//        } catch (ex: Exception) {
+//            println(ex.message)
+//        }
     }
 }
