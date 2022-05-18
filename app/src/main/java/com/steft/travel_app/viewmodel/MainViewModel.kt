@@ -3,16 +3,16 @@
 package com.steft.travel_app.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import arrow.core.*
 import arrow.typeclasses.Semigroup
 import com.steft.travel_app.common.*
 import com.steft.travel_app.dao.AppDatabase
+import com.steft.travel_app.dao.firebaseDb
+import com.steft.travel_app.dao.registrationDao
 import com.steft.travel_app.dto.*
-import com.steft.travel_app.model.Bundle
-import com.steft.travel_app.model.CustomLocation
-import com.steft.travel_app.model.Location
-import com.steft.travel_app.model.TravelAgency
+import com.steft.travel_app.model.*
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.contracts.Effect
@@ -35,6 +35,7 @@ class MainViewModel(application: Application, val loggedIn: Boolean, val travelA
     private val locationDao = database.locationDao()
     private val agencyDao = database.travelAgencyDao()
     private val bundleDao = database.bundleDao()
+    private val registrationDao = firebaseDb().registrationDao()
 
     private val locationToTriple: (Location) -> PreviewTriple =
         { (id, city, country) ->
@@ -107,6 +108,11 @@ class MainViewModel(application: Application, val loggedIn: Boolean, val travelA
                 ?: customLocation
                     ?.let { Either.Right(it) }
         }
+
+
+    fun init() {
+        Log.i("MainViewModel", "Initialized main view model")
+    }
 
     fun getLocation(locationId: UUID): LiveData<LocationDto?> =
         intoLiveData {
@@ -218,5 +224,64 @@ class MainViewModel(application: Application, val loggedIn: Boolean, val travelA
                     .getAll(travelAgency)
                     .map { bundleToBundlePreviewDto(it) }
             }
+        }
+
+    fun addBundle(
+        locationId: UUID,
+        date: Date,
+        price: Double,
+        duration: Int,
+        hotels: List<String>,
+        type: LocationType): Unit =
+        ifAuthorized { travelAgency ->
+            hotels
+                .traverseValidated { Name.makeValidated(it) }
+                .map {
+                    Bundle(
+                        travelAgency = travelAgency,
+                        location = locationId,
+                        date = date,
+                        price = price,
+                        duration = duration,
+                        hotels = it,
+                        type = type)
+                }.let {
+                    when (it) {
+                        is Valid ->
+                            viewModelScope.launch {
+                                bundleDao.insertAll(it.value)
+                                registrationDao.insert(Registration(it.value.id, travelAgency, emptyList()))
+                            }
+                        is Invalid ->
+                            throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
+                    }
+                }
+        }
+
+    fun registerCustomer(bundleId: UUID, name: String, surname: String, phone: String, email: String, hotel: String) =
+        Name.makeValidated(name)
+            .zip(
+                Semigroup.nonEmptyList(),
+                Name.makeValidated(surname),
+                Phone.makeValidated(phone),
+                Email.makeValidated(email))
+            { name, surname, phone, email ->
+                CustomerDetails(name, surname, phone, email, hotel)
+            }.let {
+                when (it) {
+                    is Valid ->
+                        viewModelScope.launch {
+                            registrationDao.register(bundleId, it.value)
+                        }
+                    is Invalid ->
+                        throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
+                }
+            }
+
+    fun test(): Unit =
+        ifAuthorized { travelAgency ->
+            viewModelScope.launch {
+                registrationDao.insert(Registration(UUID.randomUUID(), travelAgency, emptyList()))
+            }.let { }
         }
 }
