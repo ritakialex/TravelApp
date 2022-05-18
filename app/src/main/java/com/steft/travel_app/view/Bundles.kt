@@ -42,7 +42,7 @@ class Bundles : Fragment() {
         try {
             viewModel
                 .getBundles()
-                .observe(this) { bundles ->
+                .observe(viewLifecycleOwner) { bundles ->
                     with(recyclerView) {
                         layoutManager = LinearLayoutManager(context)
                         adapter = MyItemRecyclerViewAdapter(ArrayList(bundles))

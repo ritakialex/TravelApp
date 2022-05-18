@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import arrow.fx.coroutines.fixedRate
 import com.steft.travel_app.R
 import com.steft.travel_app.databinding.ActivityLoginBinding.inflate
@@ -24,6 +27,7 @@ class AgentLogin : Fragment() {
 
     private val viewModel by activityViewModels<LoginRegisterViewModel>()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,9 +36,31 @@ class AgentLogin : Fragment() {
         //αν πατήσει login σε νέο activity
         val bind = FragmentAgentLoginBinding.inflate(layoutInflater)
 
+
         bind.loginButton.setOnClickListener {
-            val intent = Intent(this@AgentLogin.requireContext(),LoginActivity::class.java)
-            startActivity(intent)
+            val username = bind.usernamelogin.text.toString()
+            val password = bind.passowordlogin.text.toString()
+
+            try {
+                viewModel
+                    .login(username,password)
+                    .observe(viewLifecycleOwner) {
+                            if(it){
+                                println("-------TEST---------True")
+                                val intent = Intent(this@AgentLogin.requireContext(),LoginActivity::class.java)
+                                startActivity(intent)
+                            }else{
+                                Toast.makeText(context, "Wrong credentials", Toast.LENGTH_LONG).show()
+                            }
+                        }
+            } catch (ex: Exception) {
+                //Do something
+                println(ex.message)
+            }
+
+            //μετά τις δοκιμές να ξαναμπεί ο κώδικας
+            /*val intent = Intent(this@AgentLogin.requireContext(),LoginActivity::class.java)
+            startActivity(intent)*/
         }
 
         //αν πατήσει register σε νέο fragment
