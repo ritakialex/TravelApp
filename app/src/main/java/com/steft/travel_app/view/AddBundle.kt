@@ -7,24 +7,50 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
+import com.steft.travel_app.databinding.FragmentAddBundleBinding
+import com.steft.travel_app.viewmodel.MainViewModel
+import com.steft.travel_app.viewmodel.MainViewModelFactory
+import java.util.*
 
 
 class AddBundle : Fragment() {
 
+    private val viewModel by activityViewModels<MainViewModel> {
+        MainViewModelFactory(
+            requireActivity().application,
+            true,
+            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_add_bundle, container, false)
+
+        val bind = FragmentAddBundleBinding.inflate(layoutInflater)
 
         //Add Bundle - Create
-        val createBundleBtn = view.findViewById<Button>(R.id.createNewBundleButton)
+        bind.createNewBundleButton.setOnClickListener{
 
-        createBundleBtn.setOnClickListener{
+            val date = bind.addBundleDate.text.toString()
+            val duration = bind.addBundleDuration.text.toString()
+            val type = bind.addBundleType.text.toString()
+            val price = bind.addBundlePrice.text.toString()
 
+            /*try {
+                viewModel
+                    .addCustomLocation(city,country)
+                Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
+
+                findNavController().navigate(R.id.action_addLocation_to_locations)
+            } catch (ex: Exception) {
+                //Do something
+                Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+                println(ex.message)
+            }*/
 
             Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG)
 

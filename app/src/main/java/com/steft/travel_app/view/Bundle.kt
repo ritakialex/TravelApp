@@ -6,36 +6,44 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
+import com.steft.travel_app.databinding.FragmentAddLocationBinding
+import com.steft.travel_app.databinding.FragmentBundleBinding
+import com.steft.travel_app.viewmodel.MainViewModel
+import com.steft.travel_app.viewmodel.MainViewModelFactory
+import java.util.*
 
 class Bundle : Fragment() {
 
+    private val viewModel by activityViewModels<MainViewModel> {
+        MainViewModelFactory(
+            requireActivity().application,
+            true,
+            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_bundle, container, false)
 
-        val view = inflater.inflate(R.layout.fragment_bundle, container, false)
+        val bind = FragmentBundleBinding.inflate(layoutInflater)
 
         //Book Button Traveler
-        val bookButton : Button = view.findViewById(R.id.bookBundleButton)
-        bookButton.setOnClickListener{
+        bind.bookBundleButton.setOnClickListener{
             findNavController().navigate(R.id.action_bundle_to_customerInfo)
         }
 
         //Edit Button Agent
-        val editButton : Button = view.findViewById(R.id.editBundleButton)
-        bookButton.setOnClickListener{
+        bind.editBundleButton.setOnClickListener{
             findNavController().navigate(R.id.action_bundle_to_editBundle)
         }
 
 
 
-        return view
+        return bind.root
     }
 
 

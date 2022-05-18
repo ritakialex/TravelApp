@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.steft.travel_app.R
+import com.steft.travel_app.databinding.FragmentLocationsListBinding
 import com.steft.travel_app.dto.LocationPreviewDto
 import com.steft.travel_app.placeholder.PlaceholderContent
 import com.steft.travel_app.placeholder.PlaceholderContent.PlaceholderItem
@@ -48,7 +49,7 @@ class Locations : Fragment() {
 //    }
     private val viewModel by activityViewModels<MainViewModel> {
         MainViewModelFactory(
-            activity!!.application,
+            requireActivity().application,
             true,
             UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
     }
@@ -58,13 +59,16 @@ class Locations : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_locations_list, container, false)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_locations_list)!!
+        val bind = FragmentLocationsListBinding.inflate(layoutInflater)
+
+        //val view = inflater.inflate(R.layout.fragment_locations_list, container, false)
+        //val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_locations_list)!!
+        val recyclerView = bind.recyclerLocationsList
 
         try {
             viewModel
                 .getLocations()
-                .observe(this) { locations ->
+                .observe(viewLifecycleOwner) { locations ->
                     with(recyclerView) {
                         layoutManager = LinearLayoutManager(context)
                         adapter = MyItemRecyclerViewAdapter(ArrayList(locations))
@@ -77,14 +81,15 @@ class Locations : Fragment() {
 
 
         //floating button
-        val addLocationBtn: FloatingActionButton = view.findViewById(R.id.floatingAddLocationButton)
+        //val addLocationBtn: FloatingActionButton = view.findViewById(R.id.floatingAddLocationButton)
 
-        addLocationBtn.setOnClickListener {
+
+        bind.floatingAddLocationButton.setOnClickListener {
             findNavController().navigate(R.id.action_locations_to_addLocation)
         }
 
 
-        return view
+        return bind.root
     }
 
 }
