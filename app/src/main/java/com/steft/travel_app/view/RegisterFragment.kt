@@ -33,18 +33,15 @@ class RegisterFragment : Fragment() {
 
             try {
                 viewModel
-                    .register(name,address,username,password)
-                        Toast.makeText(context, "Registered Successfully", Toast.LENGTH_LONG).show()
-                        val intent = Intent(this@RegisterFragment.requireContext(),LoginActivity::class.java)
-                        startActivity(intent)
+                    .register(name, address, username, password)
+                Toast.makeText(context, "Registered Successfully", Toast.LENGTH_LONG).show()
+                val intent = Intent(this@RegisterFragment.requireContext(), LoginActivity::class.java)
+                startActivity(intent)
             } catch (ex: Exception) {
                 //Do something
                 Toast.makeText(context, "Input incorrect, try again", Toast.LENGTH_LONG).show()
                 println(ex.message)
             }
-
-
-
         }
 
 

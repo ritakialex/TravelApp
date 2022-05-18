@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
 import com.steft.travel_app.databinding.FragmentAgentLoginBinding
@@ -41,7 +42,7 @@ class AgentLogin : Fragment() {
                                 println("-------TEST---------True")
                                 val intent = Intent(this@AgentLogin.requireContext(),LoginActivity::class.java)
                                 startActivity(intent)
-//                                val intent = Intent(this@FirstActivity, SecondActivity::class.java)
+//                                val intent = Intent(this@AgentLogin.requireContext(), LoginActivity::class.java)
 //                                val b = Bundle()
 //                                b.putString("id", UUID.fromString(it)) //Your id
 //                                intent.putExtras(b) //Put your id to your next Intent

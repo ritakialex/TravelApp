@@ -17,10 +17,18 @@ data class CorruptDatabaseObjectException(override val message: String) : Except
     }
 }
 
-data class AnauthorizedException(override val message: String) : Exception(message) {
+data class UnauthorizedException(override val message: String) : Exception(message) {
     companion object {
         fun fromOtherException(exception: Throwable) =
-            AnauthorizedException(derivedExceptionMessage(exception))
+            UnauthorizedException(derivedExceptionMessage(exception))
     }
 }
+
+data class InconsistentStateException(override val message: String) : Exception(message) {
+    companion object {
+        fun fromOtherException(exception: Throwable) =
+            UnauthorizedException(derivedExceptionMessage(exception))
+    }
+}
+
 

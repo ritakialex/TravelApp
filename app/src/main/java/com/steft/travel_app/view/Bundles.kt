@@ -1,3 +1,5 @@
+@file:Suppress("NAME_SHADOWING")
+
 package com.steft.travel_app.view
 
 import android.os.Bundle
@@ -6,25 +8,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.steft.travel_app.R
+import com.steft.travel_app.common.InconsistentStateException
+import com.steft.travel_app.common.UnauthorizedException
 import com.steft.travel_app.databinding.FragmentBundlesListBinding
 import com.steft.travel_app.databinding.FragmentLocationsListBinding
+import com.steft.travel_app.dto.BundlePreviewDto
 import com.steft.travel_app.placeholder.PlaceholderContent
 import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
 import java.util.*
 
-class Bundles : Fragment() {
-//    private val items = arrayListOf(
-//        PlaceholderContent.PlaceholderItem("asd", "dasdawdwa", "details"),
-//        PlaceholderContent.PlaceholderItem("asd", "12323asdsad", "details"),
-//        PlaceholderContent.PlaceholderItem("asd", "aasdassd", "details")
-//    )
 
+private fun MainViewModel.getBundles(locationId: UUID): LiveData<List<BundlePreviewDto>> =
+    TODO()
+
+class Bundles : Fragment() {
     private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(
@@ -36,26 +40,41 @@ class Bundles : Fragment() {
         val bind = FragmentBundlesListBinding.inflate(layoutInflater)
         val recyclerView = bind.recyclerBundlesList
 
-
         try {
-            viewModel
-                .getBundles()
+
+            val bundles =
+                if (savedInstanceState != null) {
+                    val locationId = savedInstanceState.getString("locationId")
+                    if (locationId != null) {
+                        val locationUUID = UUID.fromString(locationId)
+                        viewModel.getBundles(locationUUID)
+                    } else {
+                        throw InconsistentStateException("You shouldn't be here. Call an administrator immediately!!")
+                    }
+                } else if (viewModel.isLoggedIn()) {
+                    viewModel.getAgencyBundles()
+                } else {
+                    throw UnauthorizedException("You shouldn't be here. Call an administrator immediately!!")
+                }
+
+            bundles
                 .observe(viewLifecycleOwner) { bundles ->
                     with(recyclerView) {
                         layoutManager = LinearLayoutManager(context)
-                        adapter = MyItemRecyclerViewAdapter(ArrayList(bundles))
+                        adapter = MyItemRecyclerViewAdapter(ArrayList(bundles)) {
+                            findNavController().navigate(R.id.action_bundles_to_bundle)
+                        }
                     }
                 }
+
         } catch (ex: Exception) {
             //Do something
             println(ex.message)
         }
 
         //floating button
-        bind.floatingAddBundleButton.setOnClickListener{
-            println("------------------add bundle CLICK----------")
+        bind.floatingAddBundleButton.setOnClickListener {
             findNavController().navigate(R.id.action_bundles_to_addBundle)
-
         }
 
 

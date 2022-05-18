@@ -13,7 +13,7 @@ import com.steft.travel_app.dto.Preview
 import java.util.UUID
 
 
-class MyItemRecyclerViewAdapter<T : Preview>(private val values: ArrayList<T>) :
+class MyItemRecyclerViewAdapter<T : Preview>(private val values: ArrayList<T>, private val onItemClick: (T) -> Unit) :
     RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
 
@@ -59,15 +59,16 @@ class MyItemRecyclerViewAdapter<T : Preview>(private val values: ArrayList<T>) :
     }*/
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = values[position]
+
         with(holder) {
             itemTitle.text = currentItem.title
             itemDesc.text = currentItem.details
         }
-        /*holder.cardView.setOnClickListener {
-            val transaction = (context as MainActivity).supportFragmentManager.beginTransaction()
-            transaction.addToBackStack("")
-            transaction.replace(R.id.frame, ViewFragment(note.uuid, service)).commit()
-        }*/
+
+        holder.cardView.setOnClickListener {
+            onItemClick(currentItem)
+        }
+
 //        holder.itemImage.setImageResource(currentItem.itemImage)
     }
 

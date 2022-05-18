@@ -3,10 +3,7 @@
 package com.steft.travel_app.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import arrow.core.*
 import arrow.typeclasses.Semigroup
 import com.steft.travel_app.common.*

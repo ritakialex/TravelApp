@@ -15,7 +15,6 @@ import com.steft.travel_app.dto.*
 import com.steft.travel_app.model.*
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.contracts.Effect
 
 private typealias PreviewTriple = Triple<UUID, String, String>
 class MainViewModelFactory(
@@ -93,7 +92,7 @@ class MainViewModel(application: Application, private val travelAgency: UUID?) :
     private inline fun <T> ifAuthorized(crossinline f: (travelAgency: UUID) -> T): T =
         travelAgency
             ?.let { f(it) }
-            ?: throw AnauthorizedException("You aren't logged in as a travel agent")
+            ?: throw UnauthorizedException("You aren't logged in as a travel agent")
 
     private suspend fun getLocationSuspend(locationId: UUID): Either<Location, CustomLocation>? =
         Utils.concurrently(
@@ -209,7 +208,6 @@ class MainViewModel(application: Application, private val travelAgency: UUID?) :
                         type = type.name)
                 }
         }
-
 
     fun getBundles(): LiveData<List<BundlePreviewDto>> =
         intoLiveData {
