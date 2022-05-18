@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.steft.travel_app.R
+import com.steft.travel_app.databinding.FragmentBundlesListBinding
+import com.steft.travel_app.databinding.FragmentLocationsListBinding
 import com.steft.travel_app.placeholder.PlaceholderContent
 import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
@@ -25,7 +27,7 @@ class Bundles : Fragment() {
 
     private val viewModel by activityViewModels<MainViewModel> {
         MainViewModelFactory(
-            activity!!.application,
+            requireActivity().application,
             true,
             UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
     }
@@ -35,8 +37,8 @@ class Bundles : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_bundles_list, container, false)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_bundles_list)!!
+        val bind = FragmentBundlesListBinding.inflate(layoutInflater)
+        val recyclerView = bind.recyclerBundlesList
 
 
         try {
@@ -54,15 +56,12 @@ class Bundles : Fragment() {
         }
 
         //floating button
-        val addBundleBtn : FloatingActionButton
-        addBundleBtn = view.findViewById(R.id.floatingAddBundleButton)
-
-        addBundleBtn.setOnClickListener{
+        bind.floatingAddBundleButton.setOnClickListener{
             findNavController().navigate(R.id.action_bundles_to_addBundle)
 
         }
 
 
-        return view
+        return bind.root
     }
 }
