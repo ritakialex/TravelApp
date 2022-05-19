@@ -18,18 +18,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val viewModel by viewModels<MainViewModel> {
-            MainViewModelFactory(application, true, UUID.randomUUID())
-        }
+//        val viewModel by viewModels<MainViewModel> {
+//            MainViewModelFactory(application, UUID.randomUUID())
+//        }
 
+        val viewModel by viewModels<LoginRegisterViewModel>()
         viewModel
-            .registerCustomer(
-                UUID.fromString("b6c8a409-1355-4948-b026-40fb86f788f4"),
-                "Stef",
-                "Touf",
-                "+12124567890",
-                "stefetoufe@gmail.com",
-                "Hotel Grande")
+            .register("Steff", "Address 1, City, Country", "Stef", "123123")
 //
 //        val viewModel by viewModels<Ma>()
 //

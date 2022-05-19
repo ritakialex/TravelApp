@@ -17,8 +17,8 @@ interface TravelAgencyDao {
     @Query("SELECT * FROM travel_agency WHERE id = :id")
     suspend fun findById(id: UUID): TravelAgency?
 
-    @Query("SELECT password FROM travel_agency WHERE username = :username")
-    suspend fun getPassword(username: Username): Sha256
+    @Query("SELECT * FROM travel_agency WHERE username = :username")
+    suspend fun findByUsername(username: Username): TravelAgency?
 
     @Insert
     suspend fun insertAll(vararg agencies: TravelAgency)

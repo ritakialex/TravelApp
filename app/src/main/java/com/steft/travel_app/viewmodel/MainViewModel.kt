@@ -15,9 +15,9 @@ import com.steft.travel_app.dto.*
 import com.steft.travel_app.model.*
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.contracts.Effect
 
 private typealias PreviewTriple = Triple<UUID, String, String>
+
 class MainViewModelFactory(
     private val application: Application,
     private val travelAgency: UUID? = null) : ViewModelProvider.Factory {
@@ -86,9 +86,7 @@ class MainViewModel(application: Application, private val travelAgency: UUID?) :
                     ?: throw CorruptDatabaseObjectException("Location with id $locationId doesnt exist")
             }
 
-    private inline fun <T> intoLiveData(crossinline f: suspend () -> T): LiveData<T> =
-        MutableLiveData<T>()
-            .also { viewModelScope.launch { it.value = f() } }
+    private fun <T> intoLiveData(t: suspend () -> T) = Utils.intoLiveData<T>(viewModelScope, t)
 
     private inline fun <T> ifAuthorized(crossinline f: (travelAgency: UUID) -> T): T =
         travelAgency
@@ -113,7 +111,7 @@ class MainViewModel(application: Application, private val travelAgency: UUID?) :
 
     fun isLoggedIn() = travelAgency != null
 
-    fun getUserId() = travelAgency
+    fun getUserId() = ifAuthorized { it }
 
     fun getLocation(locationId: UUID): LiveData<LocationDto?> =
         intoLiveData {
@@ -171,27 +169,29 @@ class MainViewModel(application: Application, private val travelAgency: UUID?) :
         }
 
 
-    fun addCustomLocation(city: String, country: String) {
+    fun addCustomLocation(city: String, country: String): LiveData<Boolean> =
         ifAuthorized { travelAgency ->
-            Name.makeValidated(city)
-                .zip(Semigroup.nonEmptyList(), Name.makeValidated(country))
-                .map { (city, country) ->
-                    CustomLocation(
-                        travelAgency = travelAgency,
-                        city = city,
-                        country = country)
-                }.let {
-                    when (it) {
-                        is Invalid ->
-                            throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
-                        is Valid ->
-                            viewModelScope.launch {
-                                locationDao.insertAllCustom(it.value)
-                            }
+            intoLiveData {
+                Name.makeValidated(city)
+                    .zip(Semigroup.nonEmptyList(), Name.makeValidated(country))
+                    .map { (city, country) ->
+                        CustomLocation(
+                            travelAgency = travelAgency,
+                            city = city,
+                            country = country)
+                    }.let {
+                        when (it) {
+                            is Invalid ->
+                                throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
+                            is Valid ->
+                                Either.catch {
+                                    locationDao.insertAllCustom(it.value)
+                                }.fold({ false }, { true })
+                        }
                     }
-                }
+            }
         }
-    }
+
 
     fun getBundle(bundleId: UUID): LiveData<BundleDto?> =
         intoLiveData {
@@ -218,6 +218,13 @@ class MainViewModel(application: Application, private val travelAgency: UUID?) :
                 .map { bundleToBundlePreviewDto(it) }
         }
 
+    fun getBundles(locationId: UUID): LiveData<List<BundlePreviewDto>> =
+        intoLiveData {
+            bundleDao
+                .findByLocation(locationId)
+                .map { bundleToBundlePreviewDto(it) }
+        }
+
     fun getAgencyBundles(): LiveData<List<BundlePreviewDto>> =
         ifAuthorized { travelAgency ->
             intoLiveData {
@@ -233,30 +240,32 @@ class MainViewModel(application: Application, private val travelAgency: UUID?) :
         price: Double,
         duration: Int,
         hotels: List<String>,
-        type: LocationType): Unit =
+        type: LocationType): LiveData<Boolean> =
         ifAuthorized { travelAgency ->
-            hotels
-                .traverseValidated { Name.makeValidated(it) }
-                .map {
-                    Bundle(
-                        travelAgency = travelAgency,
-                        location = locationId,
-                        date = date,
-                        price = price,
-                        duration = duration,
-                        hotels = it,
-                        type = type)
-                }.let {
-                    when (it) {
-                        is Valid ->
-                            viewModelScope.launch {
-                                bundleDao.insertAll(it.value)
-                                registrationDao.insert(Registration(it.value.id, travelAgency, emptyList()))
-                            }
-                        is Invalid ->
-                            throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
+            intoLiveData {
+                hotels
+                    .traverseValidated { Name.makeValidated(it) }
+                    .map {
+                        Bundle(
+                            travelAgency = travelAgency,
+                            location = locationId,
+                            date = date,
+                            price = price,
+                            duration = duration,
+                            hotels = it,
+                            type = type)
+                    }.let {
+                        when (it) {
+                            is Valid ->
+                                Either.catch {
+                                    bundleDao.insertAll(it.value)
+                                    registrationDao.insert(Registration(it.value.id, travelAgency, emptyList()))
+                                }.fold({ false }, { true })
+                            is Invalid ->
+                                throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
+                        }
                     }
-                }
+            }
         }
 
     fun registerCustomer(bundleId: UUID, name: String, surname: String, phone: String, email: String, hotel: String) =
@@ -279,4 +288,10 @@ class MainViewModel(application: Application, private val travelAgency: UUID?) :
                 }
             }
 
+    fun getAgencyBookings(): LiveData<List<Registration>> =
+        ifAuthorized { agencyId ->
+            intoLiveData {
+                registrationDao.findByAgencyId(agencyId)
+            }
+        }
 }

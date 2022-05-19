@@ -2,13 +2,13 @@
 
 package com.steft.travel_app.common
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import arrow.core.Either
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlinx.coroutines.async
 
 object Utils {
     suspend fun <A, B> Iterable<A>.pMap(f: suspend (A) -> B): List<B> = coroutineScope {
@@ -38,6 +38,10 @@ object Utils {
 
             f(resultA.await(), resultB.await())
         }
+
+    inline fun <T> intoLiveData(scope: CoroutineScope, crossinline f: suspend () -> T): LiveData<T> =
+        MutableLiveData<T>()
+            .also { scope.launch { it.value = f() } }
 
 
 }
