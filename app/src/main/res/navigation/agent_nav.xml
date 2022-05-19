@@ -60,7 +60,7 @@
     <fragment
             android:id="@+id/editBundle"
             android:name="com.steft.travel_app.view.EditBundle"
-            android:label="EditBundle"
+            android:label="Edit Bundle"
             tools:layout="@layout/fragment_edit_bundle">
         <action
                 android:id="@+id/action_editBundle_to_bundles"
@@ -71,4 +71,5 @@
             android:name="com.steft.travel_app.view.MainActivity"
             android:label="activity_main"
             tools:layout="@layout/activity_main" />
+
 </navigation>

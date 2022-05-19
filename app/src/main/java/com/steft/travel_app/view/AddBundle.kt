@@ -26,6 +26,7 @@ class AddBundle : Fragment() {
         // Inflate the layout for this fragment
 
         val bind = FragmentAddBundleBinding.inflate(layoutInflater)
+        val agency = viewModel.getUserId()
 
         println("------------------went to ADD Bundle----------")
         //Add Bundle - Create
@@ -38,7 +39,7 @@ class AddBundle : Fragment() {
 
             /*try {
                 viewModel
-                    .addCustomLocation(city,country)
+                    .addBundle(city,country)
                 Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
 
                 findNavController().navigate(R.id.action_addLocation_to_locations)

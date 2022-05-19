@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.constraintlayout.widget.Placeholder
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -45,6 +46,7 @@ class Locations : Fragment() {
         //val view = inflater.inflate(R.layout.fragment_locations_list, container, false)
         //val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_locations_list)!!
         val recyclerView = bind.recyclerLocationsList
+        bind.floatingAddLocationButton.visibility = View.GONE
 
         try {
             viewModel
@@ -57,7 +59,6 @@ class Locations : Fragment() {
                                 Bundle().also {
                                     it.putString("locationId", id.toString())
                                 })
-
                         }
                     }
                 }
@@ -67,9 +68,20 @@ class Locations : Fragment() {
         }
 
 
-        //floating button
+        //floating button set VISIBLE if logged in
         //val addLocationBtn: FloatingActionButton = view.findViewById(R.id.floatingAddLocationButton)
 
+        try {
+            if(viewModel.isLoggedIn()){
+                bind.floatingAddLocationButton.visibility = View.VISIBLE
+            } else {
+                throw Exception()
+            }
+        } catch (ex: Exception) {
+            //Do something
+            Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+            println(ex.message)
+        }
 
         bind.floatingAddLocationButton.setOnClickListener {
             findNavController().navigate(R.id.action_locations_to_addLocation)

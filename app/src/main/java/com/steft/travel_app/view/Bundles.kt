@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
@@ -29,6 +31,7 @@ private fun MainViewModel.getBundles(locationId: UUID): LiveData<List<BundlePrev
     TODO()
 
 class Bundles : Fragment() {
+
     private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(
@@ -39,9 +42,9 @@ class Bundles : Fragment() {
 
         val bind = FragmentBundlesListBinding.inflate(layoutInflater)
         val recyclerView = bind.recyclerBundlesList
+        bind.floatingAddBundleButton.visibility = View.GONE
 
         try {
-
             val bundles =
                 if (savedInstanceState != null) {
                     val locationId = savedInstanceState.getString("locationId")
@@ -56,7 +59,6 @@ class Bundles : Fragment() {
                 } else {
                     throw UnauthorizedException("You shouldn't be here. Call an administrator immediately!!")
                 }
-
             bundles
                 .observe(viewLifecycleOwner) { bundles ->
                     with(recyclerView) {
@@ -66,13 +68,26 @@ class Bundles : Fragment() {
                         }
                     }
                 }
-
         } catch (ex: Exception) {
             //Do something
             println(ex.message)
         }
 
-        //floating button
+
+        //button set VISIBLE if logged in
+        try {
+            if(viewModel.isLoggedIn()){
+                        bind.floatingAddBundleButton.visibility = View.VISIBLE
+                    } else {
+                        throw Exception()
+                    }
+        } catch (ex: Exception) {
+            //Do something
+            Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+            println(ex.message)
+        }
+
+
         bind.floatingAddBundleButton.setOnClickListener {
             findNavController().navigate(R.id.action_bundles_to_addBundle)
         }

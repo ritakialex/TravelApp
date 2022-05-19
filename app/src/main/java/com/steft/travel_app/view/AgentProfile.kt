@@ -36,6 +36,8 @@ class AgentProfile : Fragment() {
                     if(it != null){
                         val (id, name, address, username) = it
                         bind.profileName.text = name
+                        bind.profileAddress.text = address
+                        bind.profileUsername.text = username
                     }else{
                         throw Exception()
                     }
@@ -48,14 +50,26 @@ class AgentProfile : Fragment() {
         }
 
 
-
+        //Logout
         bind.profileLogoutButton.setOnClickListener {
             val intent = Intent(this@AgentProfile.requireContext(),MainActivity::class.java)
             startActivity(intent)
         }
 
+        //Delete
         bind.profileDeleteButton.setOnClickListener {
             TODO()
+            /*try {
+                viewModel
+                    .deleteTravelAgency(id)
+                Toast.makeText(context, "Profile Deleted", Toast.LENGTH_LONG).show()
+                val intent = Intent(this@AgentProfile.requireContext(),MainActivity::class.java)
+                startActivity(intent)
+            } catch (ex: Exception) {
+                //Do something
+                Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+                println(ex.message)
+            }*/
         }
 
         // Inflate the layout for this fragment

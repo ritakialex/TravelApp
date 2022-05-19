@@ -37,6 +37,7 @@ class AddLocation : Fragment() {
         //val view = inflater.inflate(R.layout.fragment_add_location, container, false)
 
         val bind = FragmentAddLocationBinding.inflate(layoutInflater)
+        val agency = viewModel.getUserId()
 
         //Add Location Button
         bind.createNewLocationButton.setOnClickListener {

@@ -34,6 +34,7 @@ class Bookings : Fragment() {
         val bind = FragmentBookingsBinding.inflate(layoutInflater)
         val recyclerView = bind.recyclerBookingsList
 
+        //εμφάνιση των κρατήσεων
         try {
             viewModel
                 .getBookings(viewModel.getId())
@@ -47,6 +48,9 @@ class Bookings : Fragment() {
             //Do something
             println(ex.message)
         }
+
+
+
 
         return bind.root
     }

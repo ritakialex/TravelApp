@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         MainViewModelFactory(
             application,
             UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d")
-            /*intent.extras!!.getString("id").let{ UUID.fromString(it) }*/
+            //intent.extras!!.getString("id").let{ UUID.fromString(it) }
         )
     }
 
@@ -40,64 +40,15 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController)
 
 
-        //val viewModel2 by viewModels<MainViewModel>()
-
-
-        /*try {
-            viewModel
-                .register(
-                    "Validname",
-                    "2",
-                    "user",
-                    "123123123")
-
-        } catch (ex: Exception) {
-            println(ex.message)
-        }
-
-        try {
-            // for fragments
-            // val viewModel by activityViewModels<MainViewModel>()
-            viewModel2
-                .getLocations()
-                .observe(this) { locations -> locations.forEach(::println) }
-        } catch (ex: Exception) {
-            println(ex.message)
-        }*/
-
-
-        viewModel
+        /*viewModel
             .registerCustomer(
                 UUID.fromString("b6c8a409-1355-4948-b026-40fb86f788f4"),
                 "Stef",
                 "Touf",
                 "+12124567890",
                 "stefetoufe@gmail.com",
-                "Hotel Grande")
-//
-//        val viewModel by viewModels<Ma>()
-//
-//        try {
-//            viewModel
-//                .register(
-//                    "Validname",
-//                    "2",
-//                    "user",
-//                    "123123123")
-//
-//        } catch (ex: Exception) {
-//            println(ex.message)
-//        }
-//
-//        try {
-//            // for fragments
-//            // val viewModel by activityViewModels<MainViewModel>()
-//            viewModel2
-//                .getLocations()
-//                .observe(this) { locations -> locations.forEach(::println) }
-//        } catch (ex: Exception) {
-//            println(ex.message)
-//        }
+                "Hotel Grande")*/
+
 
     }
 

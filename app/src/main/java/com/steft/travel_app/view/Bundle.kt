@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
@@ -24,8 +25,37 @@ class Bundle : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        println("------------------went to one Bundle----------")
+
         val bind = FragmentBundleBinding.inflate(layoutInflater)
+
+        //show bundle
+        /* try {
+             viewModel
+                 .getBundle(id)
+                 .observe(viewLifecycleOwner) {
+                     if (it != null) {
+                         val (id, agencyId, locationId, date, price, duration, hotels, type ) = it
+                         bind.dateFromBundleTextView.text = date
+                         bind.durationBundleTextView.text = duration
+                         bind.typeBundleTextView.text = type
+                         bind.priceBundleTextView.text = price
+                         bind.agencyBundleTextView.text = agencyId
+
+                         viewModel.getLocation(locationId).observe(viewLifecycleOwner) {
+                             val (id, agency, city, country) = it
+                             bind.cityBundleTextView.text = city
+                             bind.countryBundleTextView.text = country
+                         }
+                     } else {
+                         throw Exception()
+                     }
+                 }
+         }    catch (ex: Exception) {
+             //Do something
+             Toast.makeText(context, "Something went wrong, try again", Toast.LENGTH_LONG).show()
+             println(ex.message)
+         }*/
+
 
         //Book Button Traveler
         bind.bookBundleButton.setOnClickListener{

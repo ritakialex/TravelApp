@@ -201,7 +201,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/agencyBundleTextView" />
 
 <!-- if agent is logged in, they should see the Edit Button instead of Buy        -->
-        <Button
+        <!--<Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit"
@@ -211,7 +211,7 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/agencyBundleTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/agencyBundleTextView" />-->
 
 
 

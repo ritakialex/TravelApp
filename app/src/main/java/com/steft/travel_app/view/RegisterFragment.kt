@@ -25,6 +25,10 @@ class RegisterFragment : Fragment() {
 
         val bind = FragmentRegisterBinding.inflate(layoutInflater)
 
+        bind.agencyName.setOnClickListener{
+            Toast.makeText(context, "Start with capital letter", Toast.LENGTH_SHORT).show()
+        }
+
         bind.buttonRegister.setOnClickListener {
             val name = bind.agencyName.text.toString()
             val address = bind.agencyAddress.text.toString()
