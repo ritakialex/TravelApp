@@ -30,6 +30,7 @@
             android:focusable="true"
             android:visibility="visible"
             app:srcCompat="@drawable/ic_add_24"
+            app:iconTint="@color/white"
             android:id="@+id/floatingAddLocationButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

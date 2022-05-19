@@ -3,7 +3,8 @@
 
     <item android:title="Locations"
             android:id="@+id/locations"
-            android:icon="@drawable/ic_baseline_location_24"/>
+            android:icon="@drawable/ic_baseline_location_24"
+            android:color="@color/teal_100"/>
 
     <item android:title="Bundles"
             android:id="@+id/bundles"
