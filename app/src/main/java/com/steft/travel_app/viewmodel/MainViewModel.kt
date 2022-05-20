@@ -287,10 +287,25 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                 }
             }
 
-    fun getAgencyBookings(): LiveData<List<Registration>> =
+    fun getAgencyBookings(): LiveData<List<RegistrationPreviewDto>> =
         ifAuthorized { agencyId ->
             intoLiveData {
                 registrationDao.findByAgencyId(agencyId)
+                    .flatMap { (bundle, _, customers) ->
+
+                        bundleDao.findById(bundle)
+                            ?.let { (_, _, location) ->
+
+                                locationDao.findById(location)
+                                    ?.let { (_, city, country) ->
+                                        customers.map { (name, surname, phone, email, hotel) ->
+                                            val locationName = "$city, $country"
+                                            val customer = "$name, $surname, $phone, $email, $hotel"
+                                            RegistrationPreviewDto(bundle, locationName, customer)
+                                        }
+                                    }
+                            } ?: throw IllegalStateException("Error in retrieving bookings")
+                    }
             }
         }
 }
