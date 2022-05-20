@@ -56,9 +56,9 @@ class MainActivity : AppCompatActivity() {
 //            MainViewModelFactory(application, UUID.randomUUID())
 //        }
 
-        val viewModel by viewModels<LoginRegisterViewModel>()
+        /*val viewModel by viewModels<LoginRegisterViewModel>()
         viewModel
-            .register("Steff", "Address 1, City, Country", "Stef", "123123")
+            .register("Steff", "Address 1, City, Country", "Stef", "123123")*/
 //
 //        val viewModel by viewModels<Ma>()
 //

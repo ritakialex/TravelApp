@@ -15,7 +15,7 @@
             android:layout_marginTop="32dp"
             android:ems="10"
             android:inputType="date"
-            android:hint="Bundle Date From"
+            android:hint="Date From DD/MM/YY"
             android:drawableLeft="@drawable/ic_baseline_date_range_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -63,6 +63,47 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addBundleType"/>
 
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addHotel1"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="text"
+            android:drawableLeft="@drawable/ic_baseline_hotel_24"
+            android:hint="Add hotel No1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addBundlePrice"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addHotel2"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="text"
+            android:drawableLeft="@drawable/ic_baseline_hotel_24"
+            android:hint="Add hotel No2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addHotel1"/>
+
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addHotel3"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="number"
+            android:drawableLeft="@drawable/ic_baseline_hotel_24"
+            android:hint="Add hotel No1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addHotel2"/>
+
     <Button
             android:text="Create Bundle"
             android:layout_width="wrap_content"
@@ -72,7 +113,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addBundlePrice"
+            app:layout_constraintTop_toBottomOf="@+id/addHotel3"
             android:layout_marginTop="32dp" />
 
 

@@ -27,19 +27,22 @@ class Bundle : Fragment() {
 
 
         val bind = FragmentBundleBinding.inflate(layoutInflater)
+        val bundleId = 1 //GET UUID
 
         //show bundle
         /* try {
              viewModel
-                 .getBundle(id)
+                 .getBundle(bundleId)
                  .observe(viewLifecycleOwner) {
                      if (it != null) {
-                         val (id, agencyId, locationId, date, price, duration, hotels, type ) = it
-                         bind.dateFromBundleTextView.text = date
-                         bind.durationBundleTextView.text = duration
+                         val (_, agencyId, locationId, date, price, duration, hotels, type ) = it
+                         bind.dateFromBundleTextView.text = date.toString()
+                         bind.durationBundleTextView.text = duration.toString()
                          bind.typeBundleTextView.text = type
-                         bind.priceBundleTextView.text = price
-                         bind.agencyBundleTextView.text = agencyId
+                         bind.priceBundleTextView.text = price.toString()
+                         bind.agencyBundleTextView.text = agencyId.toString()
+                         //TODO hotels List
+                         bind.hotelsTV.text = hotels.toString()
 
                          viewModel.getLocation(locationId).observe(viewLifecycleOwner) {
                              val (id, agency, city, country) = it

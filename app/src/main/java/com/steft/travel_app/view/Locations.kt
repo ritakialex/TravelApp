@@ -48,6 +48,7 @@ class Locations : Fragment() {
         val recyclerView = bind.recyclerLocationsList
         bind.floatingAddLocationButton.visibility = View.GONE
 
+        //for traveller
         try {
             viewModel
                 .getLocations()
@@ -67,6 +68,10 @@ class Locations : Fragment() {
             println(ex.message)
         }
 
+        //for agent to see Location
+        TODO()
+
+
 
         //floating button set VISIBLE if logged in
         //val addLocationBtn: FloatingActionButton = view.findViewById(R.id.floatingAddLocationButton)
@@ -82,6 +87,7 @@ class Locations : Fragment() {
             Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
             println(ex.message)
         }
+
 
         bind.floatingAddLocationButton.setOnClickListener {
             findNavController().navigate(R.id.action_locations_to_addLocation)

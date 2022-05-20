@@ -81,6 +81,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/typeTV"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+                android:text="Hotels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hotelsTV"
+                android:layout_margin="16dp"
+                style="@style/NameStyle"
+                app:layout_constraintTop_toBottomOf="@+id/priceTV"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
                 android:text="Travel Agency"
@@ -89,7 +99,7 @@
                 android:id="@+id/agencyTV"
                 android:layout_margin="16dp"
                 style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/priceTV"
+                app:layout_constraintTop_toBottomOf="@+id/hotelsTV"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

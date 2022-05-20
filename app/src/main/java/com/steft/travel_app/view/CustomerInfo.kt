@@ -30,15 +30,17 @@ class CustomerInfo : Fragment() {
 
         //Traveller Book bundle
         bind.bookBundleCustInfoButton.setOnClickListener {
-            /*val name = bind.custName.text.toString()
+            /*val bundle_id = 1 //GET ID
+            val name = bind.custName.text.toString()
             val lastname = bind.custLName.text.toString()
             val email = bind.custEmail.text.toString()
             val mobile = bind.custMobile.text.toString()
             val hotel = bind.custHotel.text.toString()
+            //μάλλον να εμφανίζω επιλογές από Bundle
 
             try {
                 viewModel
-                    .registerCustomer(UUID, name,lastname,email,mobile,hotel)
+                    .registerCustomer(bundle_id, name,lastname,email,mobile,hotel)
                 Toast.makeText(context, "Bundle Booked Successfully", Toast.LENGTH_LONG).show()
                 findNavController().navigate(R.id.action_customerInfo_to_locations)
             } catch (ex: Exception) {

@@ -38,7 +38,7 @@ class AgentLogin : Fragment() {
                 viewModel
                     .login(username,password)
                     .observe(viewLifecycleOwner) {
-                            if(it){//(it!==null)
+                            if(it!==null){//(it!==null)
                                 println("-------TEST---------True")
                                 val intent = Intent(this@AgentLogin.requireContext(),LoginActivity::class.java)
                                 startActivity(intent)

@@ -13,6 +13,8 @@ import com.steft.travel_app.R
 import com.steft.travel_app.databinding.FragmentAddBundleBinding
 import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -26,20 +28,25 @@ class AddBundle : Fragment() {
         // Inflate the layout for this fragment
 
         val bind = FragmentAddBundleBinding.inflate(layoutInflater)
-        val agency = viewModel.getUserId()
+        val agency = viewModel.getId()
 
         println("------------------went to ADD Bundle----------")
         //Add Bundle - Create
         bind.createNewBundleButton.setOnClickListener{
+            /*val loc_id = 1 //GET ID
+            //val date = bind.addBundleDate.text.toString() //to date
+            //val date = LocalDate.parse(bind.addBundleDate.text.toString(), DateTimeFormatter.ofPattern("dd-MM-yyyy")) //to date
+            val duration = Integer.parseInt(bind.addBundleDuration.text.toString())
+            val type = bind.addBundleType.text.toString() //how to convert into Location type
+            val price = bind.addBundlePrice.text.toString().toDouble()
+            val hotel1 = bind.addHotel1.text.toString()
+            val hotel2 = bind.addHotel2.text.toString()
+            val hotel3 = bind.addHotel3.text.toString()
+            val hotels = listOf<String>(hotel1,hotel2, hotel3)
 
-            val date = bind.addBundleDate.text.toString()
-            val duration = bind.addBundleDuration.text.toString()
-            val type = bind.addBundleType.text.toString()
-            val price = bind.addBundlePrice.text.toString()
-
-            /*try {
+            try {
                 viewModel
-                    .addBundle(city,country)
+                    .addBundle(loc_id,date, price, duration, hotels, type)
                 Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
 
                 findNavController().navigate(R.id.action_addLocation_to_locations)
@@ -47,9 +54,9 @@ class AddBundle : Fragment() {
                 //Do something
                 Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
                 println(ex.message)
-            }*/
+            }
 
-            Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG)
+            Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG)*/
 
             findNavController().navigate(R.id.action_addBundle_to_bundles)
         }
