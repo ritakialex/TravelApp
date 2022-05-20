@@ -40,7 +40,8 @@ class CustomerInfo : Fragment() {
 
             try {
                 viewModel
-                    .registerCustomer(bundle_id, name,lastname,email,mobile,hotel)
+                    .registerCustomer(bundle_id, name,lastname,email,mobile,hotel) //TODO: handle result
+
                 Toast.makeText(context, "Bundle Booked Successfully", Toast.LENGTH_LONG).show()
                 findNavController().navigate(R.id.action_customerInfo_to_locations)
             } catch (ex: Exception) {

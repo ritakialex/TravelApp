@@ -37,10 +37,13 @@ class RegisterFragment : Fragment() {
 
             try {
                 viewModel
-                    .register(name, address, username, password)
+                    .register(name, address, username, password) //TODO: Handle result
+
                 Toast.makeText(context, "Registered Successfully", Toast.LENGTH_LONG).show()
                 val intent = Intent(this@RegisterFragment.requireContext(), LoginActivity::class.java)
                 startActivity(intent)
+
+//                TODO:
 //                if (it != null) {
 //                    println("-------TEST---------True")
 //                    val intent = Intent(this@RegisterFragment.requireContext(), LoginActivity::class.java)

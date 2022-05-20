@@ -46,7 +46,8 @@ class AddLocation : Fragment() {
 
             try {
                 viewModel
-                    .addCustomLocation(city,country)
+                    .addCustomLocation(city, country) //TODO: Observe result
+
                 Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
 
                 findNavController().navigate(R.id.action_addLocation_to_locations)
