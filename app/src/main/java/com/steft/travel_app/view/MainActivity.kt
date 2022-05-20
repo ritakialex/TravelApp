@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         viewModel.init()
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.myNavHostFragment)
@@ -49,6 +50,39 @@ class MainActivity : AppCompatActivity() {
                 "stefetoufe@gmail.com",
                 "Hotel Grande")*/
 
+
+
+//        val viewModel by viewModels<MainViewModel> {
+//            MainViewModelFactory(application, UUID.randomUUID())
+//        }
+
+        val viewModel by viewModels<LoginRegisterViewModel>()
+        viewModel
+            .register("Steff", "Address 1, City, Country", "Stef", "123123")
+//
+//        val viewModel by viewModels<Ma>()
+//
+//        try {
+//            viewModel
+//                .register(
+//                    "Validname",
+//                    "2",
+//                    "user",
+//                    "123123123")
+//
+//        } catch (ex: Exception) {
+//            println(ex.message)
+//        }
+//
+//        try {
+//            // for fragments
+//            // val viewModel by activityViewModels<MainViewModel>()
+//            viewModel2
+//                .getLocations()
+//                .observe(this) { locations -> locations.forEach(::println) }
+//        } catch (ex: Exception) {
+//            println(ex.message)
+//        }
 
     }
 

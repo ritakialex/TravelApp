@@ -15,10 +15,9 @@ import java.util.*
 
 interface RegistrationDao {
     suspend fun getAll(bundle: UUID): List<Registration>
-
-    //    suspend fun findById(id: UUID): Registration
     suspend fun insert(vararg registration: Registration)
     suspend fun register(bundle: UUID, vararg customers: CustomerDetails)
+    suspend fun findByAgencyId(travelAgency: UUID): List<Registration>
 }
 
 private class RegistrationDaoImpl(private val db: FirebaseFirestore) : RegistrationDao {
@@ -47,6 +46,32 @@ private class RegistrationDaoImpl(private val db: FirebaseFirestore) : Registrat
     override suspend fun getAll(bundle: UUID) =
         collection
             .whereEqualTo("bundleId", bundle.toString())
+            .get()
+            .await()
+            .pMap { document ->
+                val bundleId = document.get("bundleId")
+                val agencyId = document.get("travelAgencyId")
+
+                val customerDetails = document.reference
+                    .collection("customers")
+                    .get()
+                    .await()
+                    .map { it.data }
+
+                RegistrationUtils
+                    .mapToRegistration(bundleId, agencyId, customerDetails)
+                    .mapLeft(CorruptDatabaseObjectException::fromOtherException)
+                    .tapLeft { err ->
+                        Log.e(
+                            LogTag.Firebase.tag,
+                            "Couldn't retrieve object with id $bundleId because of $err")
+                    }
+
+            }.filterRight()
+
+    override suspend fun findByAgencyId(travelAgency: UUID) =
+        collection
+            .whereEqualTo("travelAgencyId", travelAgency.toString())
             .get()
             .await()
             .pMap { document ->
