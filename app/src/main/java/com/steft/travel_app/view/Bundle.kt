@@ -1,3 +1,5 @@
+@file:Suppress("NAME_SHADOWING")
+
 package com.steft.travel_app.view
 
 import android.os.Bundle
@@ -9,6 +11,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import arrow.core.tail
 import com.steft.travel_app.R
 import com.steft.travel_app.databinding.FragmentAddLocationBinding
 import com.steft.travel_app.databinding.FragmentBundleBinding
@@ -27,41 +30,50 @@ class Bundle : Fragment() {
 
 
         val bind = FragmentBundleBinding.inflate(layoutInflater)
-        val bundleId = 1 //GET UUID
+        val args = this.arguments
 
         //show bundle
-        /* try {
-             viewModel
-                 .getBundle(bundleId)
-                 .observe(viewLifecycleOwner) {
-                     if (it != null) {
-                         val (_, agencyId, locationId, date, price, duration, hotels, type ) = it
-                         bind.dateFromBundleTextView.text = date.toString()
-                         bind.durationBundleTextView.text = duration.toString()
-                         bind.typeBundleTextView.text = type
-                         bind.priceBundleTextView.text = price.toString()
-                         bind.agencyBundleTextView.text = agencyId.toString()
-                         //TODO hotels List
-                         bind.hotelsTV.text = hotels.toString()
+        try {
+            val bundleId =
+                args?.getString("bundleId")
+                    ?.let { UUID.fromString(it) }
+                    ?: throw IllegalStateException("Bundle id should exist")
 
-                         viewModel.getLocation(locationId).observe(viewLifecycleOwner) {
-                             val (id, agency, city, country) = it
-                             bind.cityBundleTextView.text = city
-                             bind.countryBundleTextView.text = country
-                         }
-                     } else {
-                         throw Exception()
-                     }
-                 }
-         }    catch (ex: Exception) {
-             //Do something
-             Toast.makeText(context, "Something went wrong, try again", Toast.LENGTH_LONG).show()
-             println(ex.message)
-         }*/
+            viewModel
+                .getBundle(bundleId)
+                .observe(viewLifecycleOwner) {
+                    if (it != null) {
+                        val (_, agencyId, locationId, date, price, duration, hotels, type) = it
+                        bind.dateFromBundleTextView.text = date.toString()
+                        bind.durationBundleTextView.text = duration.toString()
+                        bind.typeBundleTextView.text = type
+                        bind.priceBundleTextView.text = price.toString()
+                        bind.agencyBundleTextView.text = agencyId.toString()
+                        //TODO hotels List
+                        bind.hotelsBundleTextView.text =
+                            hotels.tail()
+                                .fold(hotels.first()) { acc, next -> "$acc\n$next" }
+
+                        viewModel.getLocation(locationId).observe(viewLifecycleOwner) { location ->
+                            val location = location
+                                ?: throw IllegalStateException("Location id should exist")
+
+                            val (_, _, city, country) = location
+                            bind.cityBundleTextView.text = city
+                            bind.countryBundleTextView.text = country
+                        }
+                    } else {
+                        throw IllegalStateException("Bundle id cant be null")
+                    }
+                }
+        } catch (ex: Exception) {
+            Toast.makeText(context, "Something went wrong, try again", Toast.LENGTH_LONG).show()
+            println(ex.message)
+        }
 
 
         //Book Button Traveler
-        bind.bookBundleButton.setOnClickListener{
+        bind.bookBundleButton.setOnClickListener {
             findNavController().navigate(R.id.action_bundle_to_customerInfo)
         }
 

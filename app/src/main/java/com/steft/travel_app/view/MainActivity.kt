@@ -20,17 +20,14 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> {
         MainViewModelFactory(
             application,
-            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d")
-            //intent.extras!!.getString("id").let{ UUID.fromString(it) }
+            intent.extras?.getString("id")?.let { UUID.fromString(it) }
+//            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d")
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-        viewModel.init()
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.myNavHostFragment)
                 as NavHostFragment
@@ -40,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         //back arrow for navigation
         setupActionBarWithNavController(navController)
 
+        viewModel.init()
 
         /*viewModel
             .registerCustomer(
@@ -49,7 +47,6 @@ class MainActivity : AppCompatActivity() {
                 "+12124567890",
                 "stefetoufe@gmail.com",
                 "Hotel Grande")*/
-
 
 
 //        val viewModel by viewModels<MainViewModel> {

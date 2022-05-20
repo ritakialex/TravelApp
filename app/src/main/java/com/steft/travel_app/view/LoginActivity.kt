@@ -26,7 +26,9 @@ class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> {
         MainViewModelFactory(
             application,
-            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
+            intent.extras!!.getString("id").let { UUID.fromString(it) }
+        )
+//            UUID.fromString("df34b46c-5268-44f7-b213-c5a237447c3d"))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,55 +44,55 @@ class LoginActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
 
     }
-        //----------old code with drawer menu
-        /*drawerLayout = findViewById(R.id.drawerLayout)
-        val navView : NavigationView = findViewById(R.id.nav_view)
+    //----------old code with drawer menu
+    /*drawerLayout = findViewById(R.id.drawerLayout)
+    val navView : NavigationView = findViewById(R.id.nav_view)
 
-        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
+    toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+    drawerLayout.addDrawerListener(toggle)
+    toggle.syncState()
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        navView.setNavigationItemSelectedListener {
+    navView.setNavigationItemSelectedListener {
 
 
-            //to highlight selected item
-            it.isChecked = true
+        //to highlight selected item
+        it.isChecked = true
 
-            when(it.itemId){
-                R.id.nav_home -> replaceFragment(Bookings(),it.title.toString())
-                R.id.nav_bookings -> replaceFragment(Bookings(),it.title.toString())
-                R.id.nav_locations -> replaceFragment(Locations(),it.title.toString())
-                //the name of the .kt of the fragment
-                R.id.nav_bundles -> replaceFragment(Bundles(),it.title.toString())
-                R.id.nav_profile -> replaceFragment(AgentProfile(),it.title.toString())
-                R.id.nav_logout -> replaceFragment(AgentLogin(),it.title.toString())
-                //R.id.nav_purchase -> Toast.makeText(applicationContext, "lala", Toast.LENGTH_SHORT).show()
-            }
-
-            true
+        when(it.itemId){
+            R.id.nav_home -> replaceFragment(Bookings(),it.title.toString())
+            R.id.nav_bookings -> replaceFragment(Bookings(),it.title.toString())
+            R.id.nav_locations -> replaceFragment(Locations(),it.title.toString())
+            //the name of the .kt of the fragment
+            R.id.nav_bundles -> replaceFragment(Bundles(),it.title.toString())
+            R.id.nav_profile -> replaceFragment(AgentProfile(),it.title.toString())
+            R.id.nav_logout -> replaceFragment(AgentLogin(),it.title.toString())
+            //R.id.nav_purchase -> Toast.makeText(applicationContext, "lala", Toast.LENGTH_SHORT).show()
         }
 
+        true
     }
 
-    private fun replaceFragment(fragment: Fragment, title: String){
+}
 
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frameLayout, fragment)
-        fragmentTransaction.commit()
+private fun replaceFragment(fragment: Fragment, title: String){
 
-        drawerLayout.closeDrawers()
-        setTitle(title)
+    val fragmentManager = supportFragmentManager
+    val fragmentTransaction = fragmentManager.beginTransaction()
+    fragmentTransaction.replace(R.id.frameLayout, fragment)
+    fragmentTransaction.commit()
 
+    drawerLayout.closeDrawers()
+    setTitle(title)
+
+}
+
+override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    if (toggle.onOptionsItemSelected(item)){
+        return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)){
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
-    }*/
+    return super.onOptionsItemSelected(item)
+}*/
 }

@@ -25,7 +25,7 @@ class RegisterFragment : Fragment() {
 
         val bind = FragmentRegisterBinding.inflate(layoutInflater)
 
-        bind.agencyName.setOnClickListener{
+        bind.agencyName.setOnClickListener {
             Toast.makeText(context, "Start with capital letter", Toast.LENGTH_SHORT).show()
         }
 
@@ -41,6 +41,14 @@ class RegisterFragment : Fragment() {
                 Toast.makeText(context, "Registered Successfully", Toast.LENGTH_LONG).show()
                 val intent = Intent(this@RegisterFragment.requireContext(), LoginActivity::class.java)
                 startActivity(intent)
+//                if (it != null) {
+//                    println("-------TEST---------True")
+//                    val intent = Intent(this@RegisterFragment.requireContext(), LoginActivity::class.java)
+//                    val b = Bundle()
+//                    b.putString("id", it.toString()) //Your id
+//                    intent.putExtras(b) //Put your id to your next Intent
+//                    startActivity(intent)
+//                }
             } catch (ex: Exception) {
                 //Do something
                 Toast.makeText(context, "Input incorrect, try again", Toast.LENGTH_LONG).show()

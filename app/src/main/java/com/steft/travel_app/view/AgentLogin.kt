@@ -36,21 +36,19 @@ class AgentLogin : Fragment() {
 
             try {
                 viewModel
-                    .login(username,password)
+                    .login(username, password)
                     .observe(viewLifecycleOwner) {
-                            if(it!==null){//(it!==null)
-                                println("-------TEST---------True")
-                                val intent = Intent(this@AgentLogin.requireContext(),LoginActivity::class.java)
-                                startActivity(intent)
-//                                val intent = Intent(this@AgentLogin.requireContext(), LoginActivity::class.java)
-//                                val b = Bundle()
-//                                b.putString("id", UUID.fromString(it)) //Your id
-//                                intent.putExtras(b) //Put your id to your next Intent
-//                                startActivity(intent)
-                            }else{
-                                Toast.makeText(context, "Wrong credentials", Toast.LENGTH_LONG).show()
-                            }
+                        if (it != null) {
+                            println("-------TEST---------True")
+                            val intent = Intent(this@AgentLogin.requireContext(), LoginActivity::class.java)
+                            val b = Bundle()
+                            b.putString("id", it.toString()) //Your id
+                            intent.putExtras(b) //Put your id to your next Intent
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(context, "Wrong credentials", Toast.LENGTH_LONG).show()
                         }
+                    }
             } catch (ex: Exception) {
                 //Do something
                 println(ex.message)

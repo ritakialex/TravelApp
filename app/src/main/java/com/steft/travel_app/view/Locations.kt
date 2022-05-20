@@ -72,27 +72,16 @@ class Locations : Fragment() {
         //TODO()
 
 
-
         //floating button set VISIBLE if logged in
         //val addLocationBtn: FloatingActionButton = view.findViewById(R.id.floatingAddLocationButton)
 
-        try {
-            if(viewModel.isLoggedIn()){
-                bind.floatingAddLocationButton.visibility = View.VISIBLE
-            } else {
-                throw Exception()
-            }
-        } catch (ex: Exception) {
-            //Do something
-            Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
-            println(ex.message)
+        if (viewModel.isLoggedIn()) {
+            bind.floatingAddLocationButton.visibility = View.VISIBLE
         }
-
 
         bind.floatingAddLocationButton.setOnClickListener {
             findNavController().navigate(R.id.action_locations_to_addLocation)
         }
-
 
         return bind.root
     }
