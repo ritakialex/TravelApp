@@ -48,13 +48,14 @@ class Locations : Fragment() {
         val recyclerView = bind.recyclerLocationsList
         bind.floatingAddLocationButton.visibility = View.GONE
 
-        //for traveller
+        //view location - different navigation if location is selected
         try {
             viewModel
                 .getLocations()
                 .observe(viewLifecycleOwner) { locations ->
                     with(recyclerView) {
                         layoutManager = LinearLayoutManager(context)
+                        //for agent
                         if(viewModel.isLoggedIn()){
                             adapter =
                                 MyItemRecyclerViewAdapter(ArrayList(locations)) { (id, _, _) ->
@@ -63,6 +64,7 @@ class Locations : Fragment() {
                                             it.putString("locationId", id.toString())
                                         })
                                 }
+                            //for traveller
                         }else {
                             adapter =
                                 MyItemRecyclerViewAdapter(ArrayList(locations)) { (id, _, _) ->
@@ -79,13 +81,9 @@ class Locations : Fragment() {
             println(ex.message)
         }
 
-        //for agent to see Location
-        //TODO()
-
 
         //floating button set VISIBLE if logged in
         //val addLocationBtn: FloatingActionButton = view.findViewById(R.id.floatingAddLocationButton)
-
         if (viewModel.isLoggedIn()) {
             bind.floatingAddLocationButton.visibility = View.VISIBLE
         }
