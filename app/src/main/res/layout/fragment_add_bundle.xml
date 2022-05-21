@@ -11,7 +11,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Text"
+            android:text="Bundle for city, country"
             android:textSize="20dp"
             android:textColor="@color/black"
             android:id="@+id/locationInfo"
@@ -29,7 +29,7 @@
             android:id="@+id/addBundleDate"
             android:ems="10"
             android:inputType="date"
-            android:hint="Date From DD/MM/YY"
+            android:hint="Date From DD-MM-YYYY"
             android:drawableLeft="@drawable/ic_baseline_date_range_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -44,7 +44,7 @@
             android:ems="10"
             android:inputType="number"
             android:drawableLeft="@drawable/ic_baseline_duration_24"
-            android:hint="Bundle Duration"
+            android:hint="Duration in days"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,7 @@
             android:id="@+id/addHotel3"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:inputType="number"
+            android:inputType="text"
             android:drawableLeft="@drawable/ic_baseline_hotel_24"
             android:hint="Add hotel No1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -146,13 +146,15 @@
                         android:text="Cruise"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/cruiseRadio" />
+                        android:id="@+id/cruiseRadio"
+                        />
 
                 <RadioButton
                         android:text="Roadtrip"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/roadtripRadio" />
+                        android:id="@+id/roadtripRadio"
+                        />
 
                 <RadioButton
                         android:text="Independent"

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
@@ -25,8 +26,6 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-val loc_id: UUID = TODO("Get id")
-
 class AddBundle : Fragment() {
 
     private val viewModel by activityViewModels<MainViewModel>()
@@ -42,6 +41,7 @@ class AddBundle : Fragment() {
         val args = this.arguments
         val locationId = args?.getString("locationId")
 
+        //fill textView with location city and country
         try{
             if (locationId != null) {
                 val locationUUID = UUID.fromString(locationId)
@@ -60,43 +60,71 @@ class AddBundle : Fragment() {
             Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
         }
 
+
+
+
+
         //Add Bundle - Create
         bind.createNewBundleButton.setOnClickListener {
 
-            val dateStr = bind.addBundleDate.text.toString() //to date
-            val duration = Integer.parseInt(bind.addBundleDuration.text.toString())
-            val type = bind.addBundleType.text.toString().toInt() //how to convert into Location type
-            val price = bind.addBundlePrice.text.toString().toDouble()
-            val hotel1 = bind.addHotel1.text.toString()
-            val hotel2 = bind.addHotel2.text.toString()
-            val hotel3 = bind.addHotel3.text.toString()
-            val hotels = listOf(hotel1, hotel2, hotel3)
-
-            val lType = when (type) {
-                0 -> LocationType.Cruise
-                1 -> LocationType.Roadtrip
-                2 -> LocationType.Independent
-                else -> throw IllegalArgumentException("Must be between 0 and 2")
-            }
-
             try {
-                val date =
-                    SimpleDateFormat("dd-mm-yyyy")
-                        .parse(dateStr)
-                        ?: throw IllegalArgumentException("Date doesnt conform to format dd-mm-yyyy")
+                val locationUUID = UUID.fromString(locationId)
+                val dateStr = bind.addBundleDate.text.toString() //to date
+                val duration = Integer.parseInt(bind.addBundleDuration.text.toString())
+                //val type = bind.radioGroup.checkedRadioButtonId//bind.addBundleType.text.toString().toInt() //how to convert into Location type
+                val price = bind.addBundlePrice.text.toString().toDouble()
+                val hotel1 = bind.addHotel1.text.toString()
+                val hotel2 = bind.addHotel2.text.toString()
+                val hotel3 = bind.addHotel3.text.toString()
+                val hotels = listOf(hotel1, hotel2, hotel3)
 
-                viewModel
-                    .addBundle(loc_id, date, price, duration, hotels, lType)
-                Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
 
-                findNavController().navigate(R.id.action_addLocation_to_locations)
-            } catch (ex: Exception) {
-                Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+                var type = 0
+                bind.radioGroup.setOnCheckedChangeListener { radioGroup, i ->
+                    when (i) {
+                        R.id.cruiseRadio -> type = 0
+                        R.id.roadtripRadio -> type = 1
+                        R.id.independentRadio -> type = 2
+                    }
+                }
+
+                try {
+                    val lType = when (type) {
+                        0 -> LocationType.Cruise
+                        1 -> LocationType.Roadtrip
+                        2 -> LocationType.Independent
+                        else -> throw IllegalArgumentException("Must be between 0 and 2")
+                    }
+
+                    val date =
+                        SimpleDateFormat("dd-mm-yyyy")
+                            .parse(dateStr)
+                            ?: throw IllegalArgumentException("Date doesn't conform to format dd-mm-yyyy")
+
+                    //try to create bundle
+                    try {
+                        viewModel
+                            .addBundle(locationUUID, date, price, duration, hotels, lType) //TODO: Observe result
+                        Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_addBundle_to_bundles)
+                    } catch (ex: Exception) {
+                        Toast.makeText(
+                            context,
+                            "make sure you filled all fields",
+                            Toast.LENGTH_LONG).show()
+                        println(ex.message)
+                    }
+                } catch (ex: Exception) {
+                    Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG)
+                        .show()
+                    println(ex.message)
+                }
+
+                /*Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG)
+                findNavController().navigate(R.id.action_addBundle_to_bundles)*/
+            }catch(ex: Exception){
                 println(ex.message)
             }
-
-            Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG)
-            findNavController().navigate(R.id.action_addBundle_to_bundles)
         }
 
 
