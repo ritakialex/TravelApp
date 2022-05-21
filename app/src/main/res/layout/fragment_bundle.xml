@@ -1,4 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/frameProfile"
+        tools:context="view.Bundle"
+        android:background="@color/teal_200">
+
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+                <!--android:layout_gravity="center"-->
+
+
+            <EditText
+                    android:text="City:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/NameStyle"
+                    android:editable="false"/>
+
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="City"
+                    android:gravity="center"
+                    android:id="@+id/cityBundleTextView"
+                    style="@style/NameStyle"
+                    />
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+
+            <EditText
+                    android:text="Country:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/NameStyle"
+                    android:editable="false"/>
+
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Country"
+                    android:gravity="center"
+                    android:id="@+id/countryBundleTextView"
+                    style="@style/NameStyle" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1">
+
+            <EditText
+                    android:text="Date From:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/NameStyle"
+                    android:editable="false"/>
+
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Date From"
+                    android:gravity="center"
+                    android:id="@+id/dateFromBundleTextView"
+                    style="@style/NameStyle" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1">
+
+            <EditText
+                    android:text="Duration:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/NameStyle"
+                    android:editable="false"/>
+
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Duration"
+                    android:gravity="center"
+                    android:id="@+id/durationFromBundleTextView"
+                    style="@style/NameStyle" /> />
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1">
+
+            <EditText
+                    android:text="Type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/NameStyle"
+                    android:layout_marginBottom="-25dp"
+                    android:editable="false"/>
+
+            <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cruise"
+                        style="@style/NameStyle"
+                        />
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Roadtrip"
+                        style="@style/NameStyle"
+                        />
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Indepentent"
+                        style="@style/NameStyle"
+                        />
+
+            </RadioGroup>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1">
+
+            <EditText
+                    android:text="Price:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/NameStyle"
+                    android:editable="false"/>
+
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Price"
+                    android:gravity="center"
+                    android:id="@+id/priceFromBundleTextView"
+                    style="@style/NameStyle" /> />
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1">
+
+            <EditText
+                    android:text="Travel Agency:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/NameStyle"
+                    android:editable="false"/>
+
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Travel Agency"
+                    android:gravity="center"
+                    android:id="@+id/travelFromBundleTextView"
+                    style="@style/NameStyle" />
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1">
+
+            <EditText
+                    android:text="Hotels:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/NameStyle"
+                    android:editable="false"/>
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Hotel 1"
+                    android:gravity="center"
+                    android:id="@+id/hotel1FromBundleTextView"
+                    style="@style/NameStyle" />
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Hotel 1"
+                    android:gravity="center"
+                    android:id="@+id/hotel2FromBundleTextView"
+                    style="@style/NameStyle" />
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Hotel 1"
+                    android:gravity="center"
+                    android:id="@+id/hotel3FromBundleTextView"
+                    style="@style/NameStyle" />
+
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1">
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Book"
+                android:id="@+id/bookBundleButton"
+                app:backgroundTint="@color/teal_700"
+                android:textColor="@color/white"
+                android:visibility="visible"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save changes"
+                android:id="@+id/saveChangesBundleButton"
+                app:backgroundTint="@color/teal_700"
+                android:textColor="@color/white"
+                android:visibility="visible"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</FrameLayout>
+<!--
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,7 +294,7 @@
             android:padding="8dp"
             >
 
-        <TextView
+        <EditText
                 android:text="City"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -28,7 +305,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
+        <EditText
                 android:text="Country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -114,8 +391,7 @@
             android:layout_weight="3"
             android:padding="8dp"
             android:background="@color/teal_200">
-            <!--      remove line above after      -->
-
+        &lt;!&ndash;      remove line above after      &ndash;&gt;
 
 
         <TextView
@@ -206,7 +482,6 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
 
-
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -219,8 +494,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/agencyBundleTextView" />
 
-<!-- if agent is logged in, they should see the Edit Button instead of Buy        -->
-        <!--<Button
+        &lt;!&ndash; if agent is logged in, they should see the Edit Button instead of Buy        &ndash;&gt;
+        &lt;!&ndash;<Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit"
@@ -230,11 +505,10 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/agencyBundleTextView" />-->
-
+                app:layout_constraintTop_toBottomOf="@+id/agencyBundleTextView" />&ndash;&gt;
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</LinearLayout>
+</LinearLayout>-->

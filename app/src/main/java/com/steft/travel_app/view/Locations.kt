@@ -55,11 +55,22 @@ class Locations : Fragment() {
                 .observe(viewLifecycleOwner) { locations ->
                     with(recyclerView) {
                         layoutManager = LinearLayoutManager(context)
-                        adapter = MyItemRecyclerViewAdapter(ArrayList(locations)) { (id, _, _) ->
-                            findNavController().navigate(R.id.action_locations_to_bundles,
-                                Bundle().also {
-                                    it.putString("locationId", id.toString())
-                                })
+                        if(viewModel.isLoggedIn()){
+                            adapter =
+                                MyItemRecyclerViewAdapter(ArrayList(locations)) { (id, _, _) ->
+                                    findNavController().navigate(R.id.action_locations_to_location,
+                                        Bundle().also {
+                                            it.putString("locationId", id.toString())
+                                        })
+                                }
+                        }else {
+                            adapter =
+                                MyItemRecyclerViewAdapter(ArrayList(locations)) { (id, _, _) ->
+                                    findNavController().navigate(R.id.action_locations_to_bundles,
+                                        Bundle().also {
+                                            it.putString("locationId", id.toString())
+                                        })
+                                }
                         }
                     }
                 }

@@ -10,11 +10,11 @@
             android:label="Bundles"
             tools:layout="@layout/fragment_bundles_list">
         <action
-                android:id="@+id/action_bundles_to_addBundle"
-                app:destination="@id/addBundle" />
-        <action
                 android:id="@+id/action_bundles_to_editBundle"
                 app:destination="@id/editBundle" />
+        <action
+                android:id="@+id/action_bundles_to_bundle2"
+                app:destination="@id/bundle" />
     </fragment>
     <fragment
             android:id="@+id/agentProfile"
@@ -47,6 +47,9 @@
         <action
                 android:id="@+id/action_locations_to_addLocation"
                 app:destination="@id/addLocation" />
+        <action
+                android:id="@+id/action_locations_to_location"
+                app:destination="@id/location" />
     </fragment>
     <fragment
             android:id="@+id/addLocation"
@@ -71,5 +74,25 @@
             android:name="com.steft.travel_app.view.MainActivity"
             android:label="activity_main"
             tools:layout="@layout/activity_main" />
-
+    <fragment
+            android:id="@+id/location"
+            android:name="com.steft.travel_app.view.Location"
+            tools:layout="@layout/fragment_location"
+            android:label="Location" >
+        <action
+                android:id="@+id/action_location_to_locations"
+                app:destination="@id/locations" />
+        <action
+                android:id="@+id/action_location_to_addBundle"
+                app:destination="@id/addBundle" />
+    </fragment>
+    <fragment
+            android:id="@+id/bundle"
+            android:name="com.steft.travel_app.view.Bundle"
+            tools:layout="@layout/fragment_bundle"
+            android:label="Bundle" >
+        <action
+                android:id="@+id/action_bundle_to_bundles"
+                app:destination="@id/bundles" />
+    </fragment>
 </navigation>

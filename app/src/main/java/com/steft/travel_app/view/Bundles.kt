@@ -41,7 +41,7 @@ class Bundles : Fragment() {
         val recyclerView = bind.recyclerBundlesList
         val args = this.arguments
 
-        bind.floatingAddBundleButton.visibility = View.GONE
+        //bind.floatingAddBundleButton.visibility = View.GONE
 
         try {
             val bundles =
@@ -75,13 +75,14 @@ class Bundles : Fragment() {
             println(ex)
         }
 
+        //-----delete later TODO
         //button set VISIBLE if logged in
-        if (viewModel.isLoggedIn())
+        /*if (viewModel.isLoggedIn())
             bind.floatingAddBundleButton.visibility = View.VISIBLE
 
         bind.floatingAddBundleButton.setOnClickListener {
             findNavController().navigate(R.id.action_bundles_to_addBundle)
-        }
+        }*/
 
 
         return bind.root

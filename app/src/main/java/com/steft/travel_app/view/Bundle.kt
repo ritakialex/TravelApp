@@ -33,7 +33,7 @@ class Bundle : Fragment() {
         val args = this.arguments
 
         //show bundle
-        try {
+        /*try {
             val bundleId =
                 args?.getString("bundleId")
                     ?.let { UUID.fromString(it) }
@@ -69,7 +69,7 @@ class Bundle : Fragment() {
         } catch (ex: Exception) {
             Toast.makeText(context, "Something went wrong, try again", Toast.LENGTH_LONG).show()
             println(ex.message)
-        }
+        }*/
 
 
         //Book Button Traveler
@@ -77,10 +77,10 @@ class Bundle : Fragment() {
             findNavController().navigate(R.id.action_bundle_to_customerInfo)
         }
 
-        //Edit Button Agent
-        /*bind.editBundleButton.setOnClickListener{
-            findNavController().navigate(R.id.action_bundle_to_editBundle)
-        }*/
+        //Edit - Save Button Agent
+        bind.saveChangesBundleButton.setOnClickListener{
+            findNavController().navigate(R.id.action_bundle_to_bundles)
+        }
 
 
 

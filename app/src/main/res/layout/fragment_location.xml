@@ -3,13 +3,100 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/teal_100"
-        tools:context="view.Location">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:background="@color/teal_200"
+        tools:context="view.Location"
+        >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="City"
+                android:textColor="@color/colorTitle"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:id="@+id/cityName"
+                android:textStyle="normal"
+                android:text="City"
+                android:textColor="@color/colorSubTitle"
+                android:layout_marginBottom="50dp"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="15dp"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="Country"
+                android:textColor="@color/colorTitle"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:id="@+id/countryName"
+                android:textStyle="normal"
+                android:text="Country"
+                android:textColor="@color/colorSubTitle"
+                android:layout_marginBottom="50dp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="10dp"
+            >
+
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/profileDeleteButton"
+                android:text="Delete"
+                android:layout_marginRight="30dp"
+                app:backgroundTint="@color/teal_700"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/ic_baseline_delete_24" />
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/profileLogoutButton"
+                android:text="Bundle"
+                app:backgroundTint="@color/teal_700"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/ic_add_24" />
+    </LinearLayout>
 
 </LinearLayout>
