@@ -16,11 +16,7 @@ import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
 import java.util.*
 
-fun MainViewModel.getBookings(agencyId: UUID): LiveData<List<RegistrationPreviewDto>> =
-    TODO()
 
-fun MainViewModel.getId(): UUID =
-    TODO()
 
 class Bookings : Fragment() {
 
@@ -37,7 +33,7 @@ class Bookings : Fragment() {
         //εμφάνιση των κρατήσεων
         try {
             viewModel
-                .getBookings(viewModel.getId())
+                .getAgencyBookings()
                 .observe(viewLifecycleOwner) { bookings ->
                     with(recyclerView) {
                         layoutManager = LinearLayoutManager(context)

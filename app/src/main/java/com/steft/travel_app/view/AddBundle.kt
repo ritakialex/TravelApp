@@ -38,7 +38,7 @@ class AddBundle : Fragment() {
         // Inflate the layout for this fragment
 
         val bind = FragmentAddBundleBinding.inflate(layoutInflater)
-        val agency = viewModel.getId()
+        val agency = viewModel.getUserId()
 
         println("------------------went to ADD Bundle----------")
         //Add Bundle - Create
