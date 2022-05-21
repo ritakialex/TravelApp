@@ -38,9 +38,28 @@ class AddBundle : Fragment() {
         // Inflate the layout for this fragment
 
         val bind = FragmentAddBundleBinding.inflate(layoutInflater)
-        val agency = viewModel.getUserId()
+        //val agency = viewModel.getUserId()
+        val args = this.arguments
+        val locationId = args?.getString("locationId")
 
-        println("------------------went to ADD Bundle----------")
+        try{
+            if (locationId != null) {
+                val locationUUID = UUID.fromString(locationId)
+                viewModel
+                    .getLocation(locationUUID)
+                    .observe(viewLifecycleOwner) {
+                        if (it != null) {
+                            val (id, _, city, country) = it
+                            bind.locationInfo.text = "Bundle for $city, $country"
+                        } else {
+                            throw Exception()
+                        }
+                    }
+            }
+        }catch(ex: Exception){
+            Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+        }
+
         //Add Bundle - Create
         bind.createNewBundleButton.setOnClickListener {
 

@@ -34,7 +34,7 @@
                 android:id="@+id/cityName"
                 android:textStyle="normal"
                 android:text="City"
-                android:textColor="@color/colorSubTitle"
+                android:textColor="@color/teal_800"
                 android:layout_marginBottom="50dp"/>
 
 
@@ -51,7 +51,6 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginBottom="15dp"
                 android:textSize="22sp"
                 android:textStyle="bold"
@@ -65,7 +64,7 @@
                 android:id="@+id/countryName"
                 android:textStyle="normal"
                 android:text="Country"
-                android:textColor="@color/colorSubTitle"
+                android:textColor="@color/teal_800"
                 android:layout_marginBottom="50dp"/>
 
 

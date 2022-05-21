@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
@@ -25,8 +26,9 @@ class Location : Fragment() {
         val bind = FragmentLocationBinding.inflate(layoutInflater)
         val args = this.arguments
 
+        val locationId = args?.getString("locationId")
+
         try{
-            val locationId = args?.getString("locationId")
             if (locationId != null) {
                 val locationUUID = UUID.fromString(locationId)
                 viewModel
@@ -54,11 +56,13 @@ class Location : Fragment() {
 
         //navigation to Add new Bundle
         bind.addBundleButton.setOnClickListener {
-            findNavController().navigate(R.id.action_location_to_addBundle)
+            val bundle = bundleOf("locationId" to locationId)
+            findNavController().navigate(R.id.action_location_to_addBundle,bundle)
         }
 
         //navigation to Delete location
         bind.locationDeleteButton.setOnClickListener {
+            //todo delete location
             findNavController().navigate(R.id.action_location_to_locations)
         }
 
