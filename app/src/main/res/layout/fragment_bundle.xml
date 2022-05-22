@@ -281,10 +281,10 @@
             <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Save changes"
+                    android:text="Edit bundle"
                     android:layout_marginTop="10dp"
-                    android:id="@+id/saveChangesBundleButton"
-                    android:drawableLeft="@drawable/ic_baseline_save_as_24"
+                    android:id="@+id/editBundleButton"
+                    android:drawableLeft="@drawable/ic_baseline_edit_24"
                     app:backgroundTint="@color/teal_700"
                     android:textColor="@color/white"
                     android:visibility="gone"/>

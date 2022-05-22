@@ -40,7 +40,6 @@ class Bundles : Fragment() {
         val recyclerView = bind.recyclerBundlesList
         val args = this.arguments
 
-        //bind.floatingAddBundleButton.visibility = View.GONE
 
         try {
             val bundles =

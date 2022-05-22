@@ -11,9 +11,6 @@
             android:label="Bundles"
             tools:layout="@layout/fragment_bundles_list">
         <action
-                android:id="@+id/action_bundles_to_editBundle"
-                app:destination="@id/editBundle" />
-        <action
                 android:id="@+id/action_bundles_to_bundle"
                 app:destination="@id/bundle" />
     </fragment>
@@ -90,6 +87,9 @@
         <action
                 android:id="@+id/action_bundle_to_bundles"
                 app:destination="@id/bundles" />
+        <action
+                android:id="@+id/action_bundle_to_editBundle"
+                app:destination="@id/editBundle" />
     </fragment>
     <activity
             android:id="@+id/mainActivity"

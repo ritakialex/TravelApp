@@ -20,6 +20,7 @@ import com.steft.travel_app.databinding.FragmentAddLocationBinding
 import com.steft.travel_app.databinding.FragmentBundleBinding
 import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
+import java.text.SimpleDateFormat
 import java.util.*
 
 class Bundle : Fragment() {
@@ -85,23 +86,65 @@ class Bundle : Fragment() {
         //Edit - Save Button Agent
         if (viewModel.isLoggedIn()) {
             //visibility and Editabily changes
-            bind.saveChangesBundleButton.visibility = View.VISIBLE
+            bind.editBundleButton.visibility = View.VISIBLE
             bind.deleteBundleButton.visibility = View.VISIBLE
             bind.bookBundleButton.visibility = View.GONE
-            bind.dateFromBundleTextView.isEnabled = true
+           /* bind.dateFromBundleTextView.isEnabled = true
             bind.durationFromBundleTextView.isEnabled = true
             bind.priceBundleTextView.isEnabled = true
-            bind.hotelsBundleTextView.isEnabled = true
+            bind.hotelsBundleTextView.isEnabled = true*/
         }
-        bind.saveChangesBundleButton.setOnClickListener {
-            //TODO() call editBundle
+        //Edit changes
+        bind.editBundleButton.setOnClickListener {
+            /*try {
+                val bundleId = args?.getString("bundleId")?.let { UUID.fromString(it) } ?: throw IllegalStateException("Bundle id should exist")
 
-            findNavController().navigate(R.id.action_bundle_to_bundles)
+                bind.dateFromBundleTextView.setOnClickListener {
+                    //bind.dateFromBundleTextView.setText("")
+                    val dateStr = bind.dateFromBundleTextView.text.toString() //to date
+                    val date = SimpleDateFormat("dd-mm-yyyy").parse(dateStr)
+                        ?: throw IllegalArgumentException("Date doesn't conform to format dd-mm-yyyy")
+                    viewModel
+                        .updateBundle(bundleId, date = date)
+                }
+
+                val duration = Integer.parseInt(bind.durationFromBundleTextView.text.toString())
+                val price = bind.priceBundleTextView.text.toString().toDouble()
+                val hotel1 = bind.hotelsBundleTextView.text.toString()
+                //val hotels = listOf(hotel1)
+
+
+
+                viewModel
+                    .updateBundle(bundleId, duration = duration, price=price)
+                Toast.makeText(context, "updated", Toast.LENGTH_LONG).show()
+                findNavController().navigate(R.id.action_bundle_to_bundles)
+            } catch (ex: Exception) {
+                //Do something
+                Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+                println(ex.message)
+            }*/
+            val bundleId = args?.getString("bundleId")
+            val bundle = bundleOf("bundleId" to bundleId)
+            findNavController().navigate(R.id.action_bundle_to_editBundle,bundle)
         }
+
+        //Delete bundle
         bind.deleteBundleButton.setOnClickListener {
-            //TODO() call deletebundle
-            Toast.makeText(context, "Bundle deleted", Toast.LENGTH_LONG).show()
-            findNavController().navigate(R.id.action_bundle_to_bundles)
+            try {
+                val bundleId =
+                    args?.getString("bundleId")
+                        ?.let { UUID.fromString(it) }
+                        ?: throw IllegalStateException("Bundle id should exist")
+                viewModel
+                    .deleteBundle(bundleId)
+                Toast.makeText(context, "Profile Deleted", Toast.LENGTH_LONG).show()
+                findNavController().navigate(R.id.action_bundle_to_bundles)
+            } catch (ex: Exception) {
+                //Do something
+                Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+                println(ex.message)
+            }
         }
 
 
