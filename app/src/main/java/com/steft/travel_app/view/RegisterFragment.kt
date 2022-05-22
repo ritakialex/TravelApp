@@ -35,13 +35,14 @@ class RegisterFragment : Fragment() {
             val username = bind.agencyUsername.text.toString()
             val password = bind.agencyPassword.text.toString()
 
-            try {
-                viewModel
-                    .register(name, address, username, password) //TODO: Handle result
+            if(name!= "" && address!="" && username!="" && password!=""){
+                try {
+                    viewModel
+                        .register(name, address, username, password) //TODO: Handle result
 
-                Toast.makeText(context, "Registered Successfully", Toast.LENGTH_LONG).show()
-                val intent = Intent(this@RegisterFragment.requireContext(), LoginActivity::class.java)
-                startActivity(intent)
+                    Toast.makeText(context, "Registered Successfully", Toast.LENGTH_LONG).show()
+                    val intent = Intent(this@RegisterFragment.requireContext(), LoginActivity::class.java)
+                    startActivity(intent)
 
 //                TODO:
 //                if (it != null) {
@@ -52,11 +53,15 @@ class RegisterFragment : Fragment() {
 //                    intent.putExtras(b) //Put your id to your next Intent
 //                    startActivity(intent)
 //                }
-            } catch (ex: Exception) {
-                //Do something
-                Toast.makeText(context, "Input incorrect, try again", Toast.LENGTH_LONG).show()
-                println(ex.message)
+                } catch (ex: Exception) {
+                    //Do something
+                    Toast.makeText(context, "Input incorrect, try again", Toast.LENGTH_LONG).show()
+                    println(ex.message)
+                }
+            }else{
+                Toast.makeText(context, "fill all the fields", Toast.LENGTH_LONG).show()
             }
+
         }
 
 

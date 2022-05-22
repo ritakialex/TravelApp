@@ -34,38 +34,34 @@ class AgentLogin : Fragment() {
             val username = bind.usernamelogin.text.toString()
             val password = bind.passowordlogin.text.toString()
 
-            try {
-                viewModel
-                    .login(username, password)
-                    .observe(viewLifecycleOwner) {
-                        if (it != null) {
-                            println("-------TEST---------True")
-                            val intent = Intent(this@AgentLogin.requireContext(), LoginActivity::class.java)
-                            val b = Bundle()
-                            b.putString("id", it.toString()) //Your id
-                            intent.putExtras(b) //Put your id to your next Intent
-                            startActivity(intent)
-                        } else {
-                            Toast.makeText(context, "Wrong credentials", Toast.LENGTH_LONG).show()
+            if(username!= "" && password!= ""){
+                try {
+                    viewModel
+                        .login(username, password)
+                        .observe(viewLifecycleOwner) {
+                            if (it != null) {
+                                val intent = Intent(this@AgentLogin.requireContext(), LoginActivity::class.java)
+                                val b = Bundle()
+                                b.putString("id", it.toString()) //Your id
+                                intent.putExtras(b) //Put your id to your next Intent
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(context, "Wrong credentials", Toast.LENGTH_LONG).show()
+                            }
                         }
-                    }
-            } catch (ex: Exception) {
-                //Do something
-                println(ex.message)
+                } catch (ex: Exception) {
+                    //Do something
+                    println(ex.message)
+                }
+            }else{
+                Toast.makeText(context, "fill all the fields", Toast.LENGTH_LONG).show()
             }
-
 
         }
 
         //αν πατήσει register σε νέο fragment
         bind.gotoRegisterButton.setOnClickListener {
             findNavController().navigate(R.id.action_agentLogin_to_registerFragment)
-            /*
-                val register = RegisterFragment()
-                val transaction : FragmentTransaction = requireFragmentManager().beginTransaction()
-                transaction.replace(R.id.agentLoginLayout, register)
-                transaction.commit()
-            */
         }
 
 

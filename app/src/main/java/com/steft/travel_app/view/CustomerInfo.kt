@@ -27,30 +27,43 @@ class CustomerInfo : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val bind = FragmentCustomerInfoBinding.inflate(layoutInflater)
+        val args = this.arguments
+
+
 
         //Traveller Book bundle
         bind.bookBundleCustInfoButton.setOnClickListener {
-            /*val bundle_id = 1 //GET ID
-            val name = bind.custName.text.toString()
-            val lastname = bind.custLName.text.toString()
-            val email = bind.custEmail.text.toString()
-            val mobile = bind.custMobile.text.toString()
-            val hotel = bind.custHotel.text.toString()
-            //μάλλον να εμφανίζω επιλογές από Bundle
-
             try {
-                viewModel
-                    .registerCustomer(bundle_id, name,lastname,email,mobile,hotel) //TODO: handle result
+                val bundleId =
+                    args?.getString("bundleId")
+                        ?.let { UUID.fromString(it) }
+                        ?: throw IllegalStateException("Bundle id should exist")
 
-                Toast.makeText(context, "Bundle Booked Successfully", Toast.LENGTH_LONG).show()
-                findNavController().navigate(R.id.action_customerInfo_to_locations)
+
+                    val name = bind.custName.text.toString()
+                    val lastname = bind.custLName.text.toString()
+                    val email = bind.custEmail.text.toString()
+                    val mobile = bind.custMobile.text.toString()
+                    val hotel = bind.custHotel.text.toString()
+
+
+                    try {
+                        viewModel
+                            .registerCustomer(bundleId, name,lastname,mobile,email,hotel) //TODO: handle result
+
+                        Toast.makeText(context, "Bundle Booked Successfully", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_customerInfo_to_locations)
+                    } catch (ex: Exception) {
+                        //Do something
+                        Toast.makeText(context, "Input incorrect, try again", Toast.LENGTH_LONG).show()
+                        println(ex.message)
+                    }
             } catch (ex: Exception) {
-                //Do something
-                Toast.makeText(context, "Input incorrect, try again", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Something went wrong, try again", Toast.LENGTH_LONG).show()
                 println(ex.message)
-            }*/
+            }
 
-            findNavController().navigate(R.id.action_customerInfo_to_locations)
+            //findNavController().navigate(R.id.action_customerInfo_to_locations)
         }
 
         return bind.root

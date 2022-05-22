@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import arrow.core.tail
@@ -39,7 +40,6 @@ class Bundle : Fragment() {
                     ?.let { UUID.fromString(it) }
                     ?: throw IllegalStateException("Bundle id should exist")
 
-
             viewModel
                 .getBundle(bundleId)
                 .observe(viewLifecycleOwner) {
@@ -54,7 +54,7 @@ class Bundle : Fragment() {
                         bind.hotelsBundleTextView.setText(hotels.tail()
                             .fold(hotels.first()) { acc, next -> "$acc\n$next" })
 
-
+                        //location info
                         viewModel.getLocation(locationId).observe(viewLifecycleOwner) { location ->
                             val location = location
                                 ?: throw IllegalStateException("Location id should exist")
@@ -75,10 +75,15 @@ class Bundle : Fragment() {
 
         //Book Button Traveler
         bind.bookBundleButton.setOnClickListener {
-            findNavController().navigate(R.id.action_bundle_to_customerInfo)
+            val bundleId = args?.getString("bundleId")
+            val bundle = bundleOf("bundleId" to bundleId)
+            findNavController().navigate(R.id.action_bundle_to_customerInfo, bundle)
         }
 
         //Edit - Save Button Agent
+        if (viewModel.isLoggedIn()) {
+            bind.saveChangesBundleButton.visibility = View.VISIBLE
+        }
         bind.saveChangesBundleButton.setOnClickListener{
             findNavController().navigate(R.id.action_bundle_to_bundles)
         }
