@@ -16,15 +16,12 @@ import java.util.UUID
             entity = TravelAgency::class,
             parentColumns = ["id"],
             childColumns = ["travel_agency"],
-            onDelete = ForeignKey.RESTRICT
-        ),
+            onDelete = ForeignKey.RESTRICT),
         ForeignKey(
-            entity = CustomLocation::class,
+            entity = Location::class,
             parentColumns = ["id"],
             childColumns = ["location"],
-            onDelete = ForeignKey.RESTRICT
-        )]
-)
+            onDelete = ForeignKey.RESTRICT)])
 data class Bundle(
     @PrimaryKey val id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "travel_agency") val travelAgency: UUID,

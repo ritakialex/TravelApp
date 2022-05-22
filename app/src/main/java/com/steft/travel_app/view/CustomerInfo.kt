@@ -37,7 +37,7 @@ class CustomerInfo : Fragment() {
                 val bundleId =
                     args?.getString("bundleId")
                         ?.let { UUID.fromString(it) }
-                        ?: throw IllegalStateException("Bundle id should exist")
+                        ?: throw IllegalArgumentException("Bundle id should exist")
 
 
                     val name = bind.custName.text.toString()

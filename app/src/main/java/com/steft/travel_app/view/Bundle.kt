@@ -41,7 +41,7 @@ class Bundle : Fragment() {
             val bundleId =
                 args?.getString("bundleId")
                     ?.let { UUID.fromString(it) }
-                    ?: throw IllegalStateException("Bundle id should exist")
+                    ?: throw IllegalArgumentException("Bundle id should exist")
 
             viewModel
                 .getBundle(bundleId)
@@ -59,13 +59,13 @@ class Bundle : Fragment() {
                         //location info
                         viewModel.getLocation(locationId).observe(viewLifecycleOwner) { location ->
                             val location = location
-                                ?: throw IllegalStateException("Location id should exist")
+                                ?: throw IllegalArgumentException("Location id should exist")
 
                             val (_, _, city, country) = location
                             bind.locationBundleInfo.text = "Bundle for $city, $country"
                         }
                     } else {
-                        throw IllegalStateException("Bundle id cant be null")
+                        throw IllegalArgumentException("Bundle id cant be null")
                     }
                 }
         } catch (ex: Exception) {
