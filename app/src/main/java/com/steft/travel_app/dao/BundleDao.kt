@@ -28,5 +28,5 @@ interface BundleDao {
     suspend fun update(bundle: Bundle)
 
     @Query("DELETE FROM bundle WHERE id = :id AND travel_agency = :travelAgency")
-    suspend fun delete(id: UUID, travelAgency: UUID)
+    suspend fun delete(id: UUID, travelAgency: UUID): Int
 }

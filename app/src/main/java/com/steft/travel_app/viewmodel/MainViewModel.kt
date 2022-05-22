@@ -325,7 +325,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                     .catch {
                         locationDao.deleteCustom(id, travelAgency)
                     }
-                    .fold({ false }, { true })
+                    .fold({ false }, { it > 0 })
             }
         }
 
@@ -336,7 +336,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                     .catch {
                         agencyDao.delete(travelAgency)
                     }
-                    .fold({ false }, { true })
+                    .fold({ false }, { it > 0 })
             }
         }
 
@@ -347,7 +347,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                     .catch {
                         bundleDao.delete(id, travelAgency)
                     }
-                    .fold({ false }, { true })
+                    .fold({ false }, { it > 0 })
             }
         }
 
