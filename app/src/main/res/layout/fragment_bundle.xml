@@ -277,7 +277,7 @@
                 android:id="@+id/bookBundleButton"
                 app:backgroundTint="@color/teal_700"
                 android:textColor="@color/white"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
         <Button
                 android:layout_width="wrap_content"
