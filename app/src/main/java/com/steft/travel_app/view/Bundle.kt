@@ -3,11 +3,13 @@
 package com.steft.travel_app.view
 
 import android.os.Bundle
+import android.text.method.KeyListener
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
@@ -49,8 +51,8 @@ class Bundle : Fragment() {
                         bind.durationFromBundleTextView.setText(duration.toString())
                         bind.typeBundleTextView.setText(type)
                         bind.priceBundleTextView.setText(price.toString())
-                        bind.agencyBundleTextView.setText(agencyId.toString())
-                        //TODO hotels List
+                        //bind.agencyBundleTextView.setText(agencyId.toString())
+
                         bind.hotelsBundleTextView.setText(hotels.tail()
                             .fold(hotels.first()) { acc, next -> "$acc\n$next" })
 
@@ -86,9 +88,23 @@ class Bundle : Fragment() {
 
         //Edit - Save Button Agent
         if (viewModel.isLoggedIn()) {
+            //visibity and Editabily changes
             bind.saveChangesBundleButton.visibility = View.VISIBLE
+            bind.deleteBundleButton.visibility = View.VISIBLE
+            bind.bookBundleButton.visibility = View.GONE
+            bind.dateFromBundleTextView.isEnabled = true
+            bind.durationFromBundleTextView.isEnabled = true
+            bind.priceBundleTextView.isEnabled = true
+            bind.hotelsBundleTextView.isEnabled = true
         }
         bind.saveChangesBundleButton.setOnClickListener {
+            //TODO() call editBundle
+
+            findNavController().navigate(R.id.action_bundle_to_bundles)
+        }
+        bind.deleteBundleButton.setOnClickListener {
+            //TODO() call deletebundle
+            Toast.makeText(context, "Bundle deleted", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_bundle_to_bundles)
         }
 

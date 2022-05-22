@@ -13,7 +13,7 @@
                 android:id="@+id/action_bundles_to_editBundle"
                 app:destination="@id/editBundle" />
         <action
-                android:id="@+id/action_bundles_to_bundle2"
+                android:id="@+id/action_bundles_to_bundle"
                 app:destination="@id/bundle" />
     </fragment>
     <fragment

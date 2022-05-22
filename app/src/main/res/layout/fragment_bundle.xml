@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/NameStyle"
-                    android:editable="false"/>
+                    android:enabled="false"/>
 
             <EditText
                     android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/NameStyle"
-                    android:editable="false"/>
+                    android:enabled="false"/>
 
             <EditText
                     android:layout_width="wrap_content"
@@ -81,7 +81,8 @@
                     android:text="Date From"
                     android:gravity="center"
                     android:id="@+id/dateFromBundleTextView"
-                    style="@style/NameStyle" />
+                    style="@style/NameStyle"
+                    android:enabled="false"/>
 
         </LinearLayout>
 
@@ -97,7 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/NameStyle"
-                    android:editable="false"/>
+                    android:enabled="false"/>
 
             <EditText
                     android:layout_width="wrap_content"
@@ -106,7 +107,8 @@
                     android:text="Duration"
                     android:gravity="center"
                     android:id="@+id/durationFromBundleTextView"
-                    style="@style/NameStyle" />
+                    style="@style/NameStyle"
+                    android:enabled="false"/>
         </LinearLayout>
 
         <LinearLayout
@@ -121,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/NameStyle"
-                    android:editable="false"/>
+                    android:enabled="false"/>
 
             <EditText
                     android:layout_width="wrap_content"
@@ -130,7 +132,8 @@
                     android:text="Type"
                     android:gravity="center"
                     android:id="@+id/typeBundleTextView"
-                    style="@style/NameStyle" />
+                    style="@style/NameStyle"
+                    android:enabled="false"/>
             <!--<RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -171,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/NameStyle"
-                    android:editable="false"/>
+                    android:enabled="false"/>
 
             <EditText
                     android:layout_width="wrap_content"
@@ -180,9 +183,10 @@
                     android:text="Price"
                     android:gravity="center"
                     android:id="@+id/priceBundleTextView"
-                    style="@style/NameStyle" />
+                    style="@style/NameStyle"
+                    android:enabled="false"/>
         </LinearLayout>
-        <LinearLayout
+       <!-- <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -194,7 +198,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/NameStyle"
-                    android:editable="false"/>
+                    android:enabled="false"/>
 
             <EditText
                     android:layout_width="wrap_content"
@@ -204,7 +208,7 @@
                     android:gravity="center"
                     android:id="@+id/agencyBundleTextView"
                     style="@style/NameStyle" />
-        </LinearLayout>
+        </LinearLayout>-->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -217,7 +221,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/NameStyle"
-                    android:editable="false"/>
+                    android:enabled="false"/>
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -228,7 +232,8 @@
                     android:text="Hotel 1"
                     android:gravity="center"
                     android:id="@+id/hotelsBundleTextView"
-                    style="@style/NameStyle" />
+                    style="@style/NameStyle"
+                    android:enabled="false"/>
            <!-- <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -253,6 +258,17 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_weight="1">
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/deleteBundleButton"
+                    android:drawableLeft="@drawable/ic_baseline_delete_24"
+                    app:backgroundTint="@color/teal_700"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    android:layout_marginRight="15dp"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -261,7 +277,7 @@
                 android:id="@+id/bookBundleButton"
                 app:backgroundTint="@color/teal_700"
                 android:textColor="@color/white"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
 
         <Button
                 android:layout_width="wrap_content"
@@ -269,6 +285,7 @@
                 android:text="Save changes"
                 android:layout_marginTop="10dp"
                 android:id="@+id/saveChangesBundleButton"
+                android:drawableLeft="@drawable/ic_baseline_save_as_24"
                 app:backgroundTint="@color/teal_700"
                 android:textColor="@color/white"
                 android:visibility="gone"/>
@@ -277,241 +294,4 @@
 
     </LinearLayout>
 </FrameLayout>
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.Bundle"
-        android:orientation="horizontal"
-        android:background="@color/teal_100">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:padding="8dp"
-            >
-
-        <EditText
-                android:text="City"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/cityTV"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <EditText
-                android:text="Country"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/countryTV"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/cityTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-                android:text="Date from"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/dateFromTV"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/countryTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-                android:text="Duration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/durationTV"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/dateFromTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-                android:text="Type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/typeTV"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/durationTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-        <TextView
-                android:text="Price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/priceTV"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/typeTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-        <TextView
-                android:text="Hotels"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/hotelsTV"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/priceTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-                android:text="Travel Agency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/agencyTV"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/hotelsTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:padding="8dp"
-            android:background="@color/teal_200">
-        &lt;!&ndash;      remove line above after      &ndash;&gt;
-
-
-        <TextView
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/cityBundleTextView"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/countryBundleTextView"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/cityBundleTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/dateFromBundleTextView"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/countryBundleTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/durationBundleTextView"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/dateFromBundleTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/typeBundleTextView"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/durationBundleTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/priceBundleTextView"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/typeBundleTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-        <TextView
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/hotelsBundleTextView"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/priceBundleTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/agencyBundleTextView"
-                android:layout_margin="16dp"
-                style="@style/NameStyle"
-                app:layout_constraintTop_toBottomOf="@+id/hotelsBundleTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Book"
-                android:id="@+id/bookBundleButton"
-                app:backgroundTint="@color/teal_700"
-                android:textColor="@color/white"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/agencyBundleTextView" />
-
-        &lt;!&ndash; if agent is logged in, they should see the Edit Button instead of Buy        &ndash;&gt;
-        &lt;!&ndash;<Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit"
-                android:id="@+id/editBundleButton"
-                android:visibility="gone"
-                app:backgroundTint="@color/teal_700"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/agencyBundleTextView" />&ndash;&gt;
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</LinearLayout>-->

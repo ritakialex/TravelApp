@@ -56,6 +56,7 @@
         android:id="@+id/createNewLocationButton"
         app:backgroundTint="@color/teal_700"
         android:textColor="@color/white"
+        android:drawableLeft="@drawable/ic_baseline_save_as_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addLocationCountry"
