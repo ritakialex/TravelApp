@@ -318,9 +318,38 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
         }
 
 
-    fun deleteCustomLocation(id: UUID): LiveData<Boolean> = TODO()
-    fun deleteTravelAgency(id: UUID): LiveData<Boolean> = TODO()
-    fun deleteBundle(id: UUID): LiveData<Boolean> = TODO()
+    fun deleteCustomLocation(id: UUID): LiveData<Boolean> =
+        ifAuthorized { travelAgency ->
+            intoLiveData {
+                Either
+                    .catch {
+                        locationDao.deleteCustom(id, travelAgency)
+                    }
+                    .fold({ false }, { true })
+            }
+        }
+
+    fun deleteTravelAgency(): LiveData<Boolean> =
+        ifAuthorized { travelAgency ->
+            intoLiveData {
+                Either
+                    .catch {
+                        agencyDao.delete(travelAgency)
+                    }
+                    .fold({ false }, { true })
+            }
+        }
+
+    fun deleteBundle(id: UUID): LiveData<Boolean> =
+        ifAuthorized { travelAgency ->
+            intoLiveData {
+                Either
+                    .catch {
+                        bundleDao.delete(id, travelAgency)
+                    }
+                    .fold({ false }, { true })
+            }
+        }
 
     fun updateBundle(
         bundleId: UUID,

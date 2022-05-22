@@ -49,9 +49,6 @@ interface LocationDao {
     @Insert
     suspend fun insertAllCustom(vararg location: CustomLocation)
 
-    @Query("DELETE FROM location WHERE id = :id")
-    suspend fun delete(id: UUID)
-
     @Query("DELETE FROM custom_location WHERE id = :id AND travel_agency = :travelAgencyId")
     suspend fun deleteCustom(id: UUID, travelAgencyId: UUID)
 }
