@@ -51,7 +51,7 @@ class Bundles : Fragment() {
                         val locationUUID = UUID.fromString(locationId)
                         viewModel.getBundles(locationUUID)
                     } else {
-                        throw IllegalStateException("You shouldn't be here. Call an administrator immediately!!")
+                        throw IllegalArgumentException("You shouldn't be here. Call an administrator immediately!!")
                     }
                 } else if (viewModel.isLoggedIn()) {
                     viewModel.getAgencyBundles()
