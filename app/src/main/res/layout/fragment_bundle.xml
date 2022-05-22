@@ -23,26 +23,19 @@
                 android:layout_weight="1">
                 <!--android:layout_gravity="center"-->
 
-
-            <EditText
-                    android:text="City:"
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/NameStyle"
-                    android:editable="false"/>
-
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="City"
-                    android:gravity="center"
-                    android:id="@+id/cityBundleTextView"
-                    style="@style/NameStyle"
-                    />
+                    android:text="Bundle for city, country"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:id="@+id/locationBundleInfo"
+                    android:drawableLeft="@drawable/ic_baseline_location_24"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"/>
         </LinearLayout>
 
-        <LinearLayout
+       <!-- <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,7 +58,7 @@
                     android:id="@+id/countryBundleTextView"
                     style="@style/NameStyle" />
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <LinearLayout
                 android:orientation="horizontal"
@@ -113,11 +106,11 @@
                     android:text="Duration"
                     android:gravity="center"
                     android:id="@+id/durationFromBundleTextView"
-                    style="@style/NameStyle" /> />
+                    style="@style/NameStyle" />
         </LinearLayout>
 
         <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -128,14 +121,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/NameStyle"
-                    android:layout_marginBottom="-25dp"
                     android:editable="false"/>
 
-            <RadioGroup
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Type"
+                    android:gravity="center"
+                    android:id="@+id/typeBundleTextView"
+                    style="@style/NameStyle" />
+            <!--<RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center"
+                    android:visibility="visible"
                     >
                 <RadioButton
                         android:layout_width="wrap_content"
@@ -156,7 +157,7 @@
                         style="@style/NameStyle"
                         />
 
-            </RadioGroup>
+            </RadioGroup>-->
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -178,8 +179,8 @@
                     android:inputType="textPersonName"
                     android:text="Price"
                     android:gravity="center"
-                    android:id="@+id/priceFromBundleTextView"
-                    style="@style/NameStyle" /> />
+                    android:id="@+id/priceBundleTextView"
+                    style="@style/NameStyle" />
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -201,7 +202,7 @@
                     android:inputType="textPersonName"
                     android:text="Travel Agency"
                     android:gravity="center"
-                    android:id="@+id/travelFromBundleTextView"
+                    android:id="@+id/agencyBundleTextView"
                     style="@style/NameStyle" />
         </LinearLayout>
         <LinearLayout
@@ -226,7 +227,7 @@
                     android:inputType="textPersonName"
                     android:text="Hotel 1"
                     android:gravity="center"
-                    android:id="@+id/hotel1FromBundleTextView"
+                    android:id="@+id/hotelsBundleTextView"
                     style="@style/NameStyle" />
             <EditText
                     android:layout_width="wrap_content"
@@ -256,6 +257,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Book"
+                android:layout_marginTop="10dp"
                 android:id="@+id/bookBundleButton"
                 app:backgroundTint="@color/teal_700"
                 android:textColor="@color/white"
@@ -265,6 +267,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Save changes"
+                android:layout_marginTop="10dp"
                 android:id="@+id/saveChangesBundleButton"
                 app:backgroundTint="@color/teal_700"
                 android:textColor="@color/white"
