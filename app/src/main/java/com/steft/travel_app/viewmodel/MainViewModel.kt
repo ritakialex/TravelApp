@@ -35,14 +35,10 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
     private val registrationDao = firebaseDb().registrationDao()
 
     private val locationToTriple: (Location) -> PreviewTriple =
-        { (id, city, country) ->
-            Triple(id, Name.content(city), Name.content(country))
-        }
-
-    private val customLocationToTriple: (CustomLocation) -> PreviewTriple =
         { (id, _, city, country) ->
             Triple(id, Name.content(city), Name.content(country))
         }
+
 
     private val tripleToPreviewDto: (PreviewTriple) -> LocationPreviewDto =
         { (id, city, country) ->
@@ -57,29 +53,22 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                 .map { tripleToPreviewDto(it) }
         }
 
-    private val getCustomLocationsOfAgency: suspend (UUID) -> List<LocationPreviewDto> =
+    private val getLocationsOfAgency: suspend (UUID) -> List<LocationPreviewDto> =
         { travelAgency ->
             locationDao
-                .getAllCustom(travelAgency)
-                .map { customLocationToTriple(it) }
+                .getAllOfAgency(travelAgency)
+                .map { locationToTriple(it) }
                 .map { tripleToPreviewDto(it) }
         }
 
-    private val getAllCustomLocations: suspend () -> List<LocationPreviewDto> =
-        {
-            locationDao
-                .getAllCustom()
-                .map { customLocationToTriple(it) }
-                .map { tripleToPreviewDto(it) }
-        }
 
     private suspend fun bundleToBundlePreviewDto(bundle: Bundle): BundlePreviewDto =
         bundle
             .let { (id, _, locationId, _, price, _, _, _) ->
-                getLocationSuspend(locationId)
-                    ?.fold(
-                        { "${it.city}, ${it.country}" },
-                        { "${it.city}, ${it.country}" })
+                locationDao.findByIdAll(locationId)
+                    ?.let {
+                        "${it.city}, ${it.country}"
+                    }
                     ?.let { locationName ->
                         BundlePreviewDto(id, locationName, price.toString())
                     }
@@ -93,18 +82,6 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
             ?.let { f(it) }
             ?: throw UnauthorizedException("You aren't logged in as a travel agent")
 
-    private suspend fun getLocationSuspend(locationId: UUID): Either<Location, CustomLocation>? =
-        Utils.concurrently(
-            { locationDao.findById(locationId) },
-            { locationDao.findByIdCustom(locationId) })
-        { location, customLocation ->
-            location
-                ?.let { Either.Left(it) }
-                ?: customLocation
-                    ?.let { Either.Right(it) }
-        }
-
-
     fun init() {
         Log.i("MainViewModel", "Initialized main view model")
     }
@@ -115,41 +92,28 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
 
     fun getLocation(locationId: UUID): LiveData<LocationDto?> =
         intoLiveData {
-            getLocationSuspend(locationId)
+            locationDao.findByIdAll(locationId)
                 ?.let {
-                    when (it) {
-                        is Either.Left ->
-                            it.value.let { (id, city, country) ->
-                                LocationDto(
-                                    id = id,
-                                    travelAgency = null,
-                                    city = Name.content(city),
-                                    country = Name.content(country))
-                            }
-                        is Either.Right ->
-                            it.value.let { (id, travelAgency, city, country) ->
-                                LocationDto(
-                                    id = id,
-                                    travelAgency = travelAgency,
-                                    city = Name.content(city),
-                                    country = Name.content(country))
-                            }
+                    it.let { (id, _, city, country) ->
+                        LocationDto(
+                            id = id,
+                            travelAgency = null,
+                            city = Name.content(city),
+                            country = Name.content(country))
                     }
                 }
         }
 
     fun getLocations(): LiveData<List<LocationPreviewDto>> =
         intoLiveData {
-            listOf(getAllLocations(), getAllCustomLocations())
-                .flatten()
+            getAllLocations()
         }
 
 
     fun getAgencyLocations(): LiveData<List<LocationPreviewDto>> =
         ifAuthorized { travelAgency ->
             intoLiveData {
-                listOf(getAllLocations(), getCustomLocationsOfAgency(travelAgency))
-                    .flatten()
+                getLocationsOfAgency(travelAgency)
             }
         }
 
@@ -175,7 +139,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                 Name.makeValidated(city)
                     .zip(Semigroup.nonEmptyList(), Name.makeValidated(country))
                     .map { (city, country) ->
-                        CustomLocation(
+                        Location(
                             travelAgency = travelAgency,
                             city = city,
                             country = country)
@@ -185,7 +149,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                                 throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
                             is Valid ->
                                 Either.catch {
-                                    locationDao.insertAllCustom(it.value)
+                                    locationDao.insert(it.value)
                                 }.fold({ false }, { true })
                         }
                     }
@@ -297,7 +261,6 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                     .flatMap { (bundle, _, customers) ->
                         bundleDao.findById(bundle)
                             ?.let { (_, _, location) ->
-
                                 val toPreview: (Name, Name) -> List<RegistrationPreviewDto> =
                                     { city, country ->
                                         customers.map { (name, surname, phone, email, hotel) ->
@@ -307,10 +270,8 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                                         }
                                     }
 
-                                locationDao.findById(location)
-                                    ?.let { (_, city, country) -> toPreview(city, country) }
-                                    ?: locationDao.findByIdCustom(location)
-                                        ?.let { (_, _, city, country) -> toPreview(city, country) }
+                                locationDao.findByIdAll(location)
+                                    ?.let { (_, _, city, country) -> toPreview(city, country) }
 
                             } ?: throw IllegalArgumentException("Error in retrieving bookings")
                     }

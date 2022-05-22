@@ -43,10 +43,10 @@ object Converters {
     fun dateToLong(value: Date): Long = value.time
 
     @TypeConverter
-    fun uuidToStringNullable(value: UUID?): String = value.toString()
+    fun uuidToStringNullable(value: UUID?): String? = value?.toString()
 
     @TypeConverter
-    fun stringToUuidNullable(value: String?): UUID? = UUID.fromString(value)
+    fun stringToUuidNullable(value: String?): UUID? = value?.let { UUID.fromString(value) }
 
     @TypeConverter
     fun usernameToString(value: Username): String = value.string
