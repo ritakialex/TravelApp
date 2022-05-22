@@ -1,4 +1,4 @@
-@file:Suppress("NAME_SHADOWING")
+@file:Suppress("NAME_SHADOWING", "NestedLambdaShadowedImplicitParameter")
 
 package com.steft.travel_app.viewmodel
 
@@ -256,10 +256,13 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                     }.let {
                         when (it) {
                             is Valid ->
-                                Either.catch {
-                                    bundleDao.insertAll(it.value)
-                                    registrationDao.insert(Registration(it.value.id, travelAgency, emptyList()))
-                                }.fold({ false }, { true })
+                                Either
+                                    .catch {
+                                        bundleDao.insertAll(it.value)
+                                        registrationDao.insert(Registration(it.value.id, travelAgency, emptyList()))
+                                    }
+                                    .tapLeft { Log.e("Database", it.toString()) }
+                                    .fold({ false }, { true })
                             is Invalid ->
                                 throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
                         }
@@ -292,22 +295,32 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
             intoLiveData {
                 registrationDao.findByAgencyId(agencyId)
                     .flatMap { (bundle, _, customers) ->
-
                         bundleDao.findById(bundle)
                             ?.let { (_, _, location) ->
 
-                                locationDao.findById(location)
-                                    ?.let { (_, city, country) ->
+                                val toPreview: (Name, Name) -> List<RegistrationPreviewDto> =
+                                    { city, country ->
                                         customers.map { (name, surname, phone, email, hotel) ->
                                             val locationName = "$city, $country"
-                                            val customer = "$name, $surname, $phone, $email, $hotel"
+                                            val customer = "$name $surname\n$phone\n$email\n$hotel"
                                             RegistrationPreviewDto(bundle, locationName, customer)
                                         }
                                     }
-                            } ?: throw IllegalStateException("Error in retrieving bookings")
+
+                                locationDao.findById(location)
+                                    ?.let { (_, city, country) -> toPreview(city, country) }
+                                    ?: locationDao.findByIdCustom(location)
+                                        ?.let { (_, _, city, country) -> toPreview(city, country) }
+
+                            } ?: throw IllegalArgumentException("Error in retrieving bookings")
                     }
             }
         }
+
+
+    fun deleteCustomLocation(id: UUID): LiveData<Boolean> = TODO()
+    fun deleteTravelAgency(id: UUID): LiveData<Boolean> = TODO()
+    fun deleteBundle(id: UUID): LiveData<Boolean> = TODO()
 
     fun updateBundle(
         bundleId: UUID,
@@ -328,7 +341,6 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                             }
                             ?.mapLeft { IllegalArgumentException(ValidateUtils.foldValidationErrors(it)) }
                             ?.toEither() ?: Either.Right(oldHotels)
-
 
                         hotels
                             .map { hotels ->

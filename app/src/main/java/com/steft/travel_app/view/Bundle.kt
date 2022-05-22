@@ -60,7 +60,7 @@ class Bundle : Fragment() {
                                 ?: throw IllegalStateException("Location id should exist")
 
                             val (_, _, city, country) = location
-                            bind.locationBundleInfo.setText("Bundle for $city, $country")
+                            bind.locationBundleInfo.text = "Bundle for $city, $country"
                             //bind.countryBundleTextView.text = country
                         }
                     } else {
@@ -80,11 +80,15 @@ class Bundle : Fragment() {
             findNavController().navigate(R.id.action_bundle_to_customerInfo, bundle)
         }
 
+//        viewModel
+//            .updateBundle(UUID.randomUUID(), duration = 123)
+
+
         //Edit - Save Button Agent
         if (viewModel.isLoggedIn()) {
             bind.saveChangesBundleButton.visibility = View.VISIBLE
         }
-        bind.saveChangesBundleButton.setOnClickListener{
+        bind.saveChangesBundleButton.setOnClickListener {
             findNavController().navigate(R.id.action_bundle_to_bundles)
         }
 

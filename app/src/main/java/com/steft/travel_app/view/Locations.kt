@@ -49,33 +49,32 @@ class Locations : Fragment() {
         bind.floatingAddLocationButton.visibility = View.GONE
 
         //view location - different navigation if location is selected
-        try {
-            viewModel
-                .getLocations()
-                .observe(viewLifecycleOwner) { locations ->
-                    with(recyclerView) {
-                        layoutManager = LinearLayoutManager(context)
-                        //for agent
-                        if(viewModel.isLoggedIn()){
-                            adapter =
-                                MyItemRecyclerViewAdapter(ArrayList(locations)) { (id, _, _) ->
-                                    findNavController().navigate(R.id.action_locations_to_location,
-                                        Bundle().also {
-                                            it.putString("locationId", id.toString())
-                                        })
-                                }
-                            //for traveller
-                        }else {
-                            adapter =
-                                MyItemRecyclerViewAdapter(ArrayList(locations)) { (id, _, _) ->
-                                    findNavController().navigate(R.id.action_locations_to_bundles,
-                                        Bundle().also {
-                                            it.putString("locationId", id.toString())
-                                        })
-                                }
-                        }
+
+        fun showLocations(locations: List<LocationPreviewDto>, navigateTo: Int) =
+            with(recyclerView) {
+                layoutManager = LinearLayoutManager(context)
+                //for agent
+                adapter =
+                    MyItemRecyclerViewAdapter(ArrayList(locations)) { (id, _, _) ->
+                        findNavController().navigate(navigateTo,
+                            Bundle().also {
+                                it.putString("locationId", id.toString())
+                            })
                     }
-                }
+                //for traveller
+
+            }
+
+        try {
+            if (viewModel.isLoggedIn()) {
+                viewModel
+                    .getAgencyLocations()
+                    .observe(viewLifecycleOwner) { showLocations(it, R.id.action_locations_to_location) }
+            } else {
+                viewModel
+                    .getLocations()
+                    .observe(viewLifecycleOwner) { showLocations(it, R.id.action_locations_to_bundles) }
+            }
         } catch (ex: Exception) {
             //Do something
             println(ex.message)

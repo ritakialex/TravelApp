@@ -34,7 +34,7 @@ class AgentLogin : Fragment() {
             val username = bind.usernamelogin.text.toString()
             val password = bind.passowordlogin.text.toString()
 
-            if(username!= "" && password!= ""){
+            if (username != "" && password != "") {
                 try {
                     viewModel
                         .login(username, password)
@@ -51,9 +51,9 @@ class AgentLogin : Fragment() {
                         }
                 } catch (ex: Exception) {
                     //Do something
-                    println(ex.message)
+                    println(ex)
                 }
-            }else{
+            } else {
                 Toast.makeText(context, "fill all the fields", Toast.LENGTH_LONG).show()
             }
 

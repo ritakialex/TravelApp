@@ -1,3 +1,5 @@
+@file:Suppress("NestedLambdaShadowedImplicitParameter", "NAME_SHADOWING", "SimpleRedundantLet")
+
 package com.steft.travel_app.view
 
 import android.content.Intent
@@ -35,30 +37,39 @@ class RegisterFragment : Fragment() {
             val username = bind.agencyUsername.text.toString()
             val password = bind.agencyPassword.text.toString()
 
-            if(name!= "" && address!="" && username!="" && password!=""){
+            if (name != "" && address != "" && username != "" && password != "") {
                 try {
                     viewModel
-                        .register(name, address, username, password) //TODO: Handle result
+                        .register(name, address, username, password)
+                        .observe(this) {
+                            if (it) {
 
-                    Toast.makeText(context, "Registered Successfully", Toast.LENGTH_LONG).show()
-                    val intent = Intent(this@RegisterFragment.requireContext(), LoginActivity::class.java)
-                    startActivity(intent)
+                                Toast.makeText(context, "Registered Successfully", Toast.LENGTH_LONG).show()
 
-//                TODO:
-//                if (it != null) {
-//                    println("-------TEST---------True")
-//                    val intent = Intent(this@RegisterFragment.requireContext(), LoginActivity::class.java)
-//                    val b = Bundle()
-//                    b.putString("id", it.toString()) //Your id
-//                    intent.putExtras(b) //Put your id to your next Intent
-//                    startActivity(intent)
-//                }
+                                viewModel.login(username, password)
+                                    .observe(this) { id ->
+                                        val id = id
+                                            ?.let { it.toString() }
+                                            ?: error("Id cant be null if the registration has just happened successfully")
+                                        val intent =
+                                            Intent(this@RegisterFragment.requireContext(), LoginActivity::class.java)
+                                        val b = Bundle()
+                                        b.putString("id", id) //Your id
+                                        intent.putExtras(b) //Put your id to your next Intent
+                                        startActivity(intent)
+                                    }
+
+                            } else {
+                                Toast.makeText(context, "Wrong credentials", Toast.LENGTH_LONG).show()
+                            }
+                        }
+
                 } catch (ex: Exception) {
                     //Do something
                     Toast.makeText(context, "Input incorrect, try again", Toast.LENGTH_LONG).show()
                     println(ex.message)
                 }
-            }else{
+            } else {
                 Toast.makeText(context, "fill all the fields", Toast.LENGTH_LONG).show()
             }
 

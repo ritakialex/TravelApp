@@ -1,6 +1,7 @@
 package com.steft.travel_app.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,7 +43,7 @@ class Bookings : Fragment() {
                 }
         } catch (ex: Exception) {
             //Do something
-            println(ex.message)
+           Log.e("Database", ex.toString())
         }
 
 

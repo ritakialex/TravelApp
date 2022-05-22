@@ -42,7 +42,7 @@ class AddBundle : Fragment() {
         val locationId = args?.getString("locationId")
 
         //fill textView with location city and country
-        try{
+        try {
             if (locationId != null) {
                 val locationUUID = UUID.fromString(locationId)
                 viewModel
@@ -56,12 +56,9 @@ class AddBundle : Fragment() {
                         }
                     }
             }
-        }catch(ex: Exception){
+        } catch (ex: Exception) {
             Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
         }
-
-
-
 
 
         //Add Bundle - Create
@@ -104,9 +101,14 @@ class AddBundle : Fragment() {
                     //try to create bundle
                     try {
                         viewModel
-                            .addBundle(locationUUID, date, price, duration, hotels, lType) //TODO: Observe result
-                        Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
-                        findNavController().navigate(R.id.action_addBundle_to_bundles)
+                            .addBundle(locationUUID, date, price, duration, hotels, lType)
+                            .observe(this) {
+                                if (it)
+                                    Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
+                                        .also { findNavController().navigate(R.id.action_addBundle_to_bundles) }
+                                else
+                                    Toast.makeText(context, "Something went wrong, try again", Toast.LENGTH_LONG).show()
+                            }
                     } catch (ex: Exception) {
                         Toast.makeText(
                             context,
@@ -122,7 +124,7 @@ class AddBundle : Fragment() {
 
                 /*Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG)
                 findNavController().navigate(R.id.action_addBundle_to_bundles)*/
-            }catch(ex: Exception){
+            } catch (ex: Exception) {
                 println(ex.message)
             }
         }

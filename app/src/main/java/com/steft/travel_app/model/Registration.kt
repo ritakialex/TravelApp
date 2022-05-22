@@ -62,7 +62,7 @@ object RegistrationUtils {
                         .mapLeft { ValidationError(it.toString()).nel() }
 
                 validatedCustomerDetails
-                    .zip(Semigroup.nonEmptyList(), validatedAgencyId, validatedRegId) { details, bundleId, agencyId ->
+                    .zip(Semigroup.nonEmptyList(), validatedAgencyId, validatedRegId) { details, agencyId, bundleId ->
                         Registration(bundleId, agencyId, details)
                     }
             }
