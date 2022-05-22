@@ -3,6 +3,7 @@ package com.steft.travel_app.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.steft.travel_app.model.Bundle
 import java.util.*
 
@@ -22,6 +23,9 @@ interface BundleDao {
 
     @Insert
     suspend fun insertAll(vararg bundles: Bundle)
+
+    @Update
+    suspend fun update(bundle: Bundle)
 
     @Query("DELETE FROM bundle WHERE id = :id")
     suspend fun delete(id: UUID)

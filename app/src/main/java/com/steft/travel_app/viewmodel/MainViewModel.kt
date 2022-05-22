@@ -308,4 +308,47 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                     }
             }
         }
+
+    fun updateBundle(
+        bundleId: UUID,
+        locationId: UUID? = null,
+        date: Date? = null,
+        price: Double? = null,
+        duration: Int? = null,
+        hotels: List<String>? = null,
+        type: LocationType? = null): LiveData<Boolean> =
+        ifAuthorized {
+            intoLiveData {
+                bundleDao.findById(bundleId)
+                    ?.let { (oldId, oldAgency, oldLocation, oldDate, oldPrice, oldDuration, oldHotels, oldType) ->
+
+                        val hotels = hotels
+                            ?.traverseValidated { hotel ->
+                                Name.makeValidated(hotel)
+                            }
+                            ?.mapLeft { IllegalArgumentException(ValidateUtils.foldValidationErrors(it)) }
+                            ?.toEither() ?: Either.Right(oldHotels)
+
+
+                        hotels
+                            .map { hotels ->
+                                Bundle(
+                                    id = oldId,
+                                    travelAgency = oldAgency,
+                                    location = locationId ?: oldLocation,
+                                    date = date ?: oldDate,
+                                    price = price ?: oldPrice,
+                                    duration = duration ?: oldDuration,
+                                    hotels = hotels,
+                                    type = type ?: oldType)
+                            }
+                            .map { bundleDao.update(it) }
+                            .fold({ throw it }, { true })
+                    }
+                    .let { it ?: throw IllegalArgumentException("Bundle not found") }
+
+            }
+
+        }
 }
+
