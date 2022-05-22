@@ -14,8 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
-import com.steft.travel_app.dataTestRita.User
-import com.steft.travel_app.dataTestRita.UserViewModel
 import com.steft.travel_app.databinding.FragmentAddLocationBinding
 import com.steft.travel_app.databinding.FragmentRegisterBinding
 import com.steft.travel_app.viewmodel.MainViewModel

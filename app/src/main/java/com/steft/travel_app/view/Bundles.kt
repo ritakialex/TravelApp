@@ -21,7 +21,6 @@ import com.steft.travel_app.common.UnauthorizedException
 import com.steft.travel_app.databinding.FragmentBundlesListBinding
 import com.steft.travel_app.databinding.FragmentLocationsListBinding
 import com.steft.travel_app.dto.BundlePreviewDto
-import com.steft.travel_app.placeholder.PlaceholderContent
 import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
 import java.util.*
