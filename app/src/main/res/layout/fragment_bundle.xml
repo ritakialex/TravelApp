@@ -210,7 +210,7 @@
                     style="@style/NameStyle" />
         </LinearLayout>-->
         <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -222,7 +222,6 @@
                     android:layout_height="wrap_content"
                     style="@style/NameStyle"
                     android:enabled="false"/>
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
             <EditText
@@ -269,26 +268,26 @@
                     android:textColor="@color/white"
                     android:visibility="gone"
                     android:layout_marginRight="15dp"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Book"
-                android:layout_marginTop="10dp"
-                android:id="@+id/bookBundleButton"
-                app:backgroundTint="@color/teal_700"
-                android:textColor="@color/white"
-                android:visibility="visible"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Book"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/bookBundleButton"
+                    app:backgroundTint="@color/teal_700"
+                    android:textColor="@color/white"
+                    android:visibility="visible"/>
 
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Save changes"
-                android:layout_marginTop="10dp"
-                android:id="@+id/saveChangesBundleButton"
-                android:drawableLeft="@drawable/ic_baseline_save_as_24"
-                app:backgroundTint="@color/teal_700"
-                android:textColor="@color/white"
-                android:visibility="gone"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save changes"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/saveChangesBundleButton"
+                    android:drawableLeft="@drawable/ic_baseline_save_as_24"
+                    app:backgroundTint="@color/teal_700"
+                    android:textColor="@color/white"
+                    android:visibility="gone"/>
         </LinearLayout>
 
 

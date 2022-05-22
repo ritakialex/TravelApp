@@ -22,8 +22,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="50dp"/>
 
-
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:visibility="visible"
@@ -37,8 +35,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_menu"/>
-            <!--app:headerLayout="@layout/nav_header"-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
