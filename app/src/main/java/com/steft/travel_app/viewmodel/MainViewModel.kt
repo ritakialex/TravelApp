@@ -3,7 +3,9 @@
 package com.steft.travel_app.viewmodel
 
 import android.app.Application
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import arrow.core.*
 import arrow.typeclasses.Semigroup
@@ -14,6 +16,7 @@ import com.steft.travel_app.dao.registrationDao
 import com.steft.travel_app.dto.*
 import com.steft.travel_app.model.*
 import kotlinx.coroutines.launch
+import java.time.DayOfWeek
 import java.util.*
 
 private typealias PreviewTriple = Triple<UUID, String, String>
@@ -157,16 +160,34 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
         }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getBundle(bundleId: UUID): LiveData<BundleDto?> =
         intoLiveData {
             bundleDao
                 .findById(bundleId)
                 ?.let { (id, agencyId, locationId, date, price, duration, hotels, type) ->
+
+                    val dateStr = Calendar
+                            .getInstance()
+                            .apply { time = date }
+                            .run {
+                                "${DayOfWeek.of(Calendar.DAY_OF_MONTH)} " +
+                                        "${get(Calendar.DAY_OF_MONTH)}/" +
+                                        "${get(Calendar.MONTH) + 1}/" +
+                                        "${get(Calendar.YEAR)} "
+                            }
+
+                    val travelAgency = agencyDao
+                        .findById(agencyId)
+                        ?.name
+                        ?.let { Name.content(it) }
+                        ?: throw IllegalArgumentException("Agency doesnt exist")
+
                     BundleDto(
                         id = id,
-                        travelAgency = agencyId,
+                        travelAgency = travelAgency,
                         location = locationId,
-                        date = date,
+                        date = dateStr,
                         price = price,
                         duration = duration,
                         hotels = hotels.map { Name.content(it) },
