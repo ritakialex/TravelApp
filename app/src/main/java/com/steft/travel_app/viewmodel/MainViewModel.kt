@@ -63,19 +63,19 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                 .map { tripleToPreviewDto(it) }
         }
 
-
+    //    Athens, Greece (τίτλος όπως είναι)
+//    4 days, Cruise, 650 (περιγραφή)
     private suspend fun bundleToBundlePreviewDto(bundle: Bundle): BundlePreviewDto =
-        bundle
-            .let { (id, _, locationId, _, price, _, _, _) ->
-                locationDao.findByIdAll(locationId)
-                    ?.let {
-                        "${it.city}, ${it.country}"
-                    }
-                    ?.let { locationName ->
-                        BundlePreviewDto(id, locationName, price.toString())
-                    }
-                    ?: throw CorruptDatabaseObjectException("Location with id $locationId doesnt exist")
-            }
+        bundle.let { (id, _, locationId, _, price, duration, _, type) ->
+            locationDao.findByIdAll(locationId)
+                ?.let {
+                    "${it.city}, ${it.country}"
+                }
+                ?.let { locationName ->
+                    BundlePreviewDto(id, locationName, "$duration days, $type, $price")
+                }
+                ?: throw CorruptDatabaseObjectException("Location with id $locationId doesnt exist")
+        }
 
     private fun <T> intoLiveData(t: suspend () -> T) = Utils.intoLiveData<T>(viewModelScope, t)
 
