@@ -68,9 +68,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
     private suspend fun bundleToBundlePreviewDto(bundle: Bundle): BundlePreviewDto =
         bundle.let { (id, _, locationId, _, price, duration, _, type) ->
             locationDao.findByIdAll(locationId)
-                ?.let {
-                    "${it.city}, ${it.country}"
-                }
+                ?.run { "$city, $country" }
                 ?.let { locationName ->
                     BundlePreviewDto(id, locationName, "$duration days, $type, $price€")
                 }
@@ -95,14 +93,12 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
     fun getLocation(locationId: UUID): LiveData<LocationDto?> =
         intoLiveData {
             locationDao.findByIdAll(locationId)
-                ?.let {
-                    it.let { (id, _, city, country) ->
-                        LocationDto(
-                            id = id,
-                            travelAgency = null,
-                            city = Name.content(city),
-                            country = Name.content(country))
-                    }
+                ?.let { (id, _, city, country) ->
+                    LocationDto(
+                        id = id,
+                        travelAgency = null,
+                        city = Name.content(city),
+                        country = Name.content(country))
                 }
         }
 
@@ -279,20 +275,13 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
             intoLiveData {
                 registrationDao.findByAgencyId(agencyId)
                     .flatMap { (bundle, _, customers) ->
-                        bundleDao.findById(bundle)
-                            ?.let { (_, _, location) ->
-                                val toPreview: (Name, Name) -> List<RegistrationPreviewDto> =
-                                    { city, country ->
-                                        customers.map { (name, surname, phone, email, hotel) ->
-                                            val locationName = "$city, $country"
-                                            val customer = "$name $surname\n$phone\n$email\n$hotel"
-                                            RegistrationPreviewDto(bundle, locationName, customer)
-                                        }
-                                    }
-
-                                locationDao.findByIdAll(location)
-                                    ?.let { (_, _, city, country) -> toPreview(city, country) }
-
+                        locationDao.findFromBundleId(bundle)
+                            ?.let { (_, _, city, country) ->
+                                customers.map { (name, surname, phone, email, hotel) ->
+                                    val locationName = "$city, $country"
+                                    val customer = "$name $surname\n$phone\n$email\n$hotel"
+                                    RegistrationPreviewDto(bundle, locationName, customer)
+                                }
                             } ?: throw IllegalArgumentException("Error in retrieving bookings")
                     }
             }
@@ -302,22 +291,18 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
     fun deleteCustomLocation(id: UUID): LiveData<Boolean> =
         ifAuthorized { travelAgency ->
             intoLiveData {
-                Either
-                    .catch {
-                        locationDao.deleteCustom(id, travelAgency)
-                    }
-                    .fold({ false }, { it > 0 })
+                Either.catch {
+                    locationDao.deleteCustom(id, travelAgency)
+                }.fold({ false }, { it > 0 })
             }
         }
 
     fun deleteTravelAgency(): LiveData<Boolean> =
         ifAuthorized { travelAgency ->
             intoLiveData {
-                Either
-                    .catch {
-                        agencyDao.delete(travelAgency)
-                    }
-                    .fold({ false }, { it > 0 })
+                Either.catch {
+                    agencyDao.delete(travelAgency)
+                }.fold({ false }, { it > 0 })
             }
         }
 
@@ -347,7 +332,6 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
             intoLiveData {
                 bundleDao.findById(bundleId)
                     ?.let { (oldId, oldAgency, oldLocation, oldDate, oldPrice, oldDuration, oldHotels, oldType) ->
-
                         val hotels = hotels
                             ?.traverseValidated { hotel ->
                                 Name.makeValidated(hotel)
@@ -355,22 +339,21 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                             ?.mapLeft { IllegalArgumentException(ValidateUtils.foldValidationErrors(it)) }
                             ?.toEither() ?: Either.Right(oldHotels)
 
-                        hotels
-                            .map { hotels ->
-                                Bundle(
-                                    id = oldId,
-                                    travelAgency = oldAgency,
-                                    location = locationId ?: oldLocation,
-                                    date = date ?: oldDate,
-                                    price = price ?: oldPrice,
-                                    duration = duration ?: oldDuration,
-                                    hotels = hotels,
-                                    type = type ?: oldType)
-                            }
+                        hotels.map { hotels ->
+                            Bundle(
+                                id = oldId,
+                                travelAgency = oldAgency,
+                                location = locationId ?: oldLocation,
+                                date = date ?: oldDate,
+                                price = price ?: oldPrice,
+                                duration = duration ?: oldDuration,
+                                hotels = hotels,
+                                type = type ?: oldType)
+                        }
                             .map { bundleDao.update(it) }
                             .fold({ throw it }, { true })
-                    }
-                    .let { it ?: throw IllegalArgumentException("Bundle not found") }
+
+                    } ?: throw IllegalArgumentException("Bundle not found")
 
             }
 

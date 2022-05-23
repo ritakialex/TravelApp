@@ -45,4 +45,13 @@ interface LocationDao {
 
     @Query("DELETE FROM location WHERE id = :id AND travel_agency = :travelAgencyId")
     suspend fun deleteCustom(id: UUID, travelAgencyId: UUID): Int
+
+
+    @Query(
+        """
+        SELECT * FROM location WHERE id = (
+            SELECT location FROM bundle WHERE id = :bundleId
+        )
+        """)
+    suspend fun findFromBundleId(bundleId: UUID): Location?
 }
