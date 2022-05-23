@@ -43,13 +43,20 @@ class AddLocation : Fragment() {
             val city = bind.addLocationCity.text.toString()
             val country = bind.addLocationCountry.text.toString()
 
-            if(city!=null && country !=null) {
+            if(city!="" && country !="") {
                 try {
                     viewModel
-                        .addCustomLocation(city, country) //TODO: Observe result
-                    Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
-                    findNavController().navigate(R.id.action_addLocation_to_locations)
-                } catch (ex: InvalidObjectException) {
+                        .addCustomLocation(city, country)
+                        .observe(this){
+                            if(it){
+                                Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG)
+                                    .show()
+                                findNavController().navigate(R.id.action_addLocation_to_locations)
+                            }else{
+                                Toast.makeText(context, "Start with capital letters", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                } catch (ex: Exception) {
                     //Do something
                     Toast.makeText(context, "Start with capital letters", Toast.LENGTH_LONG).show()
                     println(ex.message)
