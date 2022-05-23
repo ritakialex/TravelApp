@@ -2,6 +2,7 @@
 
 package com.steft.travel_app.view
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -24,6 +26,7 @@ class Bundle : Fragment() {
 
     private val viewModel by activityViewModels<MainViewModel>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,11 +48,11 @@ class Bundle : Fragment() {
                 .observe(viewLifecycleOwner) {
                     if (it != null) {
                         val (_, agencyId, locationId, date, price, duration, hotels, type) = it
-                        bind.dateFromBundleTextView.setText(date.toString())
+                        bind.dateFromBundleTextView.setText(date)
                         bind.durationFromBundleTextView.setText(duration.toString())
                         bind.typeBundleTextView.setText(type)
                         bind.priceBundleTextView.setText(price.toString())
-                        bind.agencyBundleTextView.setText(agencyId.toString())
+                        bind.agencyBundleTextView.setText(agencyId)
                         //TODO hotels List
                         bind.hotelsBundleTextView.setText(hotels.tail()
                             .fold(hotels.first()) { acc, next -> "$acc\n$next" })

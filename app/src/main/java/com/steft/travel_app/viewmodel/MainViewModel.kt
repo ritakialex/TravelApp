@@ -42,7 +42,6 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
             Triple(id, Name.content(city), Name.content(country))
         }
 
-
     private val tripleToPreviewDto: (PreviewTriple) -> LocationPreviewDto =
         { (id, city, country) ->
             LocationPreviewDto(id, city, "$city, $country")
@@ -168,14 +167,14 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                 ?.let { (id, agencyId, locationId, date, price, duration, hotels, type) ->
 
                     val dateStr = Calendar
-                            .getInstance()
-                            .apply { time = date }
-                            .run {
-                                "${DayOfWeek.of(Calendar.DAY_OF_MONTH)} " +
-                                        "${get(Calendar.DAY_OF_MONTH)}/" +
-                                        "${get(Calendar.MONTH) + 1}/" +
-                                        "${get(Calendar.YEAR)} "
-                            }
+                        .getInstance()
+                        .apply { time = date }
+                        .run {
+                            "${DayOfWeek.of(Calendar.DAY_OF_MONTH)} " +
+                                    "${get(Calendar.DAY_OF_MONTH)}/" +
+                                    "${get(Calendar.MONTH) + 1}/" +
+                                    "${get(Calendar.YEAR)} "
+                        }
 
                     val travelAgency = agencyDao
                         .findById(agencyId)
@@ -322,14 +321,17 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
             }
         }
 
-    fun deleteBundle(id: UUID): LiveData<Boolean> =
+    fun deleteBundle(bundleId: UUID): LiveData<Boolean> =
         ifAuthorized { travelAgency ->
             intoLiveData {
-                Either
-                    .catch {
-                        bundleDao.delete(id, travelAgency)
+                registrationDao
+                    .registrationsExist(bundleId)
+                    .let {
+                        if (it) false
+                        else Either.catch {
+                            bundleDao.delete(bundleId, travelAgency)
+                        }.fold({ false }, { it > 0 })
                     }
-                    .fold({ false }, { it > 0 })
             }
         }
 
