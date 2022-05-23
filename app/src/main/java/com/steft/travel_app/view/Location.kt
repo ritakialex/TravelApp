@@ -28,6 +28,7 @@ class Location : Fragment() {
 
         val locationId = args?.getString("locationId")
 
+
         try{
             if (locationId != null) {
                 val locationUUID = UUID.fromString(locationId)
@@ -63,7 +64,28 @@ class Location : Fragment() {
         //navigation to Delete location
         bind.locationDeleteButton.setOnClickListener {
             //todo delete location
-            findNavController().navigate(R.id.action_location_to_locations)
+            try{
+                if (locationId != null) {
+                    val locationUUID = UUID.fromString(locationId)
+                    viewModel
+                        .deleteCustomLocation(locationUUID)
+                        .observe(viewLifecycleOwner) {
+                            if (it) {
+                                Toast.makeText(context, "Location deleted", Toast.LENGTH_LONG).show()
+                            } else {
+                                Toast.makeText(context, "You can't delete this Location", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    findNavController().navigate(R.id.action_location_to_locations)
+                }else {
+                    throw Exception()
+                }
+            } catch (ex: Exception) {
+                //Do something
+                Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+                println(ex.message)
+            }
+
         }
 
         return bind.root

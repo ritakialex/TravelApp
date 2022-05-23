@@ -58,10 +58,9 @@ class AgentProfile : Fragment() {
 
         //Delete
         bind.profileDeleteButton.setOnClickListener {
-            TODO()
-            /*try {
+            try {
                 viewModel
-                    .deleteTravelAgency(id)
+                    .deleteTravelAgency()
                 Toast.makeText(context, "Profile Deleted", Toast.LENGTH_LONG).show()
                 val intent = Intent(this@AgentProfile.requireContext(),MainActivity::class.java)
                 startActivity(intent)
@@ -69,7 +68,7 @@ class AgentProfile : Fragment() {
                 //Do something
                 Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
                 println(ex.message)
-            }*/
+            }
         }
 
         // Inflate the layout for this fragment

@@ -58,7 +58,7 @@ class EditBundle : Fragment() {
                     else -> throw IllegalArgumentException("Must be between 0 and 2")
                 }
 
-                val date = SimpleDateFormat("dd-mm-yyyy").parse(dateStr)
+                val date = SimpleDateFormat("dd-MM-yyyy").parse(dateStr)
                     ?: throw IllegalArgumentException("Date doesn't conform to format dd-mm-yyyy")
 
                 if (dateStr!= null && duration!=null && price!=null && hotel1!=null && hotel2!=null /*&& hotel3!=null*/) {

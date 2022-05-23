@@ -41,13 +41,13 @@ class RegisterFragment : Fragment() {
                 try {
                     viewModel
                         .register(name, address, username, password)
-                        .observe(this) {
+                        .observe(viewLifecycleOwner) {
                             if (it) {
 
                                 Toast.makeText(context, "Registered Successfully", Toast.LENGTH_LONG).show()
 
                                 viewModel.login(username, password)
-                                    .observe(this) { id ->
+                                    .observe(viewLifecycleOwner) { id ->
                                         val id = id
                                             ?.let { it.toString() }
                                             ?: error("Id cant be null if the registration has just happened successfully")

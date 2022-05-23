@@ -30,6 +30,7 @@ class AddBundle : Fragment() {
 
     private val viewModel by activityViewModels<MainViewModel>()
 
+    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,7 +94,7 @@ class AddBundle : Fragment() {
                         else -> throw IllegalArgumentException("Must be between 0 and 2")
                     }
 
-                    val date = SimpleDateFormat("dd-mm-yyyy").parse(dateStr)
+                    val date = SimpleDateFormat("dd-MM-yyyy").parse(dateStr)
                             ?: throw IllegalArgumentException("Date doesn't conform to format dd-mm-yyyy")
 
                     //try to create bundle
