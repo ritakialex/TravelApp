@@ -324,14 +324,14 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
     fun deleteBundle(bundleId: UUID): LiveData<Boolean> =
         ifAuthorized { travelAgency ->
             intoLiveData {
-                registrationDao
-                    .registrationsExist(bundleId)
-                    .let {
-                        if (it) false
-                        else Either.catch {
+                registrationDao.run {
+                    if (registrationsExist(bundleId))
+                        false
+                    else
+                        Either.catch {
                             bundleDao.delete(bundleId, travelAgency)
                         }.fold({ false }, { it > 0 })
-                    }
+                }
             }
         }
 
