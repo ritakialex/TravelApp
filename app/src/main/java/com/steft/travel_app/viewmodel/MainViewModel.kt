@@ -51,16 +51,16 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
         {
             locationDao
                 .getAll()
-                .map { locationToTriple(it) }
-                .map { tripleToPreviewDto(it) }
+                .map(locationToTriple)
+                .map(tripleToPreviewDto)
         }
 
     private val getLocationsOfAgency: suspend (UUID) -> List<LocationPreviewDto> =
         { travelAgency ->
             locationDao
                 .getAllOfAgency(travelAgency)
-                .map { locationToTriple(it) }
-                .map { tripleToPreviewDto(it) }
+                .map(locationToTriple)
+                .map(tripleToPreviewDto)
         }
 
     //    Athens, Greece (τίτλος όπως είναι)
