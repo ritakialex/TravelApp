@@ -72,7 +72,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                     "${it.city}, ${it.country}"
                 }
                 ?.let { locationName ->
-                    BundlePreviewDto(id, locationName, "$duration days, $type, $price")
+                    BundlePreviewDto(id, locationName, "$duration days, $type, $price€")
                 }
                 ?: throw CorruptDatabaseObjectException("Location with id $locationId doesnt exist")
         }
