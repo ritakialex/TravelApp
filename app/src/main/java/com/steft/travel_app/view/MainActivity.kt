@@ -7,6 +7,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.activity.viewModels
 import com.steft.travel_app.R
+import com.steft.travel_app.dao.AppDatabase
+import com.steft.travel_app.dao.firebaseDb
+import com.steft.travel_app.dao.registrationDao
 import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
 import java.util.*

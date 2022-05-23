@@ -1,4 +1,4 @@
-@file:Suppress("NAME_SHADOWING")
+@file:Suppress("NAME_SHADOWING", "NestedLambdaShadowedImplicitParameter")
 
 package com.steft.travel_app.dao
 
@@ -18,6 +18,7 @@ interface RegistrationDao {
     suspend fun insert(vararg registration: Registration)
     suspend fun register(bundle: UUID, vararg customers: CustomerDetails)
     suspend fun findByAgencyId(travelAgency: UUID): List<Registration>
+    suspend fun registrationsExist(bundle: UUID): Boolean
 }
 
 private class RegistrationDaoImpl(private val db: FirebaseFirestore) : RegistrationDao {
@@ -42,6 +43,24 @@ private class RegistrationDaoImpl(private val db: FirebaseFirestore) : Registrat
 
             Unit //Would return Void!
         }.fold(Unit) { _, _ -> }
+
+    override suspend fun registrationsExist(bundle: UUID) =
+        collection
+            .whereEqualTo("bundleId", bundle.toString())
+            .get()
+            .await()
+            .documents
+            .let {
+                val initSize = it.size
+                it.takeWhile { elem ->
+                    elem.reference
+                        .collection("customers")
+                        .get()
+                        .await()
+                        .let { it.size() == 0 }
+                }.let { it.size != initSize }
+            }
+
 
     override suspend fun getAll(bundle: UUID) =
         collection
