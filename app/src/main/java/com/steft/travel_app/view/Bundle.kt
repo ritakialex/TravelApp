@@ -102,34 +102,6 @@ class Bundle : Fragment() {
         }
         //Edit changes
         bind.editBundleButton.setOnClickListener {
-            /*try {
-                val bundleId = args?.getString("bundleId")?.let { UUID.fromString(it) } ?: throw IllegalStateException("Bundle id should exist")
-
-                bind.dateFromBundleTextView.setOnClickListener {
-                    //bind.dateFromBundleTextView.setText("")
-                    val dateStr = bind.dateFromBundleTextView.text.toString() //to date
-                    val date = SimpleDateFormat("dd-mm-yyyy").parse(dateStr)
-                        ?: throw IllegalArgumentException("Date doesn't conform to format dd-mm-yyyy")
-                    viewModel
-                        .updateBundle(bundleId, date = date)
-                }
-
-                val duration = Integer.parseInt(bind.durationFromBundleTextView.text.toString())
-                val price = bind.priceBundleTextView.text.toString().toDouble()
-                val hotel1 = bind.hotelsBundleTextView.text.toString()
-                //val hotels = listOf(hotel1)
-
-
-
-                viewModel
-                    .updateBundle(bundleId, duration = duration, price=price)
-                Toast.makeText(context, "updated", Toast.LENGTH_LONG).show()
-                findNavController().navigate(R.id.action_bundle_to_bundles)
-            } catch (ex: Exception) {
-                //Do something
-                Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
-                println(ex.message)
-            }*/
             val bundleId = args?.getString("bundleId")
             val bundle = bundleOf("bundleId" to bundleId)
             findNavController().navigate(R.id.action_bundle_to_editBundle,bundle)
@@ -144,7 +116,14 @@ class Bundle : Fragment() {
                         ?: throw IllegalStateException("Bundle id should exist")
                 viewModel
                     .deleteBundle(bundleId)
-                Toast.makeText(context, "Profile Deleted", Toast.LENGTH_LONG).show()
+                    .observe(viewLifecycleOwner){
+                        if(it){
+                            Toast.makeText(context, "Bundle Deleted", Toast.LENGTH_LONG).show()
+                        }else {
+                            Toast.makeText(context, "Can't delete Bundle with bookings", Toast.LENGTH_LONG).show()
+                            println("---------else")
+                        }
+                    }
                 findNavController().navigate(R.id.action_bundle_to_bundles)
             } catch (ex: Exception) {
                 //Do something

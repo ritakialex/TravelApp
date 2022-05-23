@@ -116,10 +116,10 @@ class AddBundle : Fragment() {
                     }else{
                         Toast.makeText(context, "make sure you filled all fields", Toast.LENGTH_LONG).show()
                     }
-                    } catch (ex: Exception) {
-                        Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
-                        println(ex.message)
-                    }
+                } catch (ex: Exception) {
+                    Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+                    println(ex.message)
+                }
 
 
                     /*Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG)

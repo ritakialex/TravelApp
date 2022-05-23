@@ -29,28 +29,28 @@ class Location : Fragment() {
         val locationId = args?.getString("locationId")
 
 
-        try{
-            if (locationId != null) {
-                val locationUUID = UUID.fromString(locationId)
-                viewModel
-                    .getLocation(locationUUID)
-                    .observe(viewLifecycleOwner) {
-                        if (it != null) {
-                            val (id, _, city, country) = it
-                            bind.cityName.text = city
-                            bind.countryName.text = country
-                        } else {
-                            throw Exception()
+            try{
+                if (locationId != null) {
+                    val locationUUID = UUID.fromString(locationId)
+                    viewModel
+                        .getLocation(locationUUID)
+                        .observe(viewLifecycleOwner) {
+                            if (it != null) {
+                                val (id, _, city, country) = it
+                                bind.cityName.text = city
+                                bind.countryName.text = country
+                            } else {
+                                throw Exception()
+                            }
                         }
-                    }
-            }else {
-                throw Exception()
+                }else {
+                    throw Exception()
+                }
+            } catch (ex: Exception) {
+                        //Do something
+                        Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+                        println(ex.message)
             }
-        } catch (ex: Exception) {
-                    //Do something
-                    Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
-                    println(ex.message)
-        }
 
 
 
