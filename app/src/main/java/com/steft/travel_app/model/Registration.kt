@@ -13,7 +13,7 @@ data class CustomerDetails(
     val email: Email,
     val hotel: String)
 
-data class Registration(
+data class Registrations(
     val bundle: UUID,
     val travelAgency: UUID,
     val customers: List<CustomerDetails>)
@@ -37,7 +37,7 @@ object RegistrationUtils {
     fun mapToRegistration(
         regId: Any?,
         travelAgency: Any?,
-        detailsList: List<Map<String, Any>>): Either<Throwable, Registration> {
+        detailsList: List<Map<String, Any>>): Either<Throwable, Registrations> {
 
         val mapToDetails: (Map<String, Any>) -> ValidatedObject<CustomerDetails> = { map ->
             Name.makeValidated(map[name].toString())
@@ -51,7 +51,7 @@ object RegistrationUtils {
                 }
         }
 
-        val makeRegistration: (ValidatedObject<List<CustomerDetails>>) -> ValidatedObject<Registration> =
+        val makeRegistration: (ValidatedObject<List<CustomerDetails>>) -> ValidatedObject<Registrations> =
             { validatedCustomerDetails ->
                 val validatedRegId =
                     Validated.catch { UUID.fromString(regId as String)!! }
@@ -63,7 +63,7 @@ object RegistrationUtils {
 
                 validatedCustomerDetails
                     .zip(Semigroup.nonEmptyList(), validatedAgencyId, validatedRegId) { details, agencyId, bundleId ->
-                        Registration(bundleId, agencyId, details)
+                        Registrations(bundleId, agencyId, details)
                     }
             }
 

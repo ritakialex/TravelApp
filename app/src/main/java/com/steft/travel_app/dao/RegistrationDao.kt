@@ -14,17 +14,17 @@ import kotlinx.coroutines.tasks.await
 import java.util.*
 
 interface RegistrationDao {
-    suspend fun getAll(bundle: UUID): List<Registration>
-    suspend fun insert(vararg registration: Registration)
+    suspend fun getAll(bundle: UUID): List<Registrations>
+    suspend fun insert(vararg registration: Registrations)
     suspend fun register(bundle: UUID, vararg customers: CustomerDetails)
-    suspend fun findByAgencyId(travelAgency: UUID): List<Registration>
+    suspend fun findByAgencyId(travelAgency: UUID): List<Registrations>
     suspend fun registrationsExist(bundle: UUID): Boolean
 }
 
 private class RegistrationDaoImpl(private val db: FirebaseFirestore) : RegistrationDao {
     private val collection = db.collection("registration")
 
-    override suspend fun insert(vararg registration: Registration) =
+    override suspend fun insert(vararg registration: Registrations) =
         registration.pMap { (bundle, travelAgency, customers) ->
             db.runBatch { batch ->
                 val newRef = collection.document()

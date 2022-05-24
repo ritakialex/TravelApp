@@ -12,13 +12,10 @@ interface LocationDao {
     suspend fun getAll(): List<Location>
 
     @Query("SELECT * FROM location WHERE travel_agency = :travelAgency OR travel_agency IS NULL")
-    suspend fun getAllOfAgency(travelAgency: UUID): List<Location>
+    suspend fun findAllOfAgency(travelAgency: UUID): List<Location>
 
     @Query("SELECT * FROM location WHERE id = :id")
-    suspend fun findByIdAll(id: UUID): Location?
-
-    @Query("SELECT * FROM location WHERE id = :id AND travel_agency = :travelAgency")
-    suspend fun findByOfAgency(id: UUID, travelAgency: UUID): Location?
+    suspend fun findById(id: UUID): Location?
 
     @Query(
         """
@@ -41,7 +38,7 @@ interface LocationDao {
     suspend fun searchAll(query: String): List<Location>
 
     @Insert
-    suspend fun insert(vararg location: Location)
+    suspend fun insertAll(vararg locations: Location)
 
     @Query("DELETE FROM location WHERE id = :id AND travel_agency = :travelAgencyId")
     suspend fun deleteCustom(id: UUID, travelAgencyId: UUID): Int

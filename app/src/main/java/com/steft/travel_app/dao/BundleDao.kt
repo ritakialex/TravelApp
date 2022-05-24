@@ -13,7 +13,7 @@ interface BundleDao {
     suspend fun getAll(): List<Bundle>
 
     @Query("SELECT * FROM bundle WHERE travel_agency = :travelAgency")
-    suspend fun getAll(travelAgency: UUID): List<Bundle>
+    suspend fun findByTravelAgency(travelAgency: UUID): List<Bundle>
 
     @Query("SELECT * FROM bundle WHERE location = :locationId")
     suspend fun findByLocation(locationId: UUID): List<Bundle>

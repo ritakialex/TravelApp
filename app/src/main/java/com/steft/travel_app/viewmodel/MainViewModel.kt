@@ -58,7 +58,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
     private val getLocationsOfAgency: suspend (UUID) -> List<LocationPreviewDto> =
         { travelAgency ->
             locationDao
-                .getAllOfAgency(travelAgency)
+                .findAllOfAgency(travelAgency)
                 .map(locationToTriple)
                 .map(tripleToPreviewDto)
         }
@@ -67,7 +67,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
 //    4 days, Cruise, 650 (περιγραφή)
     private suspend fun bundleToBundlePreviewDto(bundle: Bundle): BundlePreviewDto =
         bundle.let { (id, _, locationId, _, price, duration, _, type) ->
-            locationDao.findByIdAll(locationId)
+            locationDao.findById(locationId)
                 ?.run { "$city, $country" }
                 ?.let { locationName ->
                     BundlePreviewDto(id, locationName, "$duration days, $type, $price€")
@@ -92,7 +92,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
 
     fun getLocation(locationId: UUID): LiveData<LocationDto?> =
         intoLiveData {
-            locationDao.findByIdAll(locationId)
+            locationDao.findById(locationId)
                 ?.let { (id, _, city, country) ->
                     LocationDto(
                         id = id,
@@ -147,7 +147,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                                 throw InvalidObjectException(ValidateUtils.foldValidationErrors(it.value))
                             is Valid ->
                                 Either.catch {
-                                    locationDao.insert(it.value)
+                                    locationDao.insertAll(it.value)
                                 }.fold({ false }, { true })
                         }
                     }
@@ -208,7 +208,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
         ifAuthorized { travelAgency ->
             intoLiveData {
                 bundleDao
-                    .getAll(travelAgency)
+                    .findByTravelAgency(travelAgency)
                     .map { bundleToBundlePreviewDto(it) }
             }
         }
@@ -239,7 +239,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                                 Either
                                     .catch {
                                         bundleDao.insertAll(it.value)
-                                        registrationDao.insert(Registration(it.value.id, travelAgency, emptyList()))
+                                        registrationDao.insert(Registrations(it.value.id, travelAgency, emptyList()))
                                     }
                                     .tapLeft { Log.e("Database", it.toString()) }
                                     .fold({ false }, { true })
@@ -270,7 +270,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                 }
             }
 
-    fun getAgencyBookings(): LiveData<List<RegistrationPreviewDto>> =
+    fun getAgencyBookings(): LiveData<List<RegistrationsPreviewDto>> =
         ifAuthorized { agencyId ->
             intoLiveData {
                 registrationDao.findByAgencyId(agencyId)
@@ -280,7 +280,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                                 customers.map { (name, surname, phone, email, hotel) ->
                                     val locationName = "$city, $country"
                                     val customer = "$name $surname\n$phone\n$email\n$hotel"
-                                    RegistrationPreviewDto(bundle, locationName, customer)
+                                    RegistrationsPreviewDto(bundle, locationName, customer)
                                 }
                             } ?: throw IllegalArgumentException("Error in retrieving bookings")
                     }

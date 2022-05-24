@@ -10,7 +10,7 @@ data class CustomerDetailsDto(
     val hotel: String
 )
 
-data class RegistrationDto(
+data class RegistrationsDto(
     val bundle: UUID,
     val customers: List<CustomerDetailsDto>
 )
