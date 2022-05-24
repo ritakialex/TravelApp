@@ -17,8 +17,7 @@
         <LinearLayout
             android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -28,8 +27,8 @@
                 android:background="@drawable/firstlayer">
 
                 <ImageView
-                    android:layout_marginTop="40dp"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_width="800dp"
                     android:layout_height="80dp"
                     android:src="@drawable/avatar"/>
@@ -50,7 +49,7 @@
                     android:textStyle="normal"
                     android:text="Agency name"
                     android:textColor="@color/colorSubTitle"
-                    android:layout_marginBottom="50dp"/>
+                    android:layout_marginBottom="35dp"/>
 
             </LinearLayout>
 
@@ -60,8 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="30dp"
-                android:paddingBottom="30dp"
+                android:paddingTop="25dp"
+                android:paddingBottom="25dp"
                 android:gravity="center">
 
             <TextView
@@ -89,8 +88,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="30dp"
-                android:paddingBottom="30dp"
+                android:paddingTop="25dp"
+                android:paddingBottom="25dp"
                 android:gravity="center">
 
             <TextView
@@ -99,8 +98,7 @@
                     android:textColor="@color/colorTitle"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:text="address"
-                    />
+                    android:text="address" />
 
             <TextView
                     android:layout_width="wrap_content"
@@ -118,8 +116,7 @@
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp">
+                android:layout_gravity="center">
 
         <Button
                 android:layout_width="wrap_content"
@@ -143,17 +140,5 @@
         </LinearLayout>
 
     </LinearLayout>
-    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_baseline_login_24"
-            android:id="@+id/floatingLogOutButton"
-            app:layout_constraintStart_toEndOf="@+id/frameProfile"
-            app:layout_constraintEnd_toEndOf="@+id/frameProfile"
-            app:layout_constraintBottom_toBottomOf="@+id/frameProfile"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="57dp" />-->
+
 </FrameLayout>

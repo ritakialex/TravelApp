@@ -9,7 +9,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.steft.travel_app.R
@@ -19,8 +21,7 @@ import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
-    /*lateinit var toggle: ActionBarDrawerToggle
-    lateinit var drawerLayout: DrawerLayout*/
+
     private lateinit var navController: NavController
 
     private val viewModel by viewModels<MainViewModel> {
@@ -43,8 +44,14 @@ class LoginActivity : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
 
+        //shows the title of the Fragment
+        setupActionBarWithNavController(navController)
     }
-    //----------old code with drawer menu
+
+    override fun onSupportNavigateUp(): Boolean =
+        navController.navigateUp() || super.onSupportNavigateUp()
+
+//----------old code with drawer menu
     /*drawerLayout = findViewById(R.id.drawerLayout)
     val navView : NavigationView = findViewById(R.id.nav_view)
 

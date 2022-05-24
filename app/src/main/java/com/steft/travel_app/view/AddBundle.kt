@@ -30,6 +30,7 @@ class AddBundle : Fragment() {
 
     private val viewModel by activityViewModels<MainViewModel>()
 
+    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,7 +73,7 @@ class AddBundle : Fragment() {
                 val price = bind.addBundlePrice.text.toString().toDouble()
                 val hotel1 = bind.addHotel1.text.toString()
                 val hotel2 = bind.addHotel2.text.toString()
-                val hotel3 = bind.addHotel3.text.toString()
+                val hotel3 = bind.addHotel3.text.toString() ?: ""
                 val hotels = listOf(hotel1, hotel2, hotel3)
 
 
@@ -93,40 +94,40 @@ class AddBundle : Fragment() {
                         else -> throw IllegalArgumentException("Must be between 0 and 2")
                     }
 
-                    val date =
-                        SimpleDateFormat("dd-mm-yyyy")
-                            .parse(dateStr)
+                    val date = SimpleDateFormat("dd-MM-yyyy").parse(dateStr)
                             ?: throw IllegalArgumentException("Date doesn't conform to format dd-mm-yyyy")
 
                     //try to create bundle
-                    try {
-                        viewModel
-                            .addBundle(locationUUID, date, price, duration, hotels, lType)
-                            .observe(this) {
-                                if (it)
-                                    Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
-                                        .also { findNavController().navigate(R.id.action_addBundle_to_bundles) }
-                                else
-                                    Toast.makeText(context, "Something went wrong, try again", Toast.LENGTH_LONG).show()
-                            }
-                    } catch (ex: Exception) {
-                        Toast.makeText(
-                            context,
-                            "make sure you filled all fields",
-                            Toast.LENGTH_LONG).show()
-                        println(ex.message)
+                    if (dateStr!= null && duration!=null && price!=null && hotel1!=null && hotel2!=null /*&& hotel3!=null*/) {
+                        try {
+                            viewModel
+                                .addBundle(locationUUID, date, price, duration, hotels, lType)
+                                .observe(viewLifecycleOwner) {
+                                    if (it)
+                                        Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
+                                            .also { findNavController().navigate(R.id.action_addBundle_to_bundles) }
+                                    else
+                                        Toast.makeText(context, "Something went wrong, try again", Toast.LENGTH_LONG).show()
+                                }
+                        } catch (ex: Exception) {
+                            Toast.makeText(context, "--make sure you filled all fields", Toast.LENGTH_LONG).show()
+                            println(ex.message)
+                        }
+                    }else{
+                        Toast.makeText(context, "make sure you filled all fields", Toast.LENGTH_LONG).show()
                     }
                 } catch (ex: Exception) {
-                    Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG)
-                        .show()
+                    Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
                     println(ex.message)
                 }
 
-                /*Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG)
+
+                    /*Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG)
                 findNavController().navigate(R.id.action_addBundle_to_bundles)*/
-            } catch (ex: Exception) {
-                println(ex.message)
-            }
+                } catch (ex: Exception) {
+                    println(ex.message)
+                }
+
         }
 
 

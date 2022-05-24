@@ -14,13 +14,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.steft.travel_app.R
-import com.steft.travel_app.dataTestRita.User
-import com.steft.travel_app.dataTestRita.UserViewModel
 import com.steft.travel_app.databinding.FragmentAddLocationBinding
 import com.steft.travel_app.databinding.FragmentRegisterBinding
 import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.launch
+import java.io.InvalidObjectException
 import java.util.*
 
 
@@ -44,17 +43,26 @@ class AddLocation : Fragment() {
             val city = bind.addLocationCity.text.toString()
             val country = bind.addLocationCountry.text.toString()
 
-            try {
-                viewModel
-                    .addCustomLocation(city, country) //TODO: Observe result
-
-                Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG).show()
-
-                findNavController().navigate(R.id.action_addLocation_to_locations)
-            } catch (ex: Exception) {
-                //Do something
-                Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
-                println(ex.message)
+            if(city!="" && country !="") {
+                try {
+                    viewModel
+                        .addCustomLocation(city, country)
+                        .observe(this){
+                            if(it){
+                                Toast.makeText(context, "Created Successfully", Toast.LENGTH_LONG)
+                                    .show()
+                                findNavController().navigate(R.id.action_addLocation_to_locations)
+                            }else{
+                                Toast.makeText(context, "Start with capital letters", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                } catch (ex: Exception) {
+                    //Do something
+                    Toast.makeText(context, "Start with capital letters", Toast.LENGTH_LONG).show()
+                    println(ex.message)
+                }
+            }else{
+                Toast.makeText(context, "Fill all fields", Toast.LENGTH_LONG).show()
             }
 
         }

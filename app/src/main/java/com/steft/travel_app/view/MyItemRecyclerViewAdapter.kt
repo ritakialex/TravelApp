@@ -28,7 +28,7 @@ class MyItemRecyclerViewAdapter<T : Preview>(private val values: ArrayList<T>, p
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         //titleImage
-        val itemImage: ShapeableImageView = itemView.findViewById(R.id.item_image)
+        //val itemImage: ShapeableImageView = itemView.findViewById(R.id.item_image)
         val itemTitle: TextView = itemView.findViewById(R.id.item_title)
         val itemDesc: TextView = itemView.findViewById(R.id.item_description)
 

@@ -8,11 +8,12 @@
         android:background="@color/teal_100">
 
     <TextView
-            android:text="Bundle name"
+            android:text="Book Bundle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bundleNameToBook"
             style="@style/NameStyle"
+            android:textAlignment="center"
             android:drawableLeft="@drawable/ic_baseline_bundles_24"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -20,13 +21,12 @@
             app:layout_constraintHorizontal_bias="0.5"
             android:layout_marginTop="16dp"  />
 
-
-
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:hint="Your Name"
+            android:textAlignment="center"
             style="@style/NameStyle"
             android:id="@+id/custName"
             android:drawableLeft="@drawable/ic_baseline_person_outline_24"
@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:hint="Your Last Name"
+            android:textAlignment="center"
             android:drawableLeft="@drawable/ic_baseline_person_outline_24"
             style="@style/NameStyle"
             android:id="@+id/custLName"
@@ -58,6 +59,7 @@
             android:inputType="textEmailAddress"
             style="@style/NameStyle"
             android:hint="Your Email"
+            android:textAlignment="center"
             android:drawableLeft="@drawable/ic_baseline_email_24"
             android:id="@+id/custEmail"
             app:layout_constraintTop_toBottomOf="@+id/custLName"
@@ -72,6 +74,7 @@
             android:inputType="phone"
             android:hint="Your mobile number"
             style="@style/NameStyle"
+            android:textAlignment="center"
             android:id="@+id/custMobile"
             android:drawableLeft="@drawable/ic_baseline_phone_android_24"
             app:layout_constraintTop_toBottomOf="@+id/custEmail"
@@ -86,6 +89,7 @@
             android:inputType="textPersonName"
             android:hint="Hotel Preference"
             style="@style/NameStyle"
+            android:textAlignment="center"
             android:id="@+id/custHotel"
             android:drawableLeft="@drawable/ic_baseline_hotel_24"
             android:layout_marginTop="16dp"
@@ -101,12 +105,11 @@
             android:id="@+id/bookBundleCustInfoButton"
             app:backgroundTint="@color/teal_700"
             android:textColor="@color/white"
+            android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@+id/custHotel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

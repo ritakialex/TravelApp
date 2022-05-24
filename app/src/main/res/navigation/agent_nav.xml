@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/agent_nav"
@@ -10,16 +11,13 @@
             android:label="Bundles"
             tools:layout="@layout/fragment_bundles_list">
         <action
-                android:id="@+id/action_bundles_to_editBundle"
-                app:destination="@id/editBundle" />
-        <action
-                android:id="@+id/action_bundles_to_bundle2"
+                android:id="@+id/action_bundles_to_bundle"
                 app:destination="@id/bundle" />
     </fragment>
     <fragment
             android:id="@+id/agentProfile"
             android:name="com.steft.travel_app.view.AgentProfile"
-            android:label="AgentProfile"
+            android:label="Agent Profile"
             tools:layout="@layout/fragment_agent_profile">
         <action
                 android:id="@+id/action_agentProfile_to_mainActivity"
@@ -28,12 +26,12 @@
     <fragment
             android:id="@+id/bookings"
             android:name="com.steft.travel_app.view.Bookings"
-            android:label="fragment_bookings"
+            android:label="Bookings"
             tools:layout="@layout/fragment_bookings" />
     <fragment
             android:id="@+id/addBundle"
             android:name="com.steft.travel_app.view.AddBundle"
-            android:label="AddBundle"
+            android:label="Add Bundle"
             tools:layout="@layout/fragment_add_bundle">
         <action
                 android:id="@+id/action_addBundle_to_bundles"
@@ -54,7 +52,7 @@
     <fragment
             android:id="@+id/addLocation"
             android:name="com.steft.travel_app.view.AddLocation"
-            android:label="fragment_add_location"
+            android:label="Add Location"
             tools:layout="@layout/fragment_add_location" >
         <action
                 android:id="@+id/action_addLocation_to_locations"
@@ -69,11 +67,6 @@
                 android:id="@+id/action_editBundle_to_bundles"
                 app:destination="@id/bundles" />
     </fragment>
-    <activity
-            android:id="@+id/mainActivity"
-            android:name="com.steft.travel_app.view.MainActivity"
-            android:label="activity_main"
-            tools:layout="@layout/activity_main" />
     <fragment
             android:id="@+id/location"
             android:name="com.steft.travel_app.view.Location"
@@ -94,5 +87,13 @@
         <action
                 android:id="@+id/action_bundle_to_bundles"
                 app:destination="@id/bundles" />
+        <action
+                android:id="@+id/action_bundle_to_editBundle"
+                app:destination="@id/editBundle" />
     </fragment>
+    <activity
+            android:id="@+id/mainActivity"
+            android:name="com.steft.travel_app.view.MainActivity"
+            android:label="activity_main"
+            tools:layout="@layout/activity_main" />
 </navigation>

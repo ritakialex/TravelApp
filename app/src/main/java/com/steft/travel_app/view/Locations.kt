@@ -21,8 +21,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.steft.travel_app.R
 import com.steft.travel_app.databinding.FragmentLocationsListBinding
 import com.steft.travel_app.dto.LocationPreviewDto
-import com.steft.travel_app.placeholder.PlaceholderContent
-import com.steft.travel_app.placeholder.PlaceholderContent.PlaceholderItem
 import com.steft.travel_app.viewmodel.LoginRegisterViewModel
 import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory

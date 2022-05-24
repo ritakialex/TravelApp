@@ -4,11 +4,13 @@ package com.steft.travel_app.view
 
 import android.os.Build
 import android.os.Bundle
+import android.text.method.KeyListener
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
@@ -20,6 +22,7 @@ import com.steft.travel_app.databinding.FragmentAddLocationBinding
 import com.steft.travel_app.databinding.FragmentBundleBinding
 import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
+import java.text.SimpleDateFormat
 import java.util.*
 
 class Bundle : Fragment() {
@@ -52,10 +55,12 @@ class Bundle : Fragment() {
                         bind.durationFromBundleTextView.setText(duration.toString())
                         bind.typeBundleTextView.setText(type)
                         bind.priceBundleTextView.setText(price.toString())
-                        bind.agencyBundleTextView.setText(agencyId)
+
+                        //bind.agencyBundleTextView.setText(agencyId)
                         //TODO hotels List
+
                         bind.hotelsBundleTextView.setText(hotels.tail()
-                            .fold(hotels.first()) { acc, next -> "$acc\n$next" })
+                            .fold(hotels.first()) { acc, next -> "$acc -\n$next" })
 
                         //location info
                         viewModel.getLocation(locationId).observe(viewLifecycleOwner) { location ->
@@ -64,7 +69,6 @@ class Bundle : Fragment() {
 
                             val (_, _, city, country) = location
                             bind.locationBundleInfo.text = "Bundle for $city, $country"
-                            //bind.countryBundleTextView.text = country
                         }
                     } else {
                         throw IllegalArgumentException("Bundle id cant be null")
@@ -83,16 +87,49 @@ class Bundle : Fragment() {
             findNavController().navigate(R.id.action_bundle_to_customerInfo, bundle)
         }
 
-//        viewModel
-//            .updateBundle(UUID.randomUUID(), duration = 123)
 
 
         //Edit - Save Button Agent
         if (viewModel.isLoggedIn()) {
-            bind.saveChangesBundleButton.visibility = View.VISIBLE
+            //visibility and Editabily changes
+            bind.editBundleButton.visibility = View.VISIBLE
+            bind.deleteBundleButton.visibility = View.VISIBLE
+            bind.bookBundleButton.visibility = View.GONE
+           /* bind.dateFromBundleTextView.isEnabled = true
+            bind.durationFromBundleTextView.isEnabled = true
+            bind.priceBundleTextView.isEnabled = true
+            bind.hotelsBundleTextView.isEnabled = true*/
         }
-        bind.saveChangesBundleButton.setOnClickListener {
-            findNavController().navigate(R.id.action_bundle_to_bundles)
+        //Edit changes
+        bind.editBundleButton.setOnClickListener {
+            val bundleId = args?.getString("bundleId")
+            val bundle = bundleOf("bundleId" to bundleId)
+            findNavController().navigate(R.id.action_bundle_to_editBundle,bundle)
+        }
+
+        //Delete bundle
+        bind.deleteBundleButton.setOnClickListener {
+            try {
+                val bundleId =
+                    args?.getString("bundleId")
+                        ?.let { UUID.fromString(it) }
+                        ?: throw IllegalStateException("Bundle id should exist")
+                viewModel
+                    .deleteBundle(bundleId)
+                    .observe(viewLifecycleOwner){
+                        if(it){
+                            Toast.makeText(context, "Bundle Deleted", Toast.LENGTH_LONG).show()
+                        }else {
+                            Toast.makeText(context, "Can't delete Bundle with bookings", Toast.LENGTH_LONG).show()
+                            println("---------else")
+                        }
+                    }
+                findNavController().navigate(R.id.action_bundle_to_bundles)
+            } catch (ex: Exception) {
+                //Do something
+                Toast.makeText(context, "something went wrong, try again", Toast.LENGTH_LONG).show()
+                println(ex.message)
+            }
         }
 
 
