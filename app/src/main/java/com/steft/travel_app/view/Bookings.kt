@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.steft.travel_app.R
 import com.steft.travel_app.databinding.FragmentBookingsBinding
 import com.steft.travel_app.databinding.FragmentLocationsListBinding
-import com.steft.travel_app.dto.RegistrationPreviewDto
 import com.steft.travel_app.viewmodel.MainViewModel
 import com.steft.travel_app.viewmodel.MainViewModelFactory
 import java.util.*

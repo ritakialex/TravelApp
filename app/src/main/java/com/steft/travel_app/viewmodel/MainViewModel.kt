@@ -20,6 +20,7 @@ import java.time.DayOfWeek
 import java.util.*
 
 private typealias PreviewTriple = Triple<UUID, String, String>
+private typealias LiveList<A> = LiveData<List<A>>
 
 class MainViewModelFactory(
     private val application: Application,
@@ -102,13 +103,13 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                 }
         }
 
-    fun getLocations(): LiveData<List<LocationPreviewDto>> =
+    fun getLocations(): LiveList<LocationPreviewDto> =
         intoLiveData {
             getAllLocations()
         }
 
 
-    fun getAgencyLocations(): LiveData<List<LocationPreviewDto>> =
+    fun getAgencyLocations(): LiveList<LocationPreviewDto> =
         ifAuthorized { travelAgency ->
             intoLiveData {
                 getLocationsOfAgency(travelAgency)
@@ -131,7 +132,9 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
         }
 
 
-    fun addCustomLocation(city: String, country: String): LiveData<Boolean> =
+    fun addCustomLocation(
+        city: String,
+        country: String): LiveData<Boolean> =
         ifAuthorized { travelAgency ->
             intoLiveData {
                 Name.makeValidated(city)
@@ -190,21 +193,21 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                 }
         }
 
-    fun getBundles(): LiveData<List<BundlePreviewDto>> =
+    fun getBundles(): LiveList<BundlePreviewDto> =
         intoLiveData {
             bundleDao
                 .getAll()
                 .map { bundleToBundlePreviewDto(it) }
         }
 
-    fun getBundles(locationId: UUID): LiveData<List<BundlePreviewDto>> =
+    fun getBundles(locationId: UUID): LiveList<BundlePreviewDto> =
         intoLiveData {
             bundleDao
                 .findByLocation(locationId)
                 .map { bundleToBundlePreviewDto(it) }
         }
 
-    fun getAgencyBundles(): LiveData<List<BundlePreviewDto>> =
+    fun getAgencyBundles(): LiveList<BundlePreviewDto> =
         ifAuthorized { travelAgency ->
             intoLiveData {
                 bundleDao
@@ -250,7 +253,13 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
             }
         }
 
-    fun registerCustomer(bundleId: UUID, name: String, surname: String, phone: String, email: String, hotel: String) =
+    fun registerCustomer(
+        bundleId: UUID,
+        name: String,
+        surname: String,
+        phone: String,
+        email: String,
+        hotel: String) =
         Name.makeValidated(name)
             .zip(
                 Semigroup.nonEmptyList(),
@@ -270,7 +279,7 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
                 }
             }
 
-    fun getAgencyBookings(): LiveData<List<RegistrationsPreviewDto>> =
+    fun getAgencyBookings(): LiveList<RegistrationsPreviewDto> =
         ifAuthorized { agencyId ->
             intoLiveData {
                 registrationDao.findByAgencyId(agencyId)

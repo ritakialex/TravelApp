@@ -1,15 +1,11 @@
-package com.steft.travel_app.dto
+package com.steft.travel_app.common
 
-import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import arrow.core.Invalid
 import arrow.core.Valid
-import arrow.core.getOrElse
 import com.google.gson.Gson
 import com.steft.travel_app.common.*
-import org.json.JSONObject
 import java.util.*
-import kotlin.math.E
 
 object Converters {
     private const val male = "male"
@@ -59,19 +55,6 @@ object Converters {
 
     @TypeConverter
     fun stringToSha(value: String): Sha256 = Sha256(value)
-
-    @TypeConverter
-    fun stringToGender(value: String): Gender = when (value) {
-        male -> Gender.Male
-        female -> Gender.Female
-        else -> throw CorruptDatabaseObjectException("Gender was $value")
-    }
-
-    @TypeConverter
-    fun genderToString(value: Gender): String = when (value) {
-        Gender.Male -> male
-        Gender.Female -> female
-    }
 
     @TypeConverter
     fun stringToLocationType(value: String): LocationType = when (value) {

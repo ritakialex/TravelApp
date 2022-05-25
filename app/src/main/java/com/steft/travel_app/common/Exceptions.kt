@@ -24,11 +24,5 @@ data class UnauthorizedException(override val message: String) : Exception(messa
     }
 }
 
-data class InconsistentStateException(override val message: String) : Exception(message) {
-    companion object {
-        fun fromOtherException(exception: Throwable) =
-            UnauthorizedException(derivedExceptionMessage(exception))
-    }
-}
 
 

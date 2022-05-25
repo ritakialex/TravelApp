@@ -16,7 +16,10 @@ import java.util.*
 interface RegistrationDao {
     suspend fun getAll(bundle: UUID): List<Registrations>
     suspend fun insert(vararg registration: Registrations)
-    suspend fun register(bundle: UUID, vararg customers: CustomerDetails)
+    suspend fun register(
+        bundle: UUID,
+        vararg customers: CustomerDetails)
+
     suspend fun findByAgencyId(travelAgency: UUID): List<Registrations>
     suspend fun registrationsExist(bundle: UUID): Boolean
 }

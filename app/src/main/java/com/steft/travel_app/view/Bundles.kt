@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.steft.travel_app.R
-import com.steft.travel_app.common.InconsistentStateException
 import com.steft.travel_app.common.UnauthorizedException
 import com.steft.travel_app.databinding.FragmentBundlesListBinding
 import com.steft.travel_app.databinding.FragmentLocationsListBinding

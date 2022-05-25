@@ -2,7 +2,6 @@
 
 package com.steft.travel_app.common
 
-import androidx.lifecycle.viewModelScope
 import arrow.core.*
 import java.nio.charset.Charset
 import java.security.MessageDigest
@@ -11,10 +10,6 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlin.random.Random
 
-enum class Gender {
-    Male,
-    Female
-}
 
 enum class LocationType {
     Cruise,
@@ -151,9 +146,3 @@ class Sha256(val string: String) {
             }
     }
 }
-
-fun main(): Unit =
-    SimpleDateFormat("dd/MM/yyyy")
-        .parse("12/12/2022")
-        ?.let { Date(it.time).let { println(it) } }
-        ?: println()

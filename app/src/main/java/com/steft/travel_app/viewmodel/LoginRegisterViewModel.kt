@@ -19,7 +19,9 @@ class LoginRegisterViewModel(application: Application) : AndroidViewModel(applic
 
     private fun <T> intoLiveData(t: suspend () -> T) = Utils.intoLiveData(viewModelScope, t)
 
-    fun login(username: String, password: String): LiveData<UUID?> =
+    fun login(
+        username: String,
+        password: String): LiveData<UUID?> =
         MutableLiveData<UUID?>()
             .also { result ->
                 viewModelScope.launch {
