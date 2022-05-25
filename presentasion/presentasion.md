@@ -1,3 +1,57 @@
+## Διεπαφή χρήστη
+(package com.steft.travel_app.view)
+
+Αρχικά, στην πρώτη οθόνη της εφαρμογής, ο χρήστης καλείται να επιλέξει αν είναι απλός χρήστης (ταξιδιώτης) ή αν είναι χρήστης ταξιδιωτικού γραφείου. Εδώ ξεκινά η πρώτη δραστηριότητα (activity) της εφαρμογής με όνομα MainActivity. Οι υπόλοιπες οθόνες είναι με fragments.
+
+[screenshot](https://i.ibb.co/0sBwrbH/image12.png)
+
+Στην πρώτη που είναι απλός χρήστης, μπαίνει στην εφαρμογή χωρίς διαπιστευτήρια ή τη δημιουργία λογαριασμού. Πρώτη οθόνη, αποτελεί η οθόνη με τους προορισμούς (locations), η εμφάνισή τους γίνεται με τη χρήση ενός recyclerview.
+
+[screenshot](https://i.ibb.co/yYhc5DQ/image7.png)
+
+Επιλέγοντας ο χρήστης έναν προορισμό, τον οδηγεί στα πακέτα που αφορούν τη συγκεκριμένη τοποθεσία. Η εμφάνιση των πακέτων γίνεται επίσης με τη χρήση recyclerview, και στις δύο περιπτώσεις η δομή του κάθε item που πρόκειται να εμφανιστεί στο recycler view αποτελείται από έναν τίτλο και μία περιγραφή. Στην περίπτωση της τοποθεσία, τίτλος είναι η πόλη και περιγραφή η πόλη μαζί με την χώρα, ενώ στην περίπτωση του πακέτου τίτλος είναι η πόλη και χώρα, με περιγραφή (την διάρκεια σε ημέρες, τον τύπο της εκδρομής και) την τιμή του πακέτου. 
+
+todo()
+
+Πατώντας και επιλέγοντας ένα πακέτο, στην επόμενη οθόνη μπορεί να δει αναλυτικά τις πληροφορίες του πακέτου και είτε να πατήσει το κουμπί Book για να προχωρήσει σε κράτηση είτε να επιστρέψει στα πακέτα και να επιλέξει κάποιο άλλο.
+
+[screenshot](https://i.ibb.co/1MBs4Nw/image13.png)
+
+Εφόσον ο χρήστης επιλέξει να προχωρήσει σε κράτηση του πακέτου, τον οδηγεί σε μία οθόνη όπου του ζητούνται να συμπληρώσει τα στοιχεία του, Ονοματεπώνυμο, email, τηλέφωνο και προτίμηση Ξενοδοχείου. Σε περίπτωση που ο χρήστης δεν έχει συμπληρώσει σωστά κάποιο στοιχείο (πχ αριθμό τηλεφώνου) ή δεν έχει συμπληρώσει όλα τα πεδία, του βγάζει μήνυμα με Toast, ότι δεν είναι σωστά τα στοιχεία και να ξαναπροσπαθήσει. Εφόσον τα στοιχεία είναι συμπληρωμένα και σωστά, του βγάζει Toast μήνυμα ότι η κράτησή του έγινε με επιτυχία και τον οδηγεί ξανά στην οθόνη των προορισμών ώστε αν επιθυμεί να προχωρήσει και σε άλλη κράτηση.
+
+[screenshot](https://i.ibb.co/4KWvKm9/image1.png) 
+
+[screenshot](https://i.ibb.co/HNBv2Zr/image8.png)
+
+Στην αρχική οθόνη, ο χρήστης μπορεί να επιλέξει ότι είναι Travel Agent και τον οδηγεί στην οθόνη Login για να συμπληρώσει τα στοιχεία του είτε να κάνει Register.
+
+[screenshot](https://i.ibb.co/92rXr9k/image2.png)
+
+Στην περίπτωση που ο χρήστης δεν συμπληρώσει και το username και το password, του εμφανίζει μήνυμα Toast, ότι πρέπει να συμπληρώσει όλα τα στοιχεία.
+
+[screenshot](https://i.ibb.co/qFRKSnh/image3.png) 
+
+[screenshot](https://i.ibb.co/vj0cyHr/image9.png)
+
+Στην περίπτωση που τα στοιχεία δεν είναι σωστά, εμφανίζεται Toast μήνυμα που του λέει ότι έχει βάλει λάθος στοιχεία. Αν ο χρήστης πατήσει Register τον πηγαίνει σε επόμενη οθόνη όπου του ζητούνται στοιχεία για να κάνει εγγραφή. Πέρα από τα hints που υπάρχουν στην οθόνη ώστε να καταλάβει ο χρήστης πώς περιμένουμε να συμπληρώσει τα στοιχεία, στο πεδίο του Agency name υπάρχει onClickListener που του υποδεικνύει ότι το όνομα πρέπει να ξεκινάει με κεφαλαίο. Αν ο χρήστης πατήσει Register χωρίς να έχει συμπληρώσει όλα τα πεδία του βγάζει μήνυμα να συμπληρώσει όλα τα στοιχεία.
+
+[screenshot](https://i.ibb.co/fCF7cC9/image10.png) 
+
+[screenshot](https://i.ibb.co/t8qrbcf/image5.png)
+
+Εφόσον συμπληρώσει σωστά όλα τα στοιχεία και πατήσει Register τον κάνει απευθείας login και τον οδηγεί στο περιβάλλον του travel agent. Εδώ ξεκινάει το δεύτερο activity με όνομα  LoginActivity. Σε αυτό ακριβώς το σημείο οδηγείται και από την προηγούμενη οθόνη αν πατήσει σωστά στοιχεία και κάνει Login αντί για Register. Ουσιαστικά, το 2ο activity ξεκινάει μόλις γίνει είσοδος του χρήστη με επιτυχία.
+
+[screenshot](https://i.ibb.co/0j2HWWW/image11.png)
+
+Στην εικόνα που ακολουθεί, βλέπουμε το design του Navigation.xml που περιγράφει τον τρόπο με τον οποίο περιηγείται ο χρήστης στο πρώτο activity, σαν επισκέπτης.
+
+[screenshot](https://i.ibb.co/Tc0h3gD/image4.png)
+
+Η πρώτη οθόνη στην οποία οδηγείται ο agent, είναι η σελίδα με τις τοποθεσίες και εκεί όπως είπαμε, ξεκινάει το δεύτερο activity. Εδώ ο χρήστης, έχει και την εμφάνιση μενού (bottom menu), με τις επιλογές Locations (τοποθεσίες), Bundles (πακέτα), Bookings (Κρατήσεις) και Profile (Προφίλ). Στην πρώτη οθόνη βλέπει τη λίστα με όλες τις τοποθεσίες που υπάρχουν διαθέσιμες. Γίνεται χρήση πάλι του fragment_locations_list, είναι το ίδιο που εμφανίζεται και στον απλό χρήστη, με τη διαφορά ότι εδώ εμφανίζεται κάτω δεξιά ένα floating button για προσθήκη τοποθεσίας. Με την αρχικοποίηση του fragment γίνεται έλεγχος αν ο χρήστης είναι συνδεδεμένος (isLoggedIn()) ώστε να αλλάξει το visibility του κουμπιού σε Visible.
+
+Αν το πατήσει, τον οδηγεί σε νέα οθόνη με σκοπό να δημιουργήσει νέα τοποθεσία.
+
+[screenshot](https://i.ibb.co/BKtnCVK/image6.png)
 
 ## Προσαρμοσμένοι τύποι αντί για primitives
 (package com.steft.travel_app.common)
@@ -27,7 +81,8 @@ class Email private constructor(private val emailString: String) {
         private val validEmailPattern =
             Pattern.compile("...") //omitted
 
-        fun makeValidated(emailString: String): ValidatedObject<Email> {
+        fun makeValidated(emailString: String)
+                : ValidatedObject<Email> {
           ... //omitted
         }
     }
@@ -43,7 +98,8 @@ class Phone private constructor(private val phoneString: String) {
         private val validPhonePattern =
             Pattern.compile(...) //omitted
 
-        fun makeValidated(phoneString: String): ValidatedObject<Phone> {
+        fun makeValidated(phoneString: String)
+                : ValidatedObject<Phone> {
           ...//omitted
         }
     }
@@ -85,7 +141,8 @@ class Name private constructor(private val nameString: String) {
         private val validAddressPattern =
             Pattern.compile(...) //omitted
 
-        fun makeValidated(nameString: String): ValidatedObject<Name> {
+        fun makeValidated(nameString: String)
+                : ValidatedObject<Name> {
             ... //omitted
         }
 
@@ -232,7 +289,8 @@ interface BundleDao {
         SELECT * FROM bundle"+
         WHERE travel_agency = :travelAgency
         """)
-    suspend fun findByTravelAgency(travelAgency: UUID): List<Bundle>
+    suspend fun findByTravelAgency(travelAgency: UUID)
+            : List<Bundle>
 ```
 ```kotlin
     @Query(
@@ -291,7 +349,8 @@ interface LocationDao {
            OR travel_agency IS NULL
            """
     )
-    suspend fun findAllOfAgency(travelAgency: UUID): List<Location>
+    suspend fun findAllOfAgency(travelAgency: UUID)
+            : List<Location>
 ```
 ```kotlin
     @Query(
@@ -346,9 +405,9 @@ interface LocationDao {
 }
 ```
 * `getAll()` - Επιστρέφει όλους τους προορισμούς της βάσης
-* `findAllOfAgency(travelAgency: UUID)` - Επιστρέφει όλους τους προορισμούς στους οποίους έχει πρόσβαση ένας χρήστης ταξιδιωτικού γραφείου (δηλαδή στους προυπάρχοντες και σε αυτούς που δημιούργησε).
+* `findAllOfAgency(travelAgency: UUID)` - Επιστρέφει όλους τους προορισμούς στους οποίους έχει πρόσβαση ένας χρήστης ταξιδιωτικού γραφείου (δηλαδή στους προϋπάρχοντες και σε αυτούς που δημιούργησε).
 * `findById(id: UUID)` - Επιστρέφει τον μοναδικό προορισμό που αντιστοιχεί στο `id`, εφόσων υπάρχει.
-* `searchOfAgency(query: String, travelAgency: UUID)` - Επιστρέφει όλους τους προορισμούς με βάση την αναζήτηση της χώρας ή της πόλης `query`, στους οποιους έχει πρόσβαση ο χρήστης ταξιδιωτικού γραφείου που αναγνωρίζεται με `id`.
+* `searchOfAgency(query: String, travelAgency: UUID)` - Επιστρέφει όλους τους προορισμούς με βάση την αναζήτηση της χώρας ή της πόλης `query`, στους οποίους έχει πρόσβαση ο χρήστης ταξιδιωτικού γραφείου που αναγνωρίζεται με `id`.
 * `searchAll(query: String)` - Επιστρέφει όλους τους προορισμούς με βάση την αναζήτηση της χώρας ή της πόλης `query`.
 * `insertAll(vararg locations: Location)` - Προσθέτει στην βάση όλα τα `locations`
 * `deleteCustom(id: UUID, travelAgencyId: UUID)` - Διαγράφει τον προορισμό που αντιστοιχεί στο `id`, εφόσον έχει δημιουργηθεί από τον χρήστη του ταξιδιωτικού γραφείου που αντιστοιχεί στο `travelAgencyId`.
@@ -365,13 +424,14 @@ interface RegistrationDao {
         bundle: UUID, 
         vararg customers: CustomerDetails)
 
-    suspend fun findByAgencyId(travelAgency: UUID): List<Registrations>
+    suspend fun findByAgencyId(travelAgency: UUID)
+            : List<Registrations>
 
     suspend fun registrationsExist(bundle: UUID): Boolean
 }
 
-private class RegistrationDaoImpl(private val db: FirebaseFirestore) 
-  : RegistrationDao {
+private class RegistrationDaoImpl(
+    private val db: FirebaseFirestore) : RegistrationDao {
   ... //omitted
 }
 
@@ -395,11 +455,19 @@ interface TravelAgencyDao {
     suspend fun getAll(): List<TravelAgency>
 ```
 ```kotlin
-    @Query("SELECT * FROM travel_agency WHERE id = :id")
+    @Query(
+        """
+        SELECT * FROM travel_agency 
+        WHERE id = :id
+        """)
     suspend fun findById(id: UUID): TravelAgency?
 ```
 ```kotlin
-    @Query("SELECT * FROM travel_agency WHERE username = :username")
+    @Query(
+        """
+        SELECT * FROM travel_agency 
+        WHERE username = :username
+        """)
     suspend fun findByUsername(username: Username): TravelAgency?
 ```
 ```kotlin
@@ -449,24 +517,24 @@ fun firebaseDb() = Firebase.firestore
 (package com.steft.travel_app.common)
 
 ```kotlin
-private fun derivedExceptionMessage(exception: Throwable) = "Original exception $exception"
-
-
-data class InvalidObjectException(override val message: String) : Exception(message) {
+data class InvalidObjectException(
+    override val message: String) : Exception(message) {
     companion object {
         fun fromOtherException(exception: Throwable) =
             InvalidObjectException(derivedExceptionMessage(exception))
     }
 }
 
-data class CorruptDatabaseObjectException(override val message: String) : Exception(message) {
+data class CorruptDatabaseObjectException(
+    override val message: String) : Exception(message) {
     companion object {
         fun fromOtherException(exception: Throwable) =
             CorruptDatabaseObjectException(derivedExceptionMessage(exception))
     }
 }
 
-data class UnauthorizedException(override val message: String) : Exception(message) {
+data class UnauthorizedException(
+    override val message: String) : Exception(message) {
     companion object {
         fun fromOtherException(exception: Throwable) =
             UnauthorizedException(derivedExceptionMessage(exception))
@@ -492,8 +560,9 @@ data class UnauthorizedException(override val message: String) : Exception(messa
   ```
 * Απλά DTOs - DTOs που καθρεπτίζουν την δομή των μοντέλων που αναπαριστούν, αλλά χωρίς προσαρμοσμένους τύπους.
 
-
-
+` `
+` `
+` `
 ```kotlin
 data class BundleDto(
     val id: UUID,
@@ -559,7 +628,8 @@ data class TravelAgencyDto(
 
 ### LoginRegisterViewModel
 ```kotlin
-class LoginRegisterViewModel(application: Application) : AndroidViewModel(application) {
+class LoginRegisterViewModel(application: Application) 
+    : AndroidViewModel(application) {
     
     ... //omitted
 
@@ -702,78 +772,4 @@ class MainViewModel(
 * **Registrations/Bookings**
   * `registerCustomer(bundleId: UUID, name: String, surname: String, phone: String, email: String, hotel: String)` - Εγκυροποιεί τα στοιχεία που δόθηκαν και εγγράφει έναν πελάτη σε ένα πακέτο προσθέτοντας τα στοιχεία του.
   * `getAgencyBookings()` - Επιστρέφει όλες τις εγγραφές που έχουν γίνει σε πακέτα του ταξιδιωτικού γραφείου του αυθεντικοποιημένου χρήστη.
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-## Διεπαφή χρήστη
-
-Αρχικά, στην πρώτη οθόνη της εφαρμογής, ο χρήστης καλείται να επιλέξει αν είναι απλός χρήστης (ταξιδιώτης) ή αν είναι χρήστης ταξιδιωτικού γραφείου. Εδώ ξεκινά η πρώτη δραστηριότητα (activity) της εφαρμογής με όνομα MainActivity. Οι υπόλοιπες οθόνες είναι με fragments.
-
-![Main screen](images/image12-2.png)
-
-Στην πρώτη που είναι απλός χρήστης, μπαίνει στην εφαρμογή χωρίς διαπιστευτήρια ή τη δημιουργία λογαριασμού. Πρώτη οθόνη, αποτελεί η οθόνη με τους προορισμούς (locations), η εμφάνισή τους γίνεται με τη χρήση ενός recyclerview.
-
-![locations](images/image7-2.png)
-
-Επιλέγοντας ο χρήστης έναν προορισμό, τον οδηγεί στα πακέτα που αφορούν τη συγκεκριμένη τοποθεσία. Η εμφάνιση των πακέτων γίνεται επίσης με τη χρήση recyclerview, και στις δύο περιπτώσεις η δομή του κάθε item που πρόκειται να εμφανιστεί στο recycler view αποτελείται από έναν τίτλο και μία περιγραφή. Στην περίπτωση της τοποθεσία, τίτλος είναι η πόλη και περιγραφή η πόλη μαζί με την χώρα, ενώ στην περίπτωση του πακέτου τίτλος είναι η πόλη και χώρα, με περιγραφή (την διάρκεια σε ημέρες, τον τύπο της εκδρομής και) την τιμή του πακέτου. 
-
-todo()
-
-Πατώντας και επιλέγοντας ένα πακέτο, στην επόμενη οθόνη μπορεί να δει αναλυτικά τις πληροφορίες του πακέτου και είτε να πατήσει το κουμπί Book για να προχωρήσει σε κράτηση είτε να επιστρέψει στα πακέτα και να επιλέξει κάποιο άλλο.
-
-![bundle](images/image13-2.png)
-
-Εφόσον ο χρήστης επιλέξει να προχωρήσει σε κράτηση του πακέτου, τον οδηγεί σε μία οθόνη όπου του ζητούνται να συμπληρώσει τα στοιχεία του, Ονοματεπώνυμο, email, τηλέφωνο και προτίμηση Ξενοδοχείου. Σε περίπτωση που ο χρήστης δεν έχει συμπληρώσει σωστά κάποιο στοιχείο (πχ αριθμό τηλεφώνου) ή δεν έχει συμπληρώσει όλα τα πεδία, του βγάζει μήνυμα με Toast, ότι δεν είναι σωστά τα στοιχεία και να ξαναπροσπαθήσει. Εφόσον τα στοιχεία είναι συμπληρωμένα και σωστά, του βγάζει Toast μήνυμα ότι η κράτησή του έγινε με επιτυχία και τον οδηγεί ξανά στην οθόνη των προορισμών ώστε αν επιθυμεί να προχωρήσει και σε άλλη κράτηση.
-
-![book bundle fail](images/image1-2.png) ![book bundle success](images/image8-2.png)
-
-Στην αρχική οθόνη, ο χρήστης μπορεί να επιλέξει ότι είναι Travel Agent και τον οδηγεί στην οθόνη Login για να συμπληρώσει τα στοιχεία του είτε να κάνει Register.
-
-![login](images/image2-2.png)
-
-Στην περίπτωση που ο χρήστης δεν συμπληρώσει και το username και το password, του εμφανίζει μήνυμα Toast, ότι πρέπει να συμπληρώσει όλα τα στοιχεία.
-
-![login empty](images/image3-2.png) ![login fail](images/image9-2.png)
-
-Στην περίπτωση που τα στοιχεία δεν είναι σωστά, εμφανίζεται Toast μήνυμα που του λέει ότι έχει βάλει λάθος στοιχεία. Αν ο χρήστης πατήσει Register τον πηγαίνει σε επόμενη οθόνη όπου του ζητούνται στοιχεία για να κάνει εγγραφή. Πέρα από τα hints που υπάρχουν στην οθόνη ώστε να καταλάβει ο χρήστης πώς περιμένουμε να συμπληρώσει τα στοιχεία, στο πεδίο του Agency name υπάρχει onClickListener που του υποδεικνύει ότι το όνομα πρέπει να ξεκινάει με κεφαλαίο. Αν ο χρήστης πατήσει Register χωρίς να έχει συμπληρώσει όλα τα πεδία του βγάζει μήνυμα να συμπληρώσει όλα τα στοιχεία.
-
-![register fail](images/image10-2.png) ![register empty](images/image5-2.png)
-
-Εφόσον συμπληρώσει σωστά όλα τα στοιχεία και πατήσει Register τον κάνει απευθείας login και τον οδηγεί στο περιβάλλον του travel agent. Εδώ ξεκινάει το δεύτερο activity με όνομα  LoginActivity. Σε αυτό ακριβώς το σημείο οδηγείται και από την προηγούμενη οθόνη αν πατήσει σωστά στοιχεία και κάνει Login αντί για Register. Ουσιαστικά, το 2ο activity ξεκινάει μόλις γίνει είσοδος του χρήστη με επιτυχία.
-
-![register success](images/image11-2.png)
-
-Στην εικόνα που ακολουθεί, βλέπουμε το design του Navigation.xml που περιγράφει τον τρόπο με τον οποίο περιηγείται ο χρήστης στο πρώτο activity, σαν επισκέπτης.
-
-![guest navigation](images/image4.png)
-
-Η πρώτη οθόνη στην οποία οδηγείται ο agent, είναι η σελίδα με τις τοποθεσίες και εκεί όπως είπαμε, ξεκινάει το δεύτερο activity. Εδώ ο χρήστης, έχει και την εμφάνιση μενού (bottom menu), με τις επιλογές Locations (τοποθεσίες), Bundles (πακέτα), Bookings (Κρατήσεις) και Profile (Προφίλ). Στην πρώτη οθόνη βλέπει τη λίστα με όλες τις τοποθεσίες που υπάρχουν διαθέσιμες. Γίνεται χρήση πάλι του fragment_locations_list, είναι το ίδιο που εμφανίζεται και στον απλό χρήστη, με τη διαφορά ότι εδώ εμφανίζεται κάτω δεξιά ένα floating button για προσθήκη τοποθεσίας. Με την αρχικοποίηση του fragment γίνεται έλεγχος αν ο χρήστης είναι συνδεδεμένος (isLoggedIn()) ώστε να αλλάξει το visibility του κουμπιού σε Visible.
-
-Αν το πατήσει, τον οδηγεί σε νέα οθόνη με σκοπό να δημιουργήσει νέα τοποθεσία.
-
-![create location](images/image6-2.png)
 
