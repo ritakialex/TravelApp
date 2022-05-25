@@ -30,8 +30,9 @@ class MainViewModelFactory(
         MainViewModel(application, travelAgency) as T
 }
 
-class MainViewModel(application: Application, val travelAgency: UUID?) :
-    AndroidViewModel(application) {
+class MainViewModel(
+    application: Application,
+    val travelAgency: UUID?) : AndroidViewModel(application) {
     private val database = AppDatabase.getDatabase(application)
     private val locationDao = database.locationDao()
     private val agencyDao = database.travelAgencyDao()

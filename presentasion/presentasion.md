@@ -1,4 +1,115 @@
 
+## Προσαρμοσμένοι τύποι αντί για primitives
+(package com.steft.travel_app.common)
+
+Οι προσαρμοσμένοι τύποι που δημιουργήθηκαν επιτελούν τους παρακάτω σκοπούς:
+* Ενισχύουν την μοντελοποίηση των δεδομένων.
+* Εξασφαλίζουν την εγκυρότητα της δομής των δεδομένων με τρόπο που δεν μπορούν να εγγυηθούν οι primitives.
+* Επιβάλλουν τον χειρισμό των περιπτώσεων όπου τα δεδομένα δεν έχουν την μορφή που θα έπρεπε
+
+Για την επιβεβαίωση της εγκυρότητας των δεδομένων, αλλά και για τον χειρισμό των περιπτώσεων μη εγκυρότητας, χρησιμοποιήθηκε ο τύπος δεδομένων `Validated` από την βιβλιοθήκη [arrow](https://arrow-kt.io/docs/apidocs/arrow-core/arrow.core/-validated/)
+
+*Σημείωση: στον ακόλουθο κώδικα χρησιμοποιούνται τα παρακάτω από το αρχείο Validated.kt:*
+```kotlin
+data class ValidationError(val message: String)
+
+typealias ValidatedObject<T> = ValidatedNel<ValidationError, T>
+
+```
+
+### Email
+```kotlin
+class Email private constructor(private val emailString: String) {
+    
+    ... //omitted
+
+    companion object {
+        private val validEmailPattern =
+            Pattern.compile("...") //omitted
+
+        fun makeValidated(emailString: String): ValidatedObject<Email> {
+          ... //omitted
+        }
+    }
+}
+```
+Επιτρέπει την ύπαρξη τιμών τύπου `Email` μόνο εφόσον είναι έγκυρες διευθύνσεις και επιβάλλει την διαχείριση των περιπτώσεων που η διεύθυνση που έχει δοθεί δεν ήταν έγκυρη.
+
+### Phone
+```kotlin
+class Phone private constructor(private val phoneString: String) {
+
+    companion object {
+        private val validPhonePattern =
+            Pattern.compile(...) //omitted
+
+        fun makeValidated(phoneString: String): ValidatedObject<Phone> {
+          ...//omitted
+        }
+    }
+```
+Επιτρέπει την ύπαρξη τιμών τύπου `Phone` μόνο εφόσον είναι έγκυρες και επιβάλλει την διαχείριση των περιπτώσεων που το τηλεφωνικό νούμερο που έχει δοθεί δεν ήταν έγκυρο. Υποστηρίζει κωδικούς χώρας και διαχωριστικά μεταξύ ομάδων αριθμών.
+
+### Username
+```kotlin
+class Username(val string: String)
+```
+Ενισχύει την σημασιολογία των τιμών που αναπαριστούν usernames.
+
+### SHA256
+```kotlin
+class Sha256(val string: String) {
+    companion object {
+        fun makeSalted(string: String): Sha256 {
+          ...//omitted
+        }
+
+        fun makeSalted(string: String, salt: String) {
+          ...//omitted
+        }
+
+        fun split(sha: Sha256): Pair<String, String> {
+          ...//omitted
+        }
+    }
+}
+```
+Αναπαριστά κρυπτογραφημένες τιμές και προσφέρει συναρτήσεις για την δημιουργία και την διαχείριση τους.
+
+### Name
+```kotlin
+class Name private constructor(private val nameString: String) {
+    override fun toString() = nameString
+
+    companion object {
+        private val validAddressPattern =
+            Pattern.compile(...) //omitted
+
+        fun makeValidated(nameString: String): ValidatedObject<Name> {
+            ... //omitted
+        }
+
+        fun content(name: Name): String {
+          ... //omitted
+        }
+    }
+}
+```
+Επιτρέπει την ύπαρξη τιμών τύπου `Name` μόνο εφόσον είναι έγκυρες και επιβάλλει την διαχείριση των περιπτώσεων που η ονομασία που έχει δοθεί δεν ήταν έγκυρη. Μία έγκυρη ονομασία είναι ορισμένη ως μία αλφαριθμητική τιμή που αποτελείται μόνο από γράμματα και κενά.
+
+### LocationType
+```kotlin
+enum class LocationType {
+    Cruise,
+    Roadtrip,
+    Independent
+}
+```
+Περιγράφει τα τρία διαφορετικά είδη εκδρομής.
+
+### Converters
+Για την αποθήκευση μοντέλων με προσαρμοσμένους τύπους στην Sqlite δημιουργήθηκαν type converters όπως απαιτείται από το Room API, στο αρχείο `Converters.kt`.
+
 ## Μοντέλα
 (package: com.steft.travel_app.model)
 
@@ -24,8 +135,8 @@ data class Location(
 Ο προορισμός αποτελεί μια διακριτή περιοχή στον κόσμο, στην οποία μπορούν τα ταξιδιωτικά γραφεία να προσφέρουν εκδρομές. Τον χαρακτηρίζουν 4 πεδία:
 * `id: UUID` - Η μοναδική ταυτότητα της εγγραφής, τύπου `UUID` (Universal Unique Identifier).
 * `travelAgency: UUID` - Ξένο κλειδί προς μία εγγραφή του πίνακα `travel_agency`. Το πεδίο είναι nullable, όπως προσδιορίζει το Αγγλικό ερωτηματικό. Η ύπαρξη αυτού του πεδίου σε μια εγγραφή προσδιορίζει πως ο συγκεκριμένος προορισμός δημιουργήθηκε από ένα ταξιδιωτικό γραφείο και δεν είναι διαθέσιμος σε όλα (εκτός φυσικά αν δημιουργήσουν τα ίδια έναν αντίστοιχο δικό τους).
-* `city: Name` - Το όνομα της πόλης του προορισμού, τύπου `Name`, βλέπε(#anchor! Validation).
-* `country: Name` - Το όνομα της πόλης του προορισμού, τύπου `Name`, βλέπε(#anchor! Validation). 
+* `city: Name` - Το όνομα της πόλης του προορισμού, τύπου `Name`.
+* `country: Name` - Το όνομα της πόλης του προορισμού, τύπου `Name`.
 
 ### TravelAgency (Ταξιδιωτικό Γραφείο) - Sqlite
 ```kotlin
@@ -43,10 +154,10 @@ data class TravelAgency(
 ```
 Αναπαριστά ένα ταξιδιωτικό γραφείο που χρησιμοποιεί την εφαρμογή μέσω ενός μοναδικού χρήστη, προσδιοριζόμενος από username/password, για να δημιουργεί και να διαχειρίζεται αγγελίες εκδρομών που διαθέτει. Το χαρακτηρίζουν 5 πεδία:
 * `id: UUID` - Η μοναδική ταυτότητα της εγγραφής, τύπου `UUID` (Universal Unique Identifier).
-* `name: Name` - Το όνομα του ταξιδιωτικού γραφείου, τύπου `Name`, βλέπε(#anchor! Validation).
-* `address: Address` - Η διεύθυνση του ταξιδιωτικού γραφείου, τύπου `Address`, βλέπε(#anchor! Validation).
-* `username: Userame` - Το μοναδικό όνομα χρήστη, τύπου `Username`, βλέπε(#anchor! Validation).
-* `password: Password` - Ο κρυπτογραφημένος με SHA256 κρυπτογράφηση κωδικός του χρήστη, βλέπε(#anchor! Validation).
+* `name: Name` - Το όνομα του ταξιδιωτικού γραφείου, τύπου `Name`.
+* `address: Address` - Η διεύθυνση του ταξιδιωτικού γραφείου, τύπου `Address`.
+* `username: Userame` - Το μοναδικό όνομα χρήστη, τύπου `Username`.
+* `password: Password` - Ο κρυπτογραφημένος με SHA256 κρυπτογράφηση κωδικός του χρήστη.
 
 ### Bundle (Πακέτο) - Sqlite
 ```kotlin
@@ -79,8 +190,8 @@ data class Bundle(
 * `location: UUID` - Ξένο κλειδί προς μία εγγραφή του πίνακα `location`. Προσδιορίζει τον προορισμό στον οποίο αναφέρεται το πακέτο.
 * `date: Date` - Η ημερομηνία έναρξης της εκδρομής, τύπου `Date`.
 * `price: Double` - Η τιμή του πακέτου, τύπου `Double`.
-* `hotels: List<Name>` - Μία λίστα με τα προτεινόμενα ξενοδοχεία του ταξιδιωτικού γραφείου στην περιοχή της εκδρομής, τύπου `List<Name>`, βλέπε(#anchor! Validation).
-* `type: LocationType` - Το είδος της εκδρομής, τύπου `LocationType`, βλέπε(#anchor! Validation).
+* `hotels: List<Name>` - Μία λίστα με τα προτεινόμενα ξενοδοχεία του ταξιδιωτικού γραφείου στην περιοχή της εκδρομής, τύπου `List<Name>`.
+* `type: LocationType` - Το είδος της εκδρομής, τύπου `LocationType`.
 
 ### Registrations (Εγγραφές) - Firestore
 ```kotlin
@@ -97,16 +208,16 @@ data class Registrations(
     val customers: List<CustomerDetails>)
 ```
 Αναπαριστά το σύνολο των εγγραφών που έχουν γίνει για ένα πακέτο ενός ταξιδιωτικού γραφείου. Κάθε εγγραφή χαρακτηρίζεται από:
-* `name: Name` - Το όνομα του πελάτη, τύπου `Name`, βλέπε(ασδαςδασδασδ).
-* `surname: Name` - Το επίθετο του πελάτη, τύπου `Name`, βλέπε(ασδασδασδ).
-* `phone: Phone` - Το τηλέφωνο επικοινωνίας που δήλωσε ο πελάτης, τύπου `Phone`, βλέπε(ασδασδασδ).
-* `email: Email` - Η διεύθυνση ηλεκτρονικόυ ταχυδρομείου επικοινωνίας που δήλωσε ο πελάτης, τύπου `Email`, βλέπε(ασδσαδ).
+* `name: Name` - Το όνομα του πελάτη, τύπου `Name`.
+* `surname: Name` - Το επίθετο του πελάτη, τύπου `Name`.
+* `phone: Phone` - Το τηλέφωνο επικοινωνίας που δήλωσε ο πελάτης, τύπου `Phone`.
+* `email: Email` - Η διεύθυνση ηλεκτρονικού ταχυδρομείου επικοινωνίας που δήλωσε ο πελάτης, τύπου `Email`.
 * `hotel: String` - Το ξενοδοχείο που επέλεξε ο πελάτης (όχι απαραίτητα ένα από τα προτεινόμενα του πακέτου), τύπου `String`.
 
 ## Daos και αρχικοποίηση των βάσεων
 (package com.steft.travel_app.dao)
 
-Για κάθε ένα από τα μοντέλα, δημιουργήθηκε ένα αντίστοιχο Dao με τίς μεθόδους ανάκτησης και τροποποίησης της βάσης που απαιτούνται από την εφαρμογή.
+Για κάθε ένα από τα μοντέλα, δημιουργήθηκε ένα αντίστοιχο Dao με τις μεθόδους ανάκτησης και τροποποίησης της βάσης που απαιτούνται από την εφαρμογή.
 
 ### BundleDao
 ```kotlin
@@ -334,109 +445,6 @@ abstract class AppDatabase : RoomDatabase() {
 ```kotlin
 fun firebaseDb() = Firebase.firestore
 ```
-
-## Προσαρμοσμένοι τύποι αντί για primitives
-(package com.steft.travel_app.common)
-
-Οι προσαρμοσμένοι τύποι που δημιουργήθηκαν επιτελούν τους παρακάτω σκοπούς:
-* Ενισχύουν την μοντελοποίηση των δεδομένων.
-* Εξασφαλίζουν την εγκυρότητα της δομής των δεδομένων με τρόπο που δεν μπορούν να εγγυηθούν οι primitives.
-* Επιβάλλουν τον χειρισμό των περιπτώσεων όπου τα δεδομένα δεν έχουν την μορφή που θα έπρεπε
-
-Για την επιβεβαίωση της εγκυρότητας των δεδομένων, αλλά και για τον χειρισμό των περιπτώσεων μη εγκυρότητας, χρησιμοποιήθηκε ο τύπος δεδομένων `Validated` από την βιβλιοθήκη [arrow](https://arrow-kt.io/docs/apidocs/arrow-core/arrow.core/-validated/)
-
-*Σημείωση: στον ακόλουθο κώδικα χρησιμοποιούνται τα παρακάτω από το αρχείο Validated.kt:*
-```kotlin
-data class ValidationError(val message: String)
-
-typealias ValidatedObject<T> = ValidatedNel<ValidationError, T>
-
-```
-
-
-### Email
-```kotlin
-class Email private constructor(private val emailString: String) {
-    
-    ... //omitted
-
-    companion object {
-        private val validEmailPattern =
-            Pattern.compile("...") //omitted
-
-        fun makeValidated(emailString: String): ValidatedObject<Email> {
-          ... //omitted
-        }
-    }
-}
-```
-Επιτρέπει την ύπαρξη τιμών τύπου `Email` μόνο εφόσον είναι έγκυρες διευθύνσεις και επιβάλλει την διαχείριση των περιπτώσεων που η διεύθυνση που έχει δοθεί δεν ήταν έγκυρη.
-
-### Phone
-```kotlin
-class Phone private constructor(private val phoneString: String) {
-
-    companion object {
-        private val validPhonePattern =
-            Pattern.compile(...) //omitted
-
-        fun makeValidated(phoneString: String): ValidatedObject<Phone> {
-          ...//omitted
-        }
-    }
-```
-Επιτρέπει την ύπαρξη τιμών τύπου `Phone` μόνο εφόσον είναι έγκυρες και επιβάλλει την διαχείριση των περιπτώσεων που το τηλεφωνικό νούμερο που έχει δοθεί δεν ήταν έγκυρο. Υποστηρίζει κωδικούς χώρας και διαχωριστικά μεταξύ ομάδων αριθμών.
-
-### Username
-```kotlin
-class Username(val string: String)
-```
-Ενισχύει την σημασιολογία των τιμών που αναπαριστούν usernames.
-
-### SHA256
-```kotlin
-class Sha256(val string: String) {
-    companion object {
-        fun makeSalted(string: String): Sha256 {
-          ...//omitted
-        }
-
-        fun makeSalted(string: String, salt: String) {
-          ...//omitted
-        }
-
-        fun split(sha: Sha256): Pair<String, String> {
-          ...//omitted
-        }
-    }
-}
-```
-Αναπαριστά κρυπτογραφημένες τιμές και προσφέρει συναρτήσεις για την δημιουργία και την διαχείριση τους.
-
-### Name
-```kotlin
-class Name private constructor(private val nameString: String) {
-    override fun toString() = nameString
-
-    companion object {
-        private val validAddressPattern =
-            Pattern.compile(...) //omitted
-
-        fun makeValidated(nameString: String): ValidatedObject<Name> {
-            ... //omitted
-        }
-
-        fun content(name: Name): String {
-          ... //omitted
-        }
-    }
-}
-```
-Επιτρέπει την ύπαρξη τιμών τύπου `Name` μόνο εφόσον είναι έγκυρες και επιβάλλει την διαχείριση των περιπτώσεων που η ονομασία που έχει δοθεί δεν ήταν έγκυρη. Μία έγκυρη ονομασία είναι ορισμένη ως μία αλφαριθμητική τιμή που αποτελείται μόνο από γράμματα και κενά.
-
-### Converters
-Για την αποθήκευση μοντέλων με προσαρμοσμένους τύπους στην Sqlite δημιουργήθηκαν type converters όπως απαιτείται από το Room API, στο αρχείο `Converters.kt`.
-
 ## Exceptions
 (package com.steft.travel_app.common)
 
@@ -580,8 +588,9 @@ class LoginRegisterViewModel(application: Application) : AndroidViewModel(applic
 ```kotlin
 private typealias LiveList<A> = LiveData<List<A>>
 
-class MainViewModel(application: Application, val travelAgency: UUID?) :
-    AndroidViewModel(application) {
+class MainViewModel(
+    application: Application, 
+    val travelAgency: UUID?) : AndroidViewModel(application) {
 
       ... //omitted
 
@@ -694,6 +703,77 @@ class MainViewModel(application: Application, val travelAgency: UUID?) :
   * `registerCustomer(bundleId: UUID, name: String, surname: String, phone: String, email: String, hotel: String)` - Εγκυροποιεί τα στοιχεία που δόθηκαν και εγγράφει έναν πελάτη σε ένα πακέτο προσθέτοντας τα στοιχεία του.
   * `getAgencyBookings()` - Επιστρέφει όλες τις εγγραφές που έχουν γίνει σε πακέτα του ταξιδιωτικού γραφείου του αυθεντικοποιημένου χρήστη.
 
-  
+&nbsp;
 
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+## Διεπαφή χρήστη
+
+Αρχικά, στην πρώτη οθόνη της εφαρμογής, ο χρήστης καλείται να επιλέξει αν είναι απλός χρήστης (ταξιδιώτης) ή αν είναι χρήστης ταξιδιωτικού γραφείου. Εδώ ξεκινά η πρώτη δραστηριότητα (activity) της εφαρμογής με όνομα MainActivity. Οι υπόλοιπες οθόνες είναι με fragments.
+
+![Main screen](images/image12-2.png)
+
+Στην πρώτη που είναι απλός χρήστης, μπαίνει στην εφαρμογή χωρίς διαπιστευτήρια ή τη δημιουργία λογαριασμού. Πρώτη οθόνη, αποτελεί η οθόνη με τους προορισμούς (locations), η εμφάνισή τους γίνεται με τη χρήση ενός recyclerview.
+
+![locations](images/image7-2.png)
+
+Επιλέγοντας ο χρήστης έναν προορισμό, τον οδηγεί στα πακέτα που αφορούν τη συγκεκριμένη τοποθεσία. Η εμφάνιση των πακέτων γίνεται επίσης με τη χρήση recyclerview, και στις δύο περιπτώσεις η δομή του κάθε item που πρόκειται να εμφανιστεί στο recycler view αποτελείται από έναν τίτλο και μία περιγραφή. Στην περίπτωση της τοποθεσία, τίτλος είναι η πόλη και περιγραφή η πόλη μαζί με την χώρα, ενώ στην περίπτωση του πακέτου τίτλος είναι η πόλη και χώρα, με περιγραφή (την διάρκεια σε ημέρες, τον τύπο της εκδρομής και) την τιμή του πακέτου. 
+
+todo()
+
+Πατώντας και επιλέγοντας ένα πακέτο, στην επόμενη οθόνη μπορεί να δει αναλυτικά τις πληροφορίες του πακέτου και είτε να πατήσει το κουμπί Book για να προχωρήσει σε κράτηση είτε να επιστρέψει στα πακέτα και να επιλέξει κάποιο άλλο.
+
+![bundle](images/image13-2.png)
+
+Εφόσον ο χρήστης επιλέξει να προχωρήσει σε κράτηση του πακέτου, τον οδηγεί σε μία οθόνη όπου του ζητούνται να συμπληρώσει τα στοιχεία του, Ονοματεπώνυμο, email, τηλέφωνο και προτίμηση Ξενοδοχείου. Σε περίπτωση που ο χρήστης δεν έχει συμπληρώσει σωστά κάποιο στοιχείο (πχ αριθμό τηλεφώνου) ή δεν έχει συμπληρώσει όλα τα πεδία, του βγάζει μήνυμα με Toast, ότι δεν είναι σωστά τα στοιχεία και να ξαναπροσπαθήσει. Εφόσον τα στοιχεία είναι συμπληρωμένα και σωστά, του βγάζει Toast μήνυμα ότι η κράτησή του έγινε με επιτυχία και τον οδηγεί ξανά στην οθόνη των προορισμών ώστε αν επιθυμεί να προχωρήσει και σε άλλη κράτηση.
+
+![book bundle fail](images/image1-2.png) ![book bundle success](images/image8-2.png)
+
+Στην αρχική οθόνη, ο χρήστης μπορεί να επιλέξει ότι είναι Travel Agent και τον οδηγεί στην οθόνη Login για να συμπληρώσει τα στοιχεία του είτε να κάνει Register.
+
+![login](images/image2-2.png)
+
+Στην περίπτωση που ο χρήστης δεν συμπληρώσει και το username και το password, του εμφανίζει μήνυμα Toast, ότι πρέπει να συμπληρώσει όλα τα στοιχεία.
+
+![login empty](images/image3-2.png) ![login fail](images/image9-2.png)
+
+Στην περίπτωση που τα στοιχεία δεν είναι σωστά, εμφανίζεται Toast μήνυμα που του λέει ότι έχει βάλει λάθος στοιχεία. Αν ο χρήστης πατήσει Register τον πηγαίνει σε επόμενη οθόνη όπου του ζητούνται στοιχεία για να κάνει εγγραφή. Πέρα από τα hints που υπάρχουν στην οθόνη ώστε να καταλάβει ο χρήστης πώς περιμένουμε να συμπληρώσει τα στοιχεία, στο πεδίο του Agency name υπάρχει onClickListener που του υποδεικνύει ότι το όνομα πρέπει να ξεκινάει με κεφαλαίο. Αν ο χρήστης πατήσει Register χωρίς να έχει συμπληρώσει όλα τα πεδία του βγάζει μήνυμα να συμπληρώσει όλα τα στοιχεία.
+
+![register fail](images/image10-2.png) ![register empty](images/image5-2.png)
+
+Εφόσον συμπληρώσει σωστά όλα τα στοιχεία και πατήσει Register τον κάνει απευθείας login και τον οδηγεί στο περιβάλλον του travel agent. Εδώ ξεκινάει το δεύτερο activity με όνομα  LoginActivity. Σε αυτό ακριβώς το σημείο οδηγείται και από την προηγούμενη οθόνη αν πατήσει σωστά στοιχεία και κάνει Login αντί για Register. Ουσιαστικά, το 2ο activity ξεκινάει μόλις γίνει είσοδος του χρήστη με επιτυχία.
+
+![register success](images/image11-2.png)
+
+Στην εικόνα που ακολουθεί, βλέπουμε το design του Navigation.xml που περιγράφει τον τρόπο με τον οποίο περιηγείται ο χρήστης στο πρώτο activity, σαν επισκέπτης.
+
+![guest navigation](images/image4.png)
+
+Η πρώτη οθόνη στην οποία οδηγείται ο agent, είναι η σελίδα με τις τοποθεσίες και εκεί όπως είπαμε, ξεκινάει το δεύτερο activity. Εδώ ο χρήστης, έχει και την εμφάνιση μενού (bottom menu), με τις επιλογές Locations (τοποθεσίες), Bundles (πακέτα), Bookings (Κρατήσεις) και Profile (Προφίλ). Στην πρώτη οθόνη βλέπει τη λίστα με όλες τις τοποθεσίες που υπάρχουν διαθέσιμες. Γίνεται χρήση πάλι του fragment_locations_list, είναι το ίδιο που εμφανίζεται και στον απλό χρήστη, με τη διαφορά ότι εδώ εμφανίζεται κάτω δεξιά ένα floating button για προσθήκη τοποθεσίας. Με την αρχικοποίηση του fragment γίνεται έλεγχος αν ο χρήστης είναι συνδεδεμένος (isLoggedIn()) ώστε να αλλάξει το visibility του κουμπιού σε Visible.
+
+Αν το πατήσει, τον οδηγεί σε νέα οθόνη με σκοπό να δημιουργήσει νέα τοποθεσία.
+
+![create location](images/image6-2.png)
 
