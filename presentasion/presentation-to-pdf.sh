@@ -1,5 +1,4 @@
 docker run \
-  -it \
   --rm \
   --volume $PWD:/data \
   --user $(id -u):$(id -g) \
@@ -7,9 +6,8 @@ docker run \
   pandoc/latex \
   --from=gfm \
   --pdf-engine=lualatex \
-  -V mainfont="DejaVuSerif" \
+  -V mainfont="ARIALUNI" \
   -V urlcolor=cyan \
-  --metadata title="Ταξιδιωτική εφαρμογή σε android" \
   --highlight-style tango \
   presentasion.md \
   -o presentasion.pdf
